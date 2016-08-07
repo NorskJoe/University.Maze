@@ -110,11 +110,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="cell.cpp" />
+    <ClCompile Include="edge.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Maze.cpp" />
+    <ClCompile Include="mazeGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cell.h" />
+    <ClInclude Include="edge.h" />
     <ClInclude Include="Maze.h" />
+    <ClInclude Include="mazeGenerator.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

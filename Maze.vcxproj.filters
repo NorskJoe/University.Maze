@@ -21,9 +21,27 @@
     <ClCompile Include="Maze.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="mazeGenerator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="cell.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="edge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Maze.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mazeGenerator.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="cell.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="edge.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
