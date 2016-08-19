@@ -1,23 +1,26 @@
 #ifndef CELL_H
 #define CELL_H
 
+/* Used to hold the position of a cell */
+struct coordinates
+{
+	int xPos, yPos;
+};
 
 class Cell
 {
 private:
-	int xPos, yPos;
+	struct coordinates xy;
 public:
 	/* Constructors */
 	Cell() :
-		xPos(0),
-		yPos(0)
+		xy()
 	{};
 	Cell(int x, int y);
 
 	/* Functions */
-	int getCellX() { return xPos; }
-	int getCellY() { return yPos; }
-	
+	struct coordinates getCell();
+	//Cell * getOtherCell(Cell * cell);
 };
 
 #endif // CELL_H

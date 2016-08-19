@@ -1,12 +1,18 @@
 #include "cell.h"
 
-/* Currently commented out because causing errors */
-//Cell::Cell()
-//{
-//}
 
 Cell::Cell(int x, int y)
 {
-	xPos = x;
-	yPos = y;
+	xy.xPos = x;
+	xy.yPos = y;
 }
+
+struct coordinates Cell::getCell()
+{
+	return this->xy;
+}
+
+/*Cell * getOtherCell(Cell * cell)
+{
+	if(cell.)
+}*/

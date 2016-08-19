@@ -2,9 +2,5 @@
 
 
 
-mazeGenerator::mazeGenerator()
-{
-}
-
 
 
