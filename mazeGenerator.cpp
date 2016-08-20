@@ -1,6 +1,8 @@
 #include <iostream>
 #include <random>
 #include <functional>
+#include <chrono>
+#include <cstdlib>
 
 #include "mazeGenerator.h"
 
@@ -30,66 +32,82 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 	currentCell->setVisited();
 	remainingCells = totalCells - 1;
 
+	/* Setting up seed */
+	mt19937::result_type seed = time(nullptr);
+
+
 	/* Main body of algorithm */
 	while(remainingCells > 0)
 	{
-		/* Seeding based on time */
-		mt19937::result_type seed = time(0);
-		auto random = bind(uniform_int_distribution<int>(1,4), mt19937(seed));
-		int xPos, yPos, counter;
-		xPos = currentCell->getCell().xPos;
-		yPos = currentCell->getCell().yPos;
+		int xPos, yPos, nextX, nextY, counter;
 
 		/* Get a random, adjacent, unvisited cell */
 		while(nextCell == NULL)
 		{	
+			xPos = currentCell->getCell().xPos;
+			yPos = currentCell->getCell().yPos;
+			/* Seeding based on time */
+			auto random = bind(uniform_int_distribution<int>(1,4), mt19937(seed));
+
 			cout << "in while(nextCell==NULL)" << endl;
 			cout << "random number is: " << random() << endl;
+
 			if(random() == NORTH)
 			{
-				if(cells[xPos][yPos + MOVE_NORTH] == NULL || cells[xPos][yPos + MOVE_NORTH]->isVisited() == true)
+				nextX = xPos;
+				nextY = yPos + MOVE_NORTH;
+				/* Check next cell is within bounds */
+				if(nextY >= 0 && nextY < height)
 				{
+					/* Check next cell is unvisited */
+					if(cells[nextX][nextY]->isVisited() == false)
+					{
+						//successful
+						nextCell = cells[nextX][nextY];
+					}
 
-				}
-				else
-				{
-					nextCell = cells[xPos][yPos + MOVE_NORTH];
 				}
 			}
 
 			else if(random() == EAST)
 			{
-				if(cells[xPos + MOVE_EAST][yPos] == NULL || cells[xPos + MOVE_EAST][yPos]->isVisited() == true)
+				nextX = xPos + MOVE_EAST;
+				nextY = yPos;
+				if(nextX >= 0 && nextX < width)
 				{
-
-				}
-				else
-				{
-					nextCell = cells[xPos + MOVE_EAST][yPos];
+					if(cells[nextX][nextY]->isVisited() == false)
+					{
+						//succesful
+						nextCell = cells[nextX][nextY];
+					}
 				}
 			}
 
 			else if(random() == SOUTH)
 			{
-				if(cells[xPos][yPos + MOVE_SOUTH] == NULL || cells[xPos][yPos + MOVE_SOUTH]->isVisited() == true)
+				nextX = xPos;
+				nextY = yPos + MOVE_SOUTH;
+				if(nextY >= 0 && nextY < height)
 				{
-
-				}
-				else
-				{
-					nextCell = cells[xPos][yPos + MOVE_SOUTH];
+					if(cells[nextX][nextY]->isVisited() == false)
+					{
+						//succesful
+						nextCell = cells[nextX][nextY];
+					}
 				}
 			}
 
 			else if(random() == WEST)
 			{
-				if(cells[xPos + MOVE_WEST][yPos] == NULL || cells[xPos + MOVE_WEST][yPos]->isVisited() == true)
+				nextX = xPos + MOVE_WEST;
+				nextY = yPos;
+				if(nextX >= 0 && nextX < width)
 				{
-
-				}
-				else
-				{
-					nextCell = cells[xPos + MOVE_WEST][yPos];
+					if(cells[nextX][nextY]->isVisited() == false)
+					{
+						//succesful
+						nextCell = cells[nextX][nextY];
+					}
 				}
 			}
 		}
