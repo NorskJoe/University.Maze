@@ -26,7 +26,7 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 	vector< vector<Cell *> > cells = maze.getAllCells();
 
 	/* Assuming position 0,0 is starting point */
-	currentCell = maze.getCell(0,4);
+	currentCell = maze.getCell(0,0);
 	currentCell->setVisited();
 	remainingCells = totalCells - 1;
 
@@ -43,6 +43,8 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 		/* Get a random, adjacent, unvisited cell */
 		while(nextCell == NULL)
 		{	
+			cout << "in while(nextCell==NULL)" << endl;
+			cout << "random number is: " << random() << endl;
 			if(random() == NORTH)
 			{
 				if(cells[xPos][yPos + MOVE_NORTH] == NULL || cells[xPos][yPos + MOVE_NORTH]->isVisited() == true)
@@ -98,7 +100,11 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 
 		counter++;
 		remainingCells--;
+		nextCell->setVisited();
+		currentCell = nextCell;
+		nextCell = NULL;
 
+		cout << "remainingCells: " << remainingCells <<endl;
 	}
 
 	return maze;
