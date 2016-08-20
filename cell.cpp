@@ -12,7 +12,7 @@ struct coordinates Cell::getCell()
 	return this->xy;
 }
 
-/*Cell * getOtherCell(Cell * cell)
+/*Cell * getOtherEdge(Cell * cell)
 {
 	if(cell.)
 }*/

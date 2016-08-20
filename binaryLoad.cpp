@@ -6,7 +6,7 @@ using namespace std;
 
 #include "binaryLoad.h"
 
-Maze loadBinFile (string progName, vector<pathway>& path) 
+Maze loadBinFile (string progName, vector<edge>& edges) 
 {
   	ifstream bin_file(progName.c_str(), ios::binary | ios::in);
     /* Check validity of file, return empty maze if fails */
@@ -42,36 +42,27 @@ Maze loadBinFile (string progName, vector<pathway>& path)
 
     /* Initialise maze */
     Maze maze(width, height, edgeCount);
-    //vector<pathway> path;
+    //vector<edge> edges;
 
     /* Getting the edge information from file */
     int edgeCounter = 0;
     while(bin_file.tellg() != length)
     {
-       // edges.push_back(edge());
-        /* x1 */
-       // bin_file.read((char*)&edges[edgeCounter].x1, sizeof(edges[edgeCounter].x1));
-        /* y1 */
-       // bin_file.read((char*)&edges[edgeCounter].y1, sizeof(edges[edgeCounter].y1));
-        /* x2 */
-       // bin_file.read((char*)&edges[edgeCounter].x2, sizeof(edges[edgeCounter].x2));
-        /* y2 */
-       // bin_file.read((char*)&edges[edgeCounter].y2, sizeof(edges[edgeCounter].y2));
 
         int x1, x2, y1, y2;
         bin_file.read((char*)&x1, sizeof(x1));
         bin_file.read((char*)&y1, sizeof(y1));
         bin_file.read((char*)&x2, sizeof(x2));
         bin_file.read((char*)&y2, sizeof(y2));
-        path.push_back(pathway());
-        path[edgeCounter].cell1 = maze.getCell(x1, y1);
-        path[edgeCounter].cell2 = maze.getCell(x2, y2);
+        edges.push_back(edge());
+        edges[edgeCounter].cell1 = maze.getCell(x1, y1);
+        edges[edgeCounter].cell2 = maze.getCell(x2, y2);
 
         edgeCounter++;
 
     }
   	
-    maze.setPath(path);
+    maze.setEdges(edges);
     //maze.setEdges(edges);
 
   	return maze;

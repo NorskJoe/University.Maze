@@ -20,8 +20,8 @@ bool saveBinFile(string fileName, Maze& maze)
     out.write((char*)&edgeCount, sizeof(edgeCount));
 
     /* Writing edge data to file */
-    vector<pathway> paths = maze.getPaths();
-    for(vector<pathway>::iterator it = paths.begin(); it != paths.end(); ++it)
+    vector<edge> edges = maze.getEdges();
+    for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
     {
         int x1, y1, x2, y2;
 

@@ -11,6 +11,7 @@ class Cell
 {
 private:
 	struct coordinates xy;
+	bool visited = false;
 public:
 	/* Constructors */
 	Cell() :
@@ -20,7 +21,9 @@ public:
 
 	/* Functions */
 	struct coordinates getCell();
-	//Cell * getOtherCell(Cell * cell);
+	//Cell * getOtherEdge(Cell * cell);
+	bool isVisited() { return visited; }
+	void setVisited() { this->visited = true; }
 };
 
 #endif // CELL_H

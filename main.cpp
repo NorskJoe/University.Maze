@@ -8,8 +8,9 @@
 #include <vector>
 
 #include "binaryLoad.h"
+#include "mazeGenerator.h"
 #include "binarySave.h"
-#include "cell.h"
+#include "svgSave.h"
 
 using namespace std;
 
@@ -33,10 +34,8 @@ int main(int argc, char **argv)
 	long seed;
 	int width, height;
 	ifstream infile;
-	//vector<edge> edges;
-	vector<pathway> paths;
+	vector<edge> edges;
 	Maze maze;
-	// output file
 
 	string programName = argv[0];
 
@@ -58,8 +57,8 @@ int main(int argc, char **argv)
 			if (i + 1 != argc)
 			{
 				/* Get and validate file to load. 
-					Generate the outline of maze, i.e width and height */
-				maze = loadBinFile(argv[i+1], paths);
+					Generate the outline of maze */
+				maze = loadBinFile(argv[i+1], edges);
 
 				if(maze.getWidth() == 0 || maze.getHeight() == 0)
 				{
@@ -96,7 +95,8 @@ int main(int argc, char **argv)
 						istringstream iss(argv[i + 3]);
 						if (iss >> height)
 						{
-							/* Valid width and height entered*/
+							/* Valid width and height entered */
+
 						}
 						else
 						{
@@ -111,7 +111,7 @@ int main(int argc, char **argv)
 						if (argv[i + 2] == SAVE_BINARY_FILE || argv[i + 2] 
 							== SAVE_SVG_FILE)
 						{
-							/* Width and height not entered, must be generated */
+							/* Width and height not entered, default to 10 */
 							cout << "Width and height not entered. Defaulting to 10x10... " << endl;
 							width = 10;
 							height = 10;
@@ -124,9 +124,10 @@ int main(int argc, char **argv)
 						}
 					}
 				}
+				/* No seed entered */
 				else
 				{
-					/* No seed found. Checking if next argument is valid */
+					/* Checking if next argument is valid */
 					if (argv[i + 1] != SAVE_BINARY_FILE && argv[i + 1] 
 						!= SAVE_SVG_FILE)
 					{
@@ -138,10 +139,13 @@ int main(int argc, char **argv)
 						/* Seed must be generated */
 						cout << "Generating seed... " << endl;
 						cout << "Width & Height defaulting to 10x10..." << endl;
+						seed = 10;
 						width = 10;
 						height = 10;
 					}
 				}
+				mazeGenerator generator = mazeGenerator(width, height, seed);
+				maze = generator.makeMaze(edges);
 			}
 			else 
 			{
@@ -160,7 +164,8 @@ int main(int argc, char **argv)
 				{
 					/* Valid filename */
 					saveSVG = true;
-					ofstream svgFile(argv[i+1]);
+					SVGsave(argv[i+1], maze);
+
 				}
 				else
 				{
@@ -214,25 +219,16 @@ int main(int argc, char **argv)
 		return programUsage(programName);
 	}
 
-	//DEBUGGING EDGES
-	// for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
-	// {
-	// 	cout << it->x1 << endl;
-	// 	cout << it->x2 << endl;
-	// 	cout << it->y1 << endl;
-	// 	cout << it->y2 << endl;
-	// }
-	//DEBUGGING
 
 	//DEBUGGING PATH
-/*	cout << "STORED: " << endl;
-	for(vector<pathway>::iterator it = paths.begin(); it != paths.end(); ++it)
+	cout << "STORED: " << endl;
+	for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
 	{
 		cout << it->cell1->getCell().xPos << endl;
 		cout << it->cell1->getCell().yPos << endl;
 		cout << it->cell2->getCell().xPos << endl;
 		cout << it->cell2->getCell().yPos << endl;
-	}*/
+	}
 	//DEBUGGING
 
 	// DEBUGGING ARGS

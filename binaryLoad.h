@@ -3,6 +3,6 @@
 
 #include "maze.h"
 
-Maze loadBinFile(std::string, vector<pathway>&);
+Maze loadBinFile(std::string, vector<edge>&);
 
 #endif
