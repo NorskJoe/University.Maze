@@ -3,10 +3,11 @@
 
 #include "maze.h"
 
-#define NORTH 1
-#define SOUTH 2
-#define EAST 3
-#define WEST 4
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+#define NUMBER_OF_DIRECTIONS 4
 #define MOVE_NORTH 1
 #define MOVE_SOUTH -1
 #define MOVE_EAST 1
@@ -21,6 +22,7 @@ public:
 
 	/* Functions */
 	Maze makeMaze(vector<edge>&);
+	void setSeed(int);
 	
 };
 

@@ -61,9 +61,7 @@ Maze loadBinFile (string progName, vector<edge>& edges)
         edgeCounter++;
 
     }
-  	
     maze.setEdges(edges);
-    //maze.setEdges(edges);
 
   	return maze;
 }

@@ -6,6 +6,7 @@
 #include <fstream>
 #include <sstream>
 #include <vector>
+#include <random>
 
 #include "binaryLoad.h"
 #include "mazeGenerator.h"
@@ -31,7 +32,7 @@ int main(int argc, char **argv)
 	bool saveSVG = false;
 	bool saveBinary = false;
 
-	long seed;
+	unsigned long seed;
 	int width, height;
 	ifstream infile;
 	vector<edge> edges;
@@ -138,10 +139,14 @@ int main(int argc, char **argv)
 					{
 						/* Seed must be generated */
 						cout << "Generating seed... " << endl;
+						/* Setting up seed */
+						mt19937 mt(time(nullptr));
+						seed = mt();
+						cout << "Seed for this generation: " << seed << endl;
 						cout << "Width & Height defaulting to 10x10..." << endl;
-						seed = 10;
 						width = 10;
 						height = 10;
+
 					}
 				}
 				mazeGenerator generator = mazeGenerator(width, height, seed);
@@ -221,14 +226,14 @@ int main(int argc, char **argv)
 
 
 	//DEBUGGING PATH
-	cout << "STORED: " << endl;
+/*	cout << "STORED: " << endl;
 	for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
 	{
-		cout << it->cell1->getCell().xPos << endl;
-		cout << it->cell1->getCell().yPos << endl;
-		cout << it->cell2->getCell().xPos << endl;
+		cout << it->cell1->getCell().xPos << ", ";
+		cout << it->cell1->getCell().yPos << "-  ";
+		cout << it->cell2->getCell().xPos << ", ";
 		cout << it->cell2->getCell().yPos << endl;
-	}
+	}*/
 	//DEBUGGING
 
 	// DEBUGGING ARGS
@@ -240,10 +245,7 @@ int main(int argc, char **argv)
 	cout << "edges: " << maze.getEdgeCount() << endl;
 	cout << "saveBinary: " << saveBinary << endl;
 	cout << "saveSVG: " << saveSVG << endl;
-	// DEBUGGING
-
-	/* At this point, all arguments and variables are valid */
-	
+	// DEBUGGING	
 
 	return 0;
 }

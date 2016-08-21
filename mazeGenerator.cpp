@@ -20,110 +20,149 @@ mazeGenerator::mazeGenerator(int w, int h, int s)
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
 Maze mazeGenerator::makeMaze(vector<edge>& edges)
 {
-	int totalCells, remainingCells;
+	int totalCells, remainingCells, edgeCount, xPos, yPos;
 
 	Maze maze(width, height);
 	totalCells = width * height;
 	Cell * currentCell, * nextCell;
 	vector< vector<Cell *> > cells = maze.getAllCells();
 
-	/* Assuming position 0,0 is starting point */
-	currentCell = maze.getCell(0,0);
+	/* Get number generator */
+	mt19937 mt(seed);
+	/* Choose a random vertex to start generation */
+	xPos = mt() % width;
+	yPos = mt() % height;
+	currentCell = maze.getCell(xPos,yPos);
 	currentCell->setVisited();
 	remainingCells = totalCells - 1;
 
-	/* Setting up seed */
-	mt19937::result_type seed = time(nullptr);
-
+	cout << "starting cell is: " << xPos << ", " << yPos << endl;
 
 	/* Main body of algorithm */
 	while(remainingCells > 0)
 	{
-		int xPos, yPos, nextX, nextY, counter;
+		int nextX, nextY, random;
 
-		/* Get a random, adjacent, unvisited cell */
+		/* Get a random adjacent cell */
 		while(nextCell == NULL)
 		{	
 			xPos = currentCell->getCell().xPos;
 			yPos = currentCell->getCell().yPos;
-			/* Seeding based on time */
-			auto random = bind(uniform_int_distribution<int>(1,4), mt19937(seed));
 
-			cout << "in while(nextCell==NULL)" << endl;
-			cout << "random number is: " << random() << endl;
+			random = mt() % NUMBER_OF_DIRECTIONS;
+			cout << "random is: " << random << endl;
 
-			if(random() == NORTH)
+			if(random == NORTH)
 			{
 				nextX = xPos;
 				nextY = yPos + MOVE_NORTH;
 				/* Check next cell is within bounds */
 				if(nextY >= 0 && nextY < height)
 				{
+					nextCell = cells[nextX][nextY];
 					/* Check next cell is unvisited */
-					if(cells[nextX][nextY]->isVisited() == false)
+					if(nextCell->isVisited() == false)
 					{
-						//successful
-						nextCell = cells[nextX][nextY];
+						/* Add currentCell and nextCell to edge structure */
+						edges.push_back(edge());
+						edges[edgeCount].cell1 = currentCell;
+						edges[edgeCount].cell2 = nextCell;
+						nextCell->setVisited();
+						remainingCells--;
+						edgeCount++;
 					}
 
 				}
 			}
 
-			else if(random() == EAST)
+			else if(random == EAST)
 			{
 				nextX = xPos + MOVE_EAST;
 				nextY = yPos;
+				/* Check cell is within bounds */
 				if(nextX >= 0 && nextX < width)
 				{
-					if(cells[nextX][nextY]->isVisited() == false)
+					nextCell = cells[nextX][nextY];
+					/* Check next cell is invisited */
+					if(nextCell->isVisited() == false)
 					{
-						//succesful
-						nextCell = cells[nextX][nextY];
+						/* Add currentCell and nextCell to edge structure */
+						edges.push_back(edge());
+						edges[edgeCount].cell1 = currentCell;
+						edges[edgeCount].cell2 = nextCell;
+						nextCell->setVisited();
+						remainingCells--;
+						edgeCount++;
 					}
 				}
 			}
 
-			else if(random() == SOUTH)
+			else if(random == SOUTH)
 			{
 				nextX = xPos;
 				nextY = yPos + MOVE_SOUTH;
+				/* Check cell is within bounds */
 				if(nextY >= 0 && nextY < height)
 				{
-					if(cells[nextX][nextY]->isVisited() == false)
+					nextCell = cells[nextX][nextY];
+					/* Check next cell is invisited */
+					if(nextCell->isVisited() == false)
 					{
-						//succesful
-						nextCell = cells[nextX][nextY];
+						/* Add currentCell and nextCell to edge structure */
+						edges.push_back(edge());
+						edges[edgeCount].cell1 = currentCell;
+						edges[edgeCount].cell2 = nextCell;
+						nextCell->setVisited();
+						remainingCells--;
+						edgeCount++;
 					}
 				}
 			}
 
-			else if(random() == WEST)
+			else if(random == WEST)
 			{
 				nextX = xPos + MOVE_WEST;
 				nextY = yPos;
+				/* Check cell is within bounds */
 				if(nextX >= 0 && nextX < width)
 				{
-					if(cells[nextX][nextY]->isVisited() == false)
+					nextCell = cells[nextX][nextY];
+					/* Check next cell is invisited */
+					if(nextCell->isVisited() == false)
 					{
-						//succesful
-						nextCell = cells[nextX][nextY];
+						/* Add currentCell and nextCell to edge structure */
+						edges.push_back(edge());
+						edges[edgeCount].cell1 = currentCell;
+						edges[edgeCount].cell2 = nextCell;
+						nextCell->setVisited();
+						remainingCells--;
+						edgeCount++;
 					}
 				}
 			}
 		}
 
-		edges.push_back(edge());
-		edges[counter].cell1 = currentCell;
-		edges[counter].cell2 = nextCell;
-
-		counter++;
-		remainingCells--;
-		nextCell->setVisited();
 		currentCell = nextCell;
 		nextCell = NULL;
-
-		cout << "remainingCells: " << remainingCells <<endl;
 	}
 
+	maze.setEdgeCount(edgeCount);
+	maze.setEdges(edges);
+
+/*	cout << "GENERATED: " << endl;
+	for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
+	{
+		cout << it->cell1->getCell().xPos << ", ";
+		cout << it->cell1->getCell().yPos << "-  ";
+		cout << it->cell2->getCell().xPos << ", ";
+		cout << it->cell2->getCell().yPos << endl;
+	}*/
+
 	return maze;
+}
+
+
+void mazeGenerator::setSeed(int s)
+{
+	this->seed = s;
 }
