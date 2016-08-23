@@ -1,6 +1,3 @@
-/*
-	Main entry point of maze project
-*/
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -20,8 +17,6 @@ const string GENERATE_WITH_SEED = "--g";
 const string SAVE_SVG_FILE = "--sv";
 const string SAVE_BINARY_FILE = "--sb";
 
-const int BUFFER = 1000;
-
 int programUsage(string programName);
 
 int main(int argc, char **argv)
@@ -34,7 +29,6 @@ int main(int argc, char **argv)
 
 	unsigned long seed;
 	int width, height;
-	ifstream infile;
 	vector<edge> edges;
 	Maze maze;
 
@@ -50,7 +44,7 @@ int main(int argc, char **argv)
 			/* First check if another generation option has been entered */
 			if (loadSeed == true)
 			{
-				cout << "Invalid command line arguments." << endl;
+				cout << "Only one maze generation option can be entered." << endl;
 				return programUsage(programName);
 			}
 			loadBinary = true;
@@ -61,9 +55,9 @@ int main(int argc, char **argv)
 					Generate the outline of maze */
 				maze = loadBinFile(argv[i+1], edges);
 
+				/* Maze width and height will be 0 if there was an error in the loadBinFile() function */
 				if(maze.getWidth() == 0 || maze.getHeight() == 0)
 				{
-					cout << "There was an error in the file: " << argv[i+1] << endl;
 					return programUsage(programName);
 				}
 			}
@@ -96,7 +90,15 @@ int main(int argc, char **argv)
 						istringstream iss(argv[i + 3]);
 						if (iss >> height)
 						{
-							/* Valid width and height entered */
+							/* Valid seed, width and height entered */
+							if(height != width)
+							{
+								cout << "The maze must be a square.  i.e. The width and height of the maze must be the same." << endl;
+								return programUsage(programName);
+							}
+							mt19937 mt(seed);
+							seed = mt();
+							cout << "Seed for this generation: " << seed << endl;
 
 						}
 						else
@@ -149,7 +151,8 @@ int main(int argc, char **argv)
 
 					}
 				}
-				mazeGenerator generator = mazeGenerator(width, height, seed);
+				/* All generation options are valid.  Create the maze */
+				MazeGenerator generator = MazeGenerator(width, height, seed);
 				maze = generator.makeMaze(edges);
 			}
 			else 
@@ -182,6 +185,7 @@ int main(int argc, char **argv)
 			else
 			{
 				cout << "ERROR: please specify a filename to save." << endl;
+				return programUsage(programName);
 			}
 		}
 
@@ -195,7 +199,11 @@ int main(int argc, char **argv)
 				{
 					/* Valid filename */
 					saveBinary = true;
-					saveBinFile(fileName, maze);
+					if(saveBinFile(fileName, maze) == false)
+					{
+						cout << "Error saving " << fileName << ". Check the file name is valid." << endl;
+						return programUsage(programName);
+					}
 				}
 				else
 				{
@@ -207,6 +215,7 @@ int main(int argc, char **argv)
 			else
 			{
 				cout << "ERROR: please specify a filename to save." << endl;
+				return programUsage(programName);
 			}
 		}
 	}
@@ -237,14 +246,14 @@ int main(int argc, char **argv)
 	//DEBUGGING
 
 	// DEBUGGING ARGS
-	cout << "arguments are: " << endl;
+/*	cout << "arguments are: " << endl;
 	cout << "loadBinary: " << loadBinary << endl;
 	cout << "loadSeed: " << loadSeed << endl;
 	cout << "width: " << maze.getWidth() << endl;
 	cout << "height: " << maze.getHeight() << endl;
 	cout << "edges: " << maze.getEdgeCount() << endl;
 	cout << "saveBinary: " << saveBinary << endl;
-	cout << "saveSVG: " << saveSVG << endl;
+	cout << "saveSVG: " << saveSVG << endl;*/
 	// DEBUGGING	
 
 	return 0;
@@ -262,7 +271,7 @@ int programUsage(string programName)
 	/* Explanation of arguments */
 	cout << "<--g> flag generates a new maze from seed. <seed> is the optional seed ";
 	cout << "to be used for generation. <width> and <height> are the optional ";
-	cout << "desrired width and height of the maze." << endl << endl;
+	cout << "desrired width and height of the maze.  Note that if these are entered, you must also enter a seed." << endl << endl;
 	cout << "<--lb> flag will load an existing maze from a .maze file. ";
 	cout << "<infile> is the specified .maze file to load a maze from." << endl << endl;
 	cout << "<--sv> flag will tell the program to save the maze in an .svg file. ";

@@ -4,7 +4,7 @@
 #include <string>
 #include "maze.h"
 
-#define CELL_SIZE 250
+#define CELL_SIZE 100
 
 bool SVGsave(std::string, Maze&);
 

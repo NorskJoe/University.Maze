@@ -1,7 +1,7 @@
-FLAGS = -Wall -pedantic -std=c++14
+FLAGS = -Wall -pedantic -std=c++11
 DEBUG = -g -ggdb
 PROG = maze
-OBJ = main.o maze.o mazeGenerator.o edge.o cell.o binaryLoad.o binarySave.o svgSave.o
+OBJ = main.o maze.o mazeGenerator.o cell.o binaryLoad.o binarySave.o svgSave.o
 
 %.o: %.cpp
 	g++ $(FLAGS) $(DEBUG) -c $< -o $@

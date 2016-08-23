@@ -3,6 +3,7 @@
 
 #include "maze.h"
 
+/* Definitions used for random direction choosing, and for traversing the maze grid */
 #define NORTH 0
 #define SOUTH 1
 #define EAST 2
@@ -13,16 +14,17 @@
 #define MOVE_EAST 1
 #define MOVE_WEST -1
 
-class mazeGenerator
+class MazeGenerator
 {
 private:
 	int width, height, seed;
 public:
-	mazeGenerator(int w, int h, int s);
+    /* Constructor/Destructor */
+	MazeGenerator(int w, int h, int s);
+    //~MazeGenerator();
 
 	/* Functions */
 	Maze makeMaze(vector<edge>&);
-	void setSeed(int);
 	
 };
 

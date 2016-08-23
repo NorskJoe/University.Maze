@@ -22,13 +22,14 @@ private:
 	vector<edge> edges;
 	vector< vector<Cell *> > cells;
 public:
-	/* Constructors */
+	/* Constructors/Destructors */
 	Maze() :
 		height(0),
 		width(0),
 		edgeCount(0)
 	{};
 	Maze(int, int, int=0);
+	//~Maze();
 
 	/* Functions */
 	int getHeight() { return height; }
@@ -36,7 +37,7 @@ public:
 	int getEdgeCount() { return edgeCount; }
 	vector<edge> getEdges() { return edges; }
 	Cell * getCell(int x, int y);
-	vector< vector<Cell *> > getAllCells() { return cells; }
+	vector< vector<Cell *> > getMaze() { return cells; }
 	
 	void setEdgeCount(int count);
 	void setWidth(int w);

@@ -1,4 +1,3 @@
-#include <iostream>
 #include <fstream>
 #include <vector>
 
@@ -9,6 +8,11 @@ using namespace std;
 bool saveBinFile(string fileName, Maze& maze)
 {
     ofstream out(fileName.c_str(), ios::binary);
+
+    if(out.is_open() == false)
+    {
+        return false;
+    }
 
     /* Writing file header data */
     int width = maze.getWidth();
@@ -25,10 +29,10 @@ bool saveBinFile(string fileName, Maze& maze)
     {
         int x1, y1, x2, y2;
 
-        x1 = it->cell1->getCell().xPos;
-        y1 = it->cell1->getCell().yPos;
-        x2 = it->cell2->getCell().xPos;
-        y2 = it->cell2->getCell().yPos;
+        x1 = it->cell1->getCoordinates().xPos;
+        y1 = it->cell1->getCoordinates().yPos;
+        x2 = it->cell2->getCoordinates().xPos;
+        y2 = it->cell2->getCoordinates().yPos;
 
         out.write((char*)&x1, sizeof(x1));
         out.write((char*)&y1, sizeof(y1));

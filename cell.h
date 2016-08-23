@@ -13,15 +13,16 @@ private:
 	struct coordinates xy;
 	bool visited = false;
 public:
-	/* Constructors */
+	/* Constructors/Destructors */
 	Cell() :
 		xy()
 	{};
 	Cell(int x, int y);
+	//~Cell();
 
 	/* Functions */
-	struct coordinates getCell();
-	//Cell * getOtherEdge(Cell * cell);
+	// CHANGE TO getCoordinates
+	struct coordinates getCoordinates();
 	bool isVisited() { return visited; }
 	void setVisited() { this->visited = true; }
 };

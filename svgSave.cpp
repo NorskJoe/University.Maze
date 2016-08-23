@@ -1,5 +1,6 @@
 #include <fstream>
 #include <vector>
+#include <iostream>
 
 #include "svgSave.h"
 
@@ -7,7 +8,7 @@ using namespace std;
 
 bool SVGsave(string fileName, Maze& maze)
 {
-	int height, width, edgeCount;
+	int height, width;
 
 	width = maze.getWidth();
 	height = maze.getHeight();
@@ -25,16 +26,31 @@ bool SVGsave(string fileName, Maze& maze)
 	out << "xmlns='http://www.w3.org/2000/svg' >" << endl;
 	out << "<rect width='" << width*CELL_SIZE << "' ";
 	out << "height='" << height*CELL_SIZE << "' ";
-	out << "style='fill:black' />" << endl;
+	out << "style='fill:blue' />" << endl;
 
 	/* Get edges */
 	vector<edge> edges = maze.getEdges();
-	
+	int x1, x2, y1, y2;
+
+	for(int i = 0; i < maze.getEdgeCount(); i++)
+	{
+		Cell * cellOne = edges[i].cell1;
+		Cell * cellTwo = edges[i].cell2;
+		x1 = cellOne->getCoordinates().xPos;
+		y1 = cellOne->getCoordinates().yPos;
+		x2 = cellTwo->getCoordinates().xPos;
+		y2 = cellTwo->getCoordinates().yPos;
+
+		out << "<line stroke='white' ";
+		out << "x1='" << x1*CELL_SIZE+50 << "' ";
+		out << "x2='" << x2*CELL_SIZE+50 << "' ";
+		out << "y1='" << y1*CELL_SIZE+50 << "' ";
+		out << "y2='" << y2*CELL_SIZE+50 << "' ";
+		out << "stroke-width='" << CELL_SIZE/2 << "' />" << endl;
+	}
 
 	/* Footer info */
 	out << "</svg>" << endl;
 	
-
-
-	return false;
+	return true;
 }

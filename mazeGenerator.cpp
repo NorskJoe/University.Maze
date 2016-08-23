@@ -1,15 +1,14 @@
-#include <iostream>
 #include <random>
-#include <functional>
-#include <chrono>
-#include <cstdlib>
+
+//REMOVE LATER
+#include <iostream>
 
 #include "mazeGenerator.h"
 
 using namespace std;
 
 /* Constructor */
-mazeGenerator::mazeGenerator(int w, int h, int s)
+MazeGenerator::MazeGenerator(int w, int h, int s)
 {
 	width = w;
 	height = h;
@@ -18,14 +17,14 @@ mazeGenerator::mazeGenerator(int w, int h, int s)
 
 /* Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
-Maze mazeGenerator::makeMaze(vector<edge>& edges)
+Maze MazeGenerator::makeMaze(vector<edge>& edges)
 {
 	int totalCells, remainingCells, edgeCount, xPos, yPos;
 
 	Maze maze(width, height);
 	totalCells = width * height;
 	Cell * currentCell, * nextCell;
-	vector< vector<Cell *> > cells = maze.getAllCells();
+	vector< vector<Cell *> > cells = maze.getMaze();
 
 	/* Get number generator */
 	mt19937 mt(seed);
@@ -36,8 +35,6 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 	currentCell->setVisited();
 	remainingCells = totalCells - 1;
 
-	cout << "starting cell is: " << xPos << ", " << yPos << endl;
-
 	/* Main body of algorithm */
 	while(remainingCells > 0)
 	{
@@ -46,11 +43,11 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 		/* Get a random adjacent cell */
 		while(nextCell == NULL)
 		{	
-			xPos = currentCell->getCell().xPos;
-			yPos = currentCell->getCell().yPos;
+			xPos = currentCell->getCoordinates().xPos;
+			yPos = currentCell->getCoordinates().yPos;
 
+			/* Get the next random direction 0-3 */
 			random = mt() % NUMBER_OF_DIRECTIONS;
-			cout << "random is: " << random << endl;
 
 			if(random == NORTH)
 			{
@@ -142,6 +139,9 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 			}
 		}
 
+		cout << "remainingCells: " << remainingCells << endl;
+		cout << "edgeCount: " << edgeCount << endl;
+
 		currentCell = nextCell;
 		nextCell = NULL;
 	}
@@ -149,20 +149,10 @@ Maze mazeGenerator::makeMaze(vector<edge>& edges)
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);
 
-/*	cout << "GENERATED: " << endl;
-	for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
-	{
-		cout << it->cell1->getCell().xPos << ", ";
-		cout << it->cell1->getCell().yPos << "-  ";
-		cout << it->cell2->getCell().xPos << ", ";
-		cout << it->cell2->getCell().yPos << endl;
-	}*/
+	//DEBUGGING
+	cout << "maze width: " << maze.getWidth() << endl;
+	cout << "maze height: " << maze.getHeight() << endl;
+	cout << "maze edges: " << maze.getEdgeCount() << endl;
 
 	return maze;
-}
-
-
-void mazeGenerator::setSeed(int s)
-{
-	this->seed = s;
 }

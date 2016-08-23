@@ -7,12 +7,7 @@ Cell::Cell(int x, int y)
 	xy.yPos = y;
 }
 
-struct coordinates Cell::getCell()
+struct coordinates Cell::getCoordinates()
 {
 	return this->xy;
 }
-
-/*Cell * getOtherEdge(Cell * cell)
-{
-	if(cell.)
-}*/
