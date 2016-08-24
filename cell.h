@@ -11,7 +11,7 @@ class Cell
 {
 private:
 	struct coordinates xy;
-	bool visited = false;
+	bool visited;
 public:
 	/* Constructors/Destructors */
 	Cell() :

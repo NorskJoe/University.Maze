@@ -238,10 +238,10 @@ int main(int argc, char **argv)
 /*	cout << "STORED: " << endl;
 	for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
 	{
-		cout << it->cell1->getCell().xPos << ", ";
-		cout << it->cell1->getCell().yPos << "-  ";
-		cout << it->cell2->getCell().xPos << ", ";
-		cout << it->cell2->getCell().yPos << endl;
+		cout << it->cell1->getCoordinates().xPos << ", ";
+		cout << it->cell1->getCoordinates().yPos << " - ";
+		cout << it->cell2->getCoordinates().xPos << ", ";
+		cout << it->cell2->getCoordinates().yPos << endl; 
 	}*/
 	//DEBUGGING
 
@@ -254,7 +254,7 @@ int main(int argc, char **argv)
 	cout << "edges: " << maze.getEdgeCount() << endl;
 	cout << "saveBinary: " << saveBinary << endl;
 	cout << "saveSVG: " << saveSVG << endl;*/
-	// DEBUGGING	
+	// DEBUGGING
 
 	return 0;
 }

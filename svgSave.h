@@ -5,6 +5,7 @@
 #include "maze.h"
 
 #define CELL_SIZE 100
+#define OFFSET 50
 
 bool SVGsave(std::string, Maze&);
 

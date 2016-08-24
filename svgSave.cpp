@@ -21,7 +21,7 @@ bool SVGsave(string fileName, Maze& maze)
 	}
 
 	/* Writing header info */
-	out << "<svg width='" << width*CELL_SIZE << "' ";
+	out << "<svg viewbox='0 0 1 1' width='" << width*CELL_SIZE << "' ";
 	out << "height='" << height*CELL_SIZE << "' ";
 	out << "xmlns='http://www.w3.org/2000/svg' >" << endl;
 	out << "<rect width='" << width*CELL_SIZE << "' ";
@@ -42,10 +42,10 @@ bool SVGsave(string fileName, Maze& maze)
 		y2 = cellTwo->getCoordinates().yPos;
 
 		out << "<line stroke='white' ";
-		out << "x1='" << x1*CELL_SIZE+50 << "' ";
-		out << "x2='" << x2*CELL_SIZE+50 << "' ";
-		out << "y1='" << y1*CELL_SIZE+50 << "' ";
-		out << "y2='" << y2*CELL_SIZE+50 << "' ";
+		out << "x1='" << x1*CELL_SIZE+OFFSET << "' ";
+		out << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
+		out << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
+		out << "y2='" << y2*CELL_SIZE+OFFSET << "' ";
 		out << "stroke-width='" << CELL_SIZE/2 << "' />" << endl;
 	}
 

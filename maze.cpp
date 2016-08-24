@@ -1,5 +1,9 @@
 #include <vector>
 
+
+//REMOVE LATER
+#include <iostream>
+
 #include "maze.h"
 
 

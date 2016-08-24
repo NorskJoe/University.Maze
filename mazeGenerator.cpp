@@ -1,8 +1,5 @@
 #include <random>
 
-//REMOVE LATER
-#include <iostream>
-
 #include "mazeGenerator.h"
 
 using namespace std;
@@ -139,8 +136,6 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 			}
 		}
 
-		cout << "remainingCells: " << remainingCells << endl;
-		cout << "edgeCount: " << edgeCount << endl;
 
 		currentCell = nextCell;
 		nextCell = NULL;
@@ -148,11 +143,6 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);
-
-	//DEBUGGING
-	cout << "maze width: " << maze.getWidth() << endl;
-	cout << "maze height: " << maze.getHeight() << endl;
-	cout << "maze edges: " << maze.getEdgeCount() << endl;
 
 	return maze;
 }

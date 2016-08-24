@@ -5,6 +5,7 @@ Cell::Cell(int x, int y)
 {
 	xy.xPos = x;
 	xy.yPos = y;
+	visited = false;
 }
 
 struct coordinates Cell::getCoordinates()
