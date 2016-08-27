@@ -20,6 +20,7 @@ public:
 	bool saveBinaryFile(std::string, Maze&);
 	bool saveSVGFile(std::string, Maze&);
 	Maze loadBinaryFile(std::string, vector<edge>&);
+	bool checkFileValidity(unsigned, unsigned, unsigned, unsigned);
 
 };
 

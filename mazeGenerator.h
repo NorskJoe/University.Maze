@@ -25,6 +25,7 @@ public:
 
 	/* Functions */
 	Maze makeMaze(vector<edge>&);
+	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
 	
 };
 

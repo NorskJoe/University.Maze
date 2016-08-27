@@ -61,12 +61,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						edges.push_back(edge());
-						edges[edgeCount].cell1 = currentCell;
-						edges[edgeCount].cell2 = nextCell;
-						nextCell->setVisited();
-						remainingCells--;
-						edgeCount++;
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 
 				}
@@ -85,12 +80,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						edges.push_back(edge());
-						edges[edgeCount].cell1 = currentCell;
-						edges[edgeCount].cell2 = nextCell;
-						nextCell->setVisited();
-						remainingCells--;
-						edgeCount++;
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -108,12 +98,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						edges.push_back(edge());
-						edges[edgeCount].cell1 = currentCell;
-						edges[edgeCount].cell2 = nextCell;
-						nextCell->setVisited();
-						remainingCells--;
-						edgeCount++;
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -131,12 +116,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						edges.push_back(edge());
-						edges[edgeCount].cell1 = currentCell;
-						edges[edgeCount].cell2 = nextCell;
-						nextCell->setVisited();
-						remainingCells--;
-						edgeCount++;
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -148,4 +128,15 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 	maze.setEdges(edges);
 
 	return maze;
+}
+
+/* Adds the currentCell and nextCell to the edge structure */
+void MazeGenerator::addNewEdge(vector<edge>& edges, int& edgeCount, int& remainingCells, Cell * currentCell, Cell * nextCell)
+{
+	edges.push_back(edge());
+	edges[edgeCount].cell1 = currentCell;
+	edges[edgeCount].cell2 = nextCell;
+	nextCell->setVisited();
+	remainingCells--;
+	edgeCount++;
 }
