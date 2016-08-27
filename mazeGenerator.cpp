@@ -1,8 +1,5 @@
 #include <random>
 
-//REMOVE LATEr
-#include <iostream>
-
 #include "mazeGenerator.h"
 
 using namespace std;
@@ -40,7 +37,8 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 	{
 		int nextX, nextY, random;
 
-		/* Get a random adjacent cell */
+		/* Get a random adjacent cell.
+			flag used to keep nextCell within the maze bounds */
 		bool flag = false;
 		while(flag == false)
 		{	
@@ -143,12 +141,9 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				}
 			}
 		}
-
-
 		currentCell = nextCell;
 		flag = false;
 	}
-
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);
 

@@ -5,10 +5,8 @@
 #include <vector>
 #include <random>
 
-#include "binaryLoad.h"
 #include "mazeGenerator.h"
-#include "binarySave.h"
-#include "svgSave.h"
+#include "fileHandler.h"
 
 using namespace std;
 
@@ -31,6 +29,7 @@ int main(int argc, char **argv)
 	int width, height;
 	vector<edge> edges;
 	Maze maze;
+	FileHandler file;
 
 	string programName = argv[0];
 
@@ -53,7 +52,7 @@ int main(int argc, char **argv)
 			{
 				/* Get and validate file to load. 
 					Generate the outline of maze */
-				maze = loadBinFile(argv[i+1], edges);
+				maze = file.loadBinaryFile(argv[i+1], edges);
 
 				/* Maze width and height will be 0 if there was an error in the loadBinFile() function */
 				if(maze.getWidth() == 0 || maze.getHeight() == 0)
@@ -172,7 +171,7 @@ int main(int argc, char **argv)
 				{
 					/* Valid filename */
 					saveSVG = true;
-					SVGsave(argv[i+1], maze);
+					file.saveSVGFile(argv[i+1], maze);
 
 				}
 				else
@@ -199,7 +198,7 @@ int main(int argc, char **argv)
 				{
 					/* Valid filename */
 					saveBinary = true;
-					if(saveBinFile(fileName, maze) == false)
+					if(file.saveBinaryFile(fileName, maze) == false)
 					{
 						cout << "Error saving " << fileName << ". Check the file name is valid." << endl;
 						return programUsage(programName);

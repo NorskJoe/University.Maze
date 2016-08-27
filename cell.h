@@ -18,10 +18,8 @@ public:
 		xy()
 	{};
 	Cell(int x, int y);
-	//~Cell();
 
 	/* Functions */
-	// CHANGE TO getCoordinates
 	struct coordinates getCoordinates();
 	bool isVisited() { return visited; }
 	void setVisited() { this->visited = true; }
