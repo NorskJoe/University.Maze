@@ -1,5 +1,8 @@
 #include <random>
 
+//REMOVE LATEr
+#include <iostream>
+
 #include "mazeGenerator.h"
 
 using namespace std;
@@ -16,7 +19,7 @@ MazeGenerator::MazeGenerator(int w, int h, int s)
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
 Maze MazeGenerator::makeMaze(vector<edge>& edges)
 {
-	int totalCells, remainingCells, edgeCount, xPos, yPos;
+	int totalCells, remainingCells, edgeCount=0, xPos, yPos;
 
 	Maze maze(width, height);
 	totalCells = width * height;
@@ -38,7 +41,8 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 		int nextX, nextY, random;
 
 		/* Get a random adjacent cell */
-		while(nextCell == NULL)
+		bool flag = false;
+		while(flag == false)
 		{	
 			xPos = currentCell->getCoordinates().xPos;
 			yPos = currentCell->getCoordinates().yPos;
@@ -53,6 +57,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check next cell is within bounds */
 				if(nextY >= 0 && nextY < height)
 				{
+					flag = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is unvisited */
 					if(nextCell->isVisited() == false)
@@ -76,6 +81,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check cell is within bounds */
 				if(nextX >= 0 && nextX < width)
 				{
+					flag = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is invisited */
 					if(nextCell->isVisited() == false)
@@ -98,6 +104,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check cell is within bounds */
 				if(nextY >= 0 && nextY < height)
 				{
+					flag = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is invisited */
 					if(nextCell->isVisited() == false)
@@ -120,6 +127,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check cell is within bounds */
 				if(nextX >= 0 && nextX < width)
 				{
+					flag = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is invisited */
 					if(nextCell->isVisited() == false)
@@ -138,7 +146,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 
 
 		currentCell = nextCell;
-		nextCell = NULL;
+		flag = false;
 	}
 
 	maze.setEdgeCount(edgeCount);
