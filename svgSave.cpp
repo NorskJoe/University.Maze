@@ -46,7 +46,7 @@ bool SVGsave(string fileName, Maze& maze)
 		out << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
 		out << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
 		out << "y2='" << y2*CELL_SIZE+OFFSET << "' ";
-		out << "stroke-width='" << CELL_SIZE/2 << "' />" << endl;
+		out << "stroke-width='" << STROKE_WIDTH << "' />" << endl;
 	}
 
 	/* Footer info */
