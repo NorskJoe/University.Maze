@@ -14,11 +14,11 @@ MazeGenerator::MazeGenerator(int w, int h, int s)
 
 /* Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
-Maze MazeGenerator::makeMaze(vector<edge>& edges)
+void MazeGenerator::makeMaze(vector<edge>& edges, Maze& maze)
 {
 	int totalCells, remainingCells, edgeCount=0, xPos, yPos;
 
-	Maze maze(width, height);
+	maze = Maze(width, height);
 	totalCells = width * height;
 	Cell * currentCell, * nextCell;
 	vector< vector<Cell *> > cells = maze.getMaze();
@@ -127,7 +127,6 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);
 
-	return maze;
 }
 
 /* Adds the currentCell and nextCell to the edge structure */

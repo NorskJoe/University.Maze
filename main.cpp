@@ -150,7 +150,7 @@ int main(int argc, char **argv)
 				}
 				/* All generation options are valid.  Create the maze */
 				MazeGenerator generator = MazeGenerator(width, height, seed);
-				maze = generator.makeMaze(edges);
+				generator.makeMaze(edges, maze);
 			}
 			else 
 			{

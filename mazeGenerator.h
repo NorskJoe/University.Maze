@@ -23,7 +23,7 @@ public:
 	MazeGenerator(int w, int h, int s);
 
 	/* Functions */
-	Maze makeMaze(vector<edge>&);
+	void makeMaze(vector<edge>&, Maze&);
 	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
 	
 };
