@@ -50,10 +50,7 @@ int main(int argc, char **argv)
 			if (i + 1 != argc)
 			{
 				/* Get and validate file to load */
-				maze = file.loadBinaryFile(argv[i+1], edges);
-
-				/* Maze width and height will be 0 if there was an error loading the binary file */
-				if(maze.getWidth() == 0 || maze.getHeight() == 0)
+				if(!file.loadBinaryFile(argv[i+1], edges, maze))
 				{
 					return programUsage(programName);
 				}

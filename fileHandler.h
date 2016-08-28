@@ -21,7 +21,7 @@ public:
 	/* Functions */
 	bool saveBinaryFile(std::string, Maze&);
 	bool saveSVGFile(std::string, Maze&);
-	Maze loadBinaryFile(std::string, vector<edge>&);
+	bool loadBinaryFile(std::string, vector<edge>&, Maze&);
 	bool checkFileValidity(unsigned w, unsigned h, unsigned edgeCount, unsigned edgesRead);
 
 };
