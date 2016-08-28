@@ -19,7 +19,7 @@ Flags:
 
  - if seed is entered, width and height are optional
 
- - if seed is not entered, you cannot specify width and height.  The maze size will default to 10x10, this also happens if a seed is not entered
+ - if seed is not entered, you cannot specify width and height.  The maze size will default to 10x10, this also happens if a seed is entered but width and height are not
 
  - --lb: tells the program to generate a maze from a binary file.  The binary file must have a .maze file extension.  The filename must follow the --lb flag
 
@@ -35,7 +35,7 @@ Program Usage:
 
  - the order of flags should be <generation option> followed by <saving option>
 
- - binary files must have the file extension .maze
+ - binary files must have the file extension .maze.  svg files must have the file extension .svg.  These must be explicity entered by the user.
 
 
 Seeding:
