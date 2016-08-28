@@ -2,7 +2,6 @@
 
 #include "maze.h"
 
-
 /* Initialise an empty maze of cells */
 Maze::Maze(int h, int w, int count)
 {
@@ -14,16 +13,13 @@ Maze::Maze(int h, int w, int count)
 	{
 		/* Initialise rows based on height */
 		vector<Cell *> currentRow;
-
 		/* Initialise each cell/column in that row */
 		for(int j = 0; j < width; j++)
 		{
 			Cell * newCell = new Cell(i, j);
 			currentRow.push_back(newCell);
 		}
-
 		cells.push_back(currentRow);
-
 	}
 }
 

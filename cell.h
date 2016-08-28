@@ -13,7 +13,7 @@ private:
 	struct coordinates xy;
 	bool visited;
 public:
-	/* Constructors/Destructors */
+	/* Constructors */
 	Cell() :
 		xy()
 	{};

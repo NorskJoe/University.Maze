@@ -58,12 +58,10 @@ bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
 bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 {
 	int height, width;
-
 	width = maze.getWidth();
 	height = maze.getHeight();
 
 	output.open(fileName.c_str());
-
 	if(output.is_open() == false)
 	{
 		return false;
@@ -75,12 +73,11 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 	output << "xmlns='http://www.w3.org/2000/svg' >" << endl;
 	output << "<rect width='" << width*CELL_SIZE << "' ";
 	output << "height='" << height*CELL_SIZE << "' ";
-	output << "style='fill:blue' />" << endl;
+	output << "style='fill:black' />" << endl;
 
-	/* Get edges */
+	/* Get edges and write edge info */
 	vector<edge> edges = maze.getEdges();
 	int x1, x2, y1, y2;
-
 	for(int i = 0; i < maze.getEdgeCount(); i++)
 	{
 		Cell * cellOne = edges[i].cell1;
@@ -100,6 +97,7 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 
 	/* Footer info */
 	output << "</svg>" << endl;
+    output.close();
 	
 	return true;
 }
@@ -107,7 +105,7 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 /* Function to load a binary file with a .maze extension, and generate a maze 	with the information */
 Maze FileHandler::loadBinaryFile (string fileName, vector<edge>& edges) 
 {
-	input.open(fileName.c_str());
+	input.open(fileName.c_str(), ios::binary | ios::in);
 
     /* Check validity of file, return empty maze if fails */
   	if(input.is_open() == false)
@@ -116,13 +114,13 @@ Maze FileHandler::loadBinaryFile (string fileName, vector<edge>& edges)
         return Maze();
   	}
 
-  	// get length of file:
+  	/* get length of file */
     input.seekg (0, input.end);
     int length = input.tellg();
     input.seekg (0, input.beg);
 
     /* Getting maze information from start of file */
-  	unsigned long width = 0, height = 0, edgeCount = 0;
+  	unsigned width = 0, height = 0, edgeCount = 0;
   	input.read((char*)&width, sizeof(width));
   	input.read((char*)&height, sizeof(height));
   	input.read((char*)&edgeCount, sizeof(edgeCount));
@@ -146,6 +144,7 @@ Maze FileHandler::loadBinaryFile (string fileName, vector<edge>& edges)
             cout << "Error reading in " << fileName << ". Some edges are outside the bounds of the maze." << endl;
             return Maze();
         }
+        /* Create an edge  */
         edges.push_back(edge());
         edges[edgeCounter].cell1 = maze.getCell(x1, y1);
         edges[edgeCounter].cell2 = maze.getCell(x2, y2);
@@ -159,7 +158,7 @@ Maze FileHandler::loadBinaryFile (string fileName, vector<edge>& edges)
    	}
 
     maze.setEdges(edges);
-
+    input.close();
   	return maze;
 }
 
@@ -179,7 +178,7 @@ bool FileHandler::checkFileValidity(unsigned width, unsigned height, unsigned ed
 		cout << "The width and height of the maze must be at least 1" << endl;
 		return false;
 	}
-	/* Check the maze is a box */
+	/* Check the maze is a square */
 	else if(width != height)
 	{
 		cout << "The maze must be a square. i.e. the width and height should be the same." << endl;

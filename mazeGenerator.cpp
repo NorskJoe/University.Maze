@@ -38,14 +38,14 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 		int nextX, nextY, random;
 
 		/* Get a random adjacent cell.
-			flag used to keep nextCell within the maze bounds */
-		bool flag = false;
-		while(flag == false)
+			validMove used to keep nextCell within the maze bounds */
+		bool validMove = false;
+		while(validMove == false)
 		{	
 			xPos = currentCell->getCoordinates().xPos;
 			yPos = currentCell->getCoordinates().yPos;
 
-			/* Get the next random direction 0-3 */
+			/* Get the next random direction. 0-3 */
 			random = mt() % NUMBER_OF_DIRECTIONS;
 
 			if(random == NORTH)
@@ -55,7 +55,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check next cell is within bounds */
 				if(nextY >= 0 && nextY < height)
 				{
-					flag = true;
+					validMove = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is unvisited */
 					if(nextCell->isVisited() == false)
@@ -74,7 +74,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check cell is within bounds */
 				if(nextX >= 0 && nextX < width)
 				{
-					flag = true;
+					validMove = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is invisited */
 					if(nextCell->isVisited() == false)
@@ -92,7 +92,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check cell is within bounds */
 				if(nextY >= 0 && nextY < height)
 				{
-					flag = true;
+					validMove = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is invisited */
 					if(nextCell->isVisited() == false)
@@ -110,7 +110,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 				/* Check cell is within bounds */
 				if(nextX >= 0 && nextX < width)
 				{
-					flag = true;
+					validMove = true;
 					nextCell = cells[nextX][nextY];
 					/* Check next cell is invisited */
 					if(nextCell->isVisited() == false)
@@ -122,7 +122,7 @@ Maze MazeGenerator::makeMaze(vector<edge>& edges)
 			}
 		}
 		currentCell = nextCell;
-		flag = false;
+		validMove = false;
 	}
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);

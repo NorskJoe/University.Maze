@@ -19,9 +19,8 @@ class MazeGenerator
 private:
 	int width, height, seed;
 public:
-    /* Constructor/Destructor */
+    /* Constructor */
 	MazeGenerator(int w, int h, int s);
-    //~MazeGenerator();
 
 	/* Functions */
 	Maze makeMaze(vector<edge>&);

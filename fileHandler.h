@@ -3,6 +3,7 @@
 
 #include "maze.h"
 
+/* Definitions used when writing an svg file */
 #define CELL_SIZE 100
 #define OFFSET 50
 #define STROKE_WIDTH 50
@@ -10,6 +11,7 @@
 class FileHandler
 {
 private:
+	/* input and output files */
 	ifstream input;
 	ofstream output;
 public:
@@ -20,7 +22,7 @@ public:
 	bool saveBinaryFile(std::string, Maze&);
 	bool saveSVGFile(std::string, Maze&);
 	Maze loadBinaryFile(std::string, vector<edge>&);
-	bool checkFileValidity(unsigned, unsigned, unsigned, unsigned);
+	bool checkFileValidity(unsigned w, unsigned h, unsigned edgeCount, unsigned edgesRead);
 
 };
 

@@ -24,20 +24,19 @@ int main(int argc, char **argv)
 	bool loadSeed = false;
 	bool saveSVG = false;
 	bool saveBinary = false;
-
+	/* Variables used for initialising and storing information of maze */
 	unsigned long seed;
 	int width, height;
 	vector<edge> edges;
 	Maze maze;
 	FileHandler file;
-
-	string programName = argv[0];
+	const string programName = argv[0];
 
 	/* Run through arguments entered, ignoring program name */
 	for (int i = 1; i < argc; i++)
 	{
 		string currentArgument = argv[i];
-
+		/* Load and initialise maze from a binary file */
 		if (currentArgument == LOAD_BINARY_FILE)
 		{
 			/* First check if another generation option has been entered */
@@ -50,11 +49,10 @@ int main(int argc, char **argv)
 			/* Check another argument exists */
 			if (i + 1 != argc)
 			{
-				/* Get and validate file to load. 
-					Generate the outline of maze */
+				/* Get and validate file to load */
 				maze = file.loadBinaryFile(argv[i+1], edges);
 
-				/* Maze width and height will be 0 if there was an error in the loadBinFile() function */
+				/* Maze width and height will be 0 if there was an error loading the binary file */
 				if(maze.getWidth() == 0 || maze.getHeight() == 0)
 				{
 					return programUsage(programName);
@@ -62,19 +60,21 @@ int main(int argc, char **argv)
 			}
 			else
 			{
+				cout << "No valid filename found." << endl;
 				return programUsage(programName);
 			}
 		}
-
+		/* Generate a new maze */
 		else if (currentArgument == GENERATE_WITH_SEED)
 		{
 			/* First check if another generation option has been entered */
 			if (loadBinary == true)
 			{
-				cout << "Invalid command line arguments." << endl;
+				cout << "Only one maze generation option can be entered." << endl;
 				return programUsage(programName);
 			}
 			loadSeed = true;
+
 			/* Check another argument exists */
 			if (i + 1 != argc)
 			{
@@ -106,21 +106,23 @@ int main(int argc, char **argv)
 							return programUsage(programName);
 						}
 					}
+
+					/* Width value not entered, checking next argument
+					  validity */
 					else
 					{
-						/* Width value not entered, checking next argument
-						  validity */
+
 						if (argv[i + 2] == SAVE_BINARY_FILE || argv[i + 2] 
 							== SAVE_SVG_FILE)
 						{
-							/* Width and height not entered, default to 10 */
+							/* Width and height not entered, default to 10x10 */
 							cout << "Width and height not entered. Defaulting to 10x10... " << endl;
 							width = 10;
 							height = 10;
 						}
+						/* Invalid input after seed and before saving options */
 						else
 						{
-							/* Invalid arguments entered */
 							cout << "Invalid command line arguments." << endl;
 							return programUsage(programName);
 						}
@@ -140,7 +142,6 @@ int main(int argc, char **argv)
 					{
 						/* Seed must be generated */
 						cout << "Generating seed... " << endl;
-						/* Setting up seed */
 						mt19937 mt(time(nullptr));
 						seed = mt();
 						cout << "Seed for this generation: " << seed << endl;
@@ -156,17 +157,18 @@ int main(int argc, char **argv)
 			}
 			else 
 			{
-				cout << "Error in command line arguments." << endl;
+				cout << "Error in command line arguments. Not enough arguments entered. " << endl;
 				programUsage(programName);
 			}
 		}
 
 		else if (currentArgument == SAVE_SVG_FILE)
 		{
-			/* Check validity of filename */
+			/* Check more arguments exist */
 			if(i + 1 != argc)
 			{
 				string fileName = argv[i + 1];
+				/* Check file extension */
 				if (fileName.substr(fileName.find_last_of(".") + 1) == "svg")
 				{
 					/* Valid filename */
@@ -183,17 +185,18 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				cout << "ERROR: please specify a filename to save." << endl;
+				cout << "Error in command line arguments. No filename found for saving svg." << endl;
 				return programUsage(programName);
 			}
 		}
 
 		else if (currentArgument == SAVE_BINARY_FILE)
 		{
-			/* Check validity of filename */
+			/* Check more arguments exist */
 			if(i + 1 != argc)
 			{
 				string fileName = argv[i + 1];
+				/* Check filename extension */
 				if (fileName.substr(fileName.find_last_of(".") + 1) == "maze")
 				{
 					/* Valid filename */
@@ -213,7 +216,7 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				cout << "ERROR: please specify a filename to save." << endl;
+				cout << "Error in command line arguments. No filename found for saving binary file." << endl;
 				return programUsage(programName);
 			}
 		}
@@ -231,29 +234,6 @@ int main(int argc, char **argv)
 		cout << "No valid file saving option found." << endl;
 		return programUsage(programName);
 	}
-
-
-	//DEBUGGING PATH
-/*	cout << "STORED: " << endl;
-	for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
-	{
-		cout << it->cell1->getCoordinates().xPos << ", ";
-		cout << it->cell1->getCoordinates().yPos << " - ";
-		cout << it->cell2->getCoordinates().xPos << ", ";
-		cout << it->cell2->getCoordinates().yPos << endl; 
-	}*/
-	//DEBUGGING
-
-	// DEBUGGING ARGS
-/*	cout << "arguments are: " << endl;
-	cout << "loadBinary: " << loadBinary << endl;
-	cout << "loadSeed: " << loadSeed << endl;
-	cout << "width: " << maze.getWidth() << endl;
-	cout << "height: " << maze.getHeight() << endl;
-	cout << "edges: " << maze.getEdgeCount() << endl;
-	cout << "saveBinary: " << saveBinary << endl;
-	cout << "saveSVG: " << saveSVG << endl;*/
-	// DEBUGGING
 
 	return 0;
 }

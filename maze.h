@@ -1,5 +1,3 @@
-/* Maze class */
-
 #ifndef MAZE_H
 #define MAZE_H
 
@@ -8,7 +6,7 @@
 
 using namespace std;
 
-
+/* edge structure holds the two cells in the edge */
 struct edge
 {
 	Cell * cell1;
@@ -22,14 +20,13 @@ private:
 	vector<edge> edges;
 	vector< vector<Cell *> > cells;
 public:
-	/* Constructors/Destructors */
+	/* Constructors */
 	Maze() :
 		height(0),
 		width(0),
 		edgeCount(0)
 	{};
 	Maze(int, int, int=0);
-	//~Maze();
 
 	/* Functions */
 	int getHeight() { return height; }
