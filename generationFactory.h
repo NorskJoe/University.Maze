@@ -1,5 +1,7 @@
-#ifndef MAZE_GENERATOR_H
-#define MAZE_GENERATOR_H
+#ifndef MAZE_FACTORY_H
+#define MAZE_FACTORY_H
+
+#include <vector>
 
 #include "maze.h"
 
@@ -15,16 +17,17 @@ the maze grid */
 #define MOVE_EAST 1
 #define MOVE_WEST -1
 
-class MazeGenerator
+class GenerationFactory
 {
-private:
+protected:
 	int width, height, seed;
 public:
     /* Constructor */
-	MazeGenerator(int w, int h, int s);
+	GenerationFactory(int w, int h, int s);
 
 	/* Functions */
-	void makeMaze(vector<edge>&, Maze&);
+	/* Factory method */
+	void makeMaze(vector<edge>&, Maze&, int);
 	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
 	
 };

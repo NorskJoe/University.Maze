@@ -6,6 +6,18 @@
 
 using namespace std;
 
+/* Definitions used for random direction choosing, and for traversing 
+the maze grid */
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+#define NUMBER_OF_DIRECTIONS 4
+#define MOVE_NORTH 1
+#define MOVE_SOUTH -1
+#define MOVE_EAST 1
+#define MOVE_WEST -1
+
 /* edge structure holds the two cells in the edge */
 struct edge
 {
@@ -15,8 +27,8 @@ struct edge
 
 class Maze
 {
-private:
-	int height, width, edgeCount;
+protected:
+	int height, width, edgeCount, seed;
 	vector<edge> edges;
 	vector< vector<Cell *> > cells;
 public:
@@ -29,6 +41,9 @@ public:
 	Maze(int, int, int=0);
 
 	/* Functions */
+	void makeMaze(Maze&, int mazeType);
+	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
+
 	int getHeight() { return height; }
 	int getWidth() { return width; }
 	int getEdgeCount() { return edgeCount; }

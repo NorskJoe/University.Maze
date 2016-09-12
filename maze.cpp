@@ -1,6 +1,10 @@
 #include <vector>
+#include <iostream>
 
 #include "maze.h"
+#include "aldousBroderGenerator.h"
+
+using namespace std;
 
 /* Initialise an empty maze of cells */
 Maze::Maze(int h, int w, int count)
@@ -21,6 +25,27 @@ Maze::Maze(int h, int w, int count)
 		}
 		cells.push_back(currentRow);
 	}
+}
+
+void Maze::makeMaze(Maze& maze, int mazeType)
+{
+	if(mazeType == 1)
+	{
+		cout << "entering aldousBroderGenerator" << endl;
+		cout << "height: " << height << endl;
+		maze = AldousBroderGenerator(edges, maze);
+	}
+}
+
+/* Adds the currentCell and nextCell to the edge structure */
+void Maze::addNewEdge(vector<edge>& edges, int& edgeCount, int& remainingCells, Cell * currentCell, Cell * nextCell)
+{
+	edges.push_back(edge());
+	edges[edgeCount].cell1 = currentCell;
+	edges[edgeCount].cell2 = nextCell;
+	nextCell->setVisited();
+	remainingCells--;
+	edgeCount++;
 }
 
 Cell * Maze::getCell(int x, int y)

@@ -149,8 +149,12 @@ int main(int argc, char **argv)
 					}
 				}
 				/* All generation options are valid.  Create the maze */
-				MazeGenerator generator = MazeGenerator(width, height, seed);
-				generator.makeMaze(edges, maze);
+				
+				maze = Maze(width, height, seed);
+				maze.makeMaze(maze, 1);
+
+				/*MazeGenerator generator = MazeGenerator(width, height, seed);
+				generator.makeMaze(edges, maze);*/
 			}
 			else 
 			{
