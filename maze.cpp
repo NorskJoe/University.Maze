@@ -27,13 +27,12 @@ Maze::Maze(int h, int w, int count)
 	}
 }
 
-void Maze::makeMaze(Maze& maze, int mazeType)
+void Maze::makeMaze(vector<edge>& edges, Maze& maze, int mazeType)
 {
-	if(mazeType == 1)
+	if(mazeType == ALDOUS_BRODER)
 	{
-		cout << "entering aldousBroderGenerator" << endl;
-		cout << "height: " << height << endl;
-		maze = AldousBroderGenerator(edges, maze);
+		AldousBroderGenerator generator(maze.getWidth(), maze.getHeight());
+		generator.makeMaze(edges, maze);
 	}
 }
 

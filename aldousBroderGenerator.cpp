@@ -7,10 +7,20 @@ using namespace std;
 
 /* Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
-AldousBroderGenerator::AldousBroderGenerator(vector<edge>& edges, Maze& maze)
+AldousBroderGenerator::AldousBroderGenerator(int w, int h)
 {
 	cout << "in aldousBroderGenerator constructor" << endl;
+	width = w;
+	height = h;
+}
+
+void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
+{
+
 	int totalCells, remainingCells, edgeCount=0, xPos, yPos;
+	int width = maze.getWidth();
+	int height = maze.getHeight();
+	int seed = maze.getSeed();
 
 	totalCells = width * height;
 	Cell * currentCell, * nextCell;
@@ -54,7 +64,7 @@ AldousBroderGenerator::AldousBroderGenerator(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 
 				}
@@ -73,7 +83,7 @@ AldousBroderGenerator::AldousBroderGenerator(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -91,7 +101,7 @@ AldousBroderGenerator::AldousBroderGenerator(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -109,7 +119,7 @@ AldousBroderGenerator::AldousBroderGenerator(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -120,4 +130,3 @@ AldousBroderGenerator::AldousBroderGenerator(vector<edge>& edges, Maze& maze)
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);
 }
-

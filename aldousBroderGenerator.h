@@ -7,9 +7,9 @@ class AldousBroderGenerator: public Maze
 {
 public:
 	/* Constructor */
-	AldousBroderGenerator(vector<edge>&, Maze&);
+	AldousBroderGenerator(int, int);
 
-	Maze makeMaze();
+	void makeMaze(vector<edge>&, Maze&);
 };
 
 #endif

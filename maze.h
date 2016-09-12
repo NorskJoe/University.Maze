@@ -18,6 +18,10 @@ the maze grid */
 #define MOVE_EAST 1
 #define MOVE_WEST -1
 
+/* Definitions for generation and solving methods.  Used to implement a factory pattern */
+#define ALDOUS_BRODER 1
+#define ELLERS 2
+
 /* edge structure holds the two cells in the edge */
 struct edge
 {
@@ -41,12 +45,13 @@ public:
 	Maze(int, int, int=0);
 
 	/* Functions */
-	void makeMaze(Maze&, int mazeType);
+	void makeMaze(vector<edge>& edges, Maze&, int mazeType);
 	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
 
 	int getHeight() { return height; }
 	int getWidth() { return width; }
 	int getEdgeCount() { return edgeCount; }
+	int getSeed() { return seed; }
 	vector<edge> getEdges() { return edges; }
 	Cell * getCell(int x, int y);
 	vector< vector<Cell *> > getMaze() { return cells; }

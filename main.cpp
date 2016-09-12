@@ -5,7 +5,7 @@
 #include <vector>
 #include <random>
 
-#include "mazeGenerator.h"
+#include "maze.h"
 #include "fileHandler.h"
 
 using namespace std;
@@ -14,6 +14,7 @@ const string LOAD_BINARY_FILE = "--lb";
 const string GENERATE_WITH_SEED = "--g";
 const string SAVE_SVG_FILE = "--sv";
 const string SAVE_BINARY_FILE = "--sb";
+
 
 int programUsage(string programName);
 
@@ -26,7 +27,7 @@ int main(int argc, char **argv)
 	bool saveBinary = false;
 	/* Variables used for initialising and storing information of maze */
 	unsigned long seed;
-	int width, height;
+	int width, height, mazeType;
 	vector<edge> edges;
 	Maze maze;
 	FileHandler file;
@@ -149,10 +150,9 @@ int main(int argc, char **argv)
 					}
 				}
 				/* All generation options are valid.  Create the maze */
-				
+				mazeType = ALDOUS_BRODER;
 				maze = Maze(width, height, seed);
-				maze.makeMaze(maze, 1);
-
+				maze.makeMaze(edges, maze, mazeType);
 				/*MazeGenerator generator = MazeGenerator(width, height, seed);
 				generator.makeMaze(edges, maze);*/
 			}
@@ -162,6 +162,7 @@ int main(int argc, char **argv)
 				programUsage(programName);
 			}
 		}
+
 
 		else if (currentArgument == SAVE_SVG_FILE)
 		{
