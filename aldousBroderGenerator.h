@@ -1,7 +1,7 @@
 #ifndef ALDOUS_BRODER_H
 #define ALDOUS_BRODER_H
 
-#include "generationFactory.h"
+#include <vector>
 
 class AldousBroderGenerator: public Maze
 {

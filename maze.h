@@ -21,6 +21,10 @@ the maze grid */
 /* Definitions for generation and solving methods.  Used to implement a factory pattern */
 #define ALDOUS_BRODER 1
 #define ELLERS 2
+#define DFS 3
+#define BFS 4
+#define DIJKSTRA_MANHATTAN 5
+#define DIJKSTRA_EUCLIDEAN 6
 
 /* edge structure holds the two cells in the edge */
 struct edge
@@ -46,6 +50,7 @@ public:
 
 	/* Functions */
 	void makeMaze(vector<edge>& edges, Maze&, int mazeType);
+	void solveMaze(int solveType);
 	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
 
 	int getHeight() { return height; }

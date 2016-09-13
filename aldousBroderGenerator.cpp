@@ -1,19 +1,18 @@
 #include <random>
-#include <iostream>
 
 #include "aldousBroderGenerator.h"
 
 using namespace std;
 
-/* Implemented using the Aldous-Broder algorithm 
-	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
+/* Constructor for making the generator object */
 AldousBroderGenerator::AldousBroderGenerator(int w, int h)
 {
-	cout << "in aldousBroderGenerator constructor" << endl;
 	width = w;
 	height = h;
 }
 
+/* Implemented using the Aldous-Broder algorithm 
+	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
 void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
 {
 
