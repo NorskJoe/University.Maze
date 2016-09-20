@@ -1,4 +1,5 @@
 #include <vector>
+#include <iostream>
 
 #include "mazeGenerator.h"
 #include "aldousBroderGenerator.h"
@@ -17,23 +18,19 @@ MazeGenerator::MazeGenerator()
 }
 
 /* Factory method will return the appropriate generator object for making a maze */
-MazeGenerator MazeGenerator::getGenerator(int mazeType)
+MazeGenerator* MazeGenerator::getGenerator(int mazeType)
 {
 	if(mazeType == ALDOUS_BRODER)
 	{
-		return AldousBroderGenerator();
+		cout << "creating aldousBroderGenerator" << endl;
+		return new AldousBroderGenerator;
 	}
 	else
 	{
-		return EllersGenerator();
+		return new EllersGenerator;
 	}
 }
 
-/* Method signature for derived generator classes */
-void MazeGenerator::makeMaze(Maze& maze, vector<edge>& edges)
-{
-
-}
 
 /* Adds the currentCell and nextCell to the edge structure */
 void MazeGenerator::addNewEdge(vector<edge>& edges, int& edgeCount, int& remainingCells, Cell * currentCell, Cell * nextCell)

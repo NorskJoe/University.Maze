@@ -1,4 +1,5 @@
 #include <random>
+#include <iostream>
 
 #include "ellersGenerator.h"
 
@@ -14,6 +15,6 @@ EllersGenerator::EllersGenerator()
 	based on explanation at: http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm */
 void EllersGenerator::makeMaze(Maze& maze, vector<edge>& edges)
 {
-	
+		cout << "in ellers generator" << endl;
 
 }

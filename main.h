@@ -1,7 +1,8 @@
-/* Definitions for generation and solving methods.  Used to implement a factory pattern */
-#define ALDOUS_BRODER 1
-#define ELLERS 2
-#define DFS 3
-#define BFS 4
-#define DIJKSTRA_MANHATTAN 5
-#define DIJKSTRA_EUCLIDEAN 6
+const string LOAD_BINARY_FILE = "--lb";
+const string GENERATE_WITH_SEED = "--g";
+const string SAVE_SVG_FILE = "--sv";
+const string SAVE_BINARY_FILE = "--sb";
+const string GENERATE_ALDOUS_BRODER = "--ga";
+const string GENERATE_ELLERS = "--ge";
+
+int programUsage(string programName);

@@ -6,19 +6,13 @@
 #include <random>
 
 #include "mazeGenerator.h"
+#include "main.h"
 #include "maze.h"
 #include "fileHandler.h"
 
 using namespace std;
 
-const string LOAD_BINARY_FILE = "--lb";
-const string GENERATE_WITH_SEED = "--g";
-const string SAVE_SVG_FILE = "--sv";
-const string SAVE_BINARY_FILE = "--sb";
-
-
-int programUsage(string programName);
-
+/* MAIN FUNCTION */
 int main(int argc, char **argv)
 {
 	/* Flags used for command line arguments */
@@ -153,8 +147,11 @@ int main(int argc, char **argv)
 				/* All generation options are valid.  Create the maze */
 				mazeType = ALDOUS_BRODER;
 				maze = Maze(width, height, seed);
-				MazeGenerator generator = MazeGenerator::getGenerator(mazeType);
-				generator.makeMaze(maze, edges);
+				/* Dynamically create a generator object based on maze type using a factory method.  Generator object will then generate the maze */
+				MazeGenerator* generator;
+				generator = MazeGenerator::getGenerator(mazeType);
+				cout << "got generator" << endl;
+				generator->makeMaze(maze, edges);
 
 				
 			}
