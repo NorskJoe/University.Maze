@@ -5,6 +5,7 @@
 #include <vector>
 #include <random>
 
+#include "mazeGenerator.h"
 #include "maze.h"
 #include "fileHandler.h"
 
@@ -152,9 +153,10 @@ int main(int argc, char **argv)
 				/* All generation options are valid.  Create the maze */
 				mazeType = ALDOUS_BRODER;
 				maze = Maze(width, height, seed);
-				maze.makeMaze(edges, maze, mazeType);
-				/*MazeGenerator generator = MazeGenerator(width, height, seed);
-				generator.makeMaze(edges, maze);*/
+				MazeGenerator generator = MazeGenerator::getGenerator(mazeType);
+				generator.makeMaze(maze, edges);
+
+				
 			}
 			else 
 			{

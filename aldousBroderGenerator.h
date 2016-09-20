@@ -1,15 +1,15 @@
 #ifndef ALDOUS_BRODER_H
 #define ALDOUS_BRODER_H
 
-#include <vector>
+#include "mazeGenerator.h"
 
-class AldousBroderGenerator: public Maze
+class AldousBroderGenerator: public MazeGenerator
 {
 public:
 	/* Constructor */
-	AldousBroderGenerator(int, int);
+	AldousBroderGenerator();
 
-	void makeMaze(vector<edge>&, Maze&);
+	void makeMaze(Maze&, vector<edge>&);
 };
 
 #endif

@@ -1,15 +1,15 @@
 #ifndef ELLERS_H
 #define ELLERS_H
 
-#include <vector>
+#include "mazeGenerator.h"
 
-class EllersGenerator: public Maze
+class EllersGenerator: public MazeGenerator
 {
 public:
 	/* Constructor */
-	EllersGenerator(int, int);
+	EllersGenerator();
 
-	void makeMaze(vector<edge>&, Maze&);
+	void makeMaze(Maze&, vector<edge>&);
 };
 
 #endif

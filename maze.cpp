@@ -2,12 +2,7 @@
 #include <iostream>
 
 #include "maze.h"
-#include "aldousBroderGenerator.h"
-#include "ellersGenerator.h"
-#include "depthFirstSearchSolver.h"
-#include "breadthFirstSearchSolver.h"
-#include "manhattanDijkstraSolver.h"
-#include "euclideanDijkstraSolver.h"
+
 
 using namespace std;
 
@@ -30,61 +25,6 @@ Maze::Maze(int h, int w, int count)
 		}
 		cells.push_back(currentRow);
 	}
-}
-
-/* Factory method that calls the appropriate generator for making the maze */
-void Maze::makeMaze(vector<edge>& edges, Maze& maze, int mazeType)
-{
-	if(mazeType == ALDOUS_BRODER)
-	{
-		AldousBroderGenerator generator(maze.getWidth(), maze.getHeight());
-		generator.makeMaze(edges, maze);
-	}
-	else if(mazeType == ELLERS)
-	{
-		EllersGenerator generator(maze.getWidth(), maze.getHeight());
-		generator.makeMaze(edges, maze);
-	}
-	else
-	{
-		//error
-	}
-}
-
-/* Factory method that calls the appropriate solver for the maze */
-void Maze::solveMaze(int solveType)
-{
-	if(solveType == DFS)
-	{
-
-	}
-	else if(solveType == BFS)
-	{
-
-	}
-	else if(solveType == DIJKSTRA_MANHATTAN)
-	{
-
-	}
-	else if(solveType == DIJKSTRA_EUCLIDEAN)
-	{
-
-	}
-	else
-	{
-		//error
-	}
-}
-
-/* Adds the currentCell and nextCell to the edge structure */
-void Maze::addNewEdge(vector<edge>& edges, int& edgeCount, int& remainingCells, Cell * currentCell, Cell * nextCell)
-{
-	edges.push_back(edge());
-	edges[edgeCount].cell1 = currentCell;
-	edges[edgeCount].cell2 = nextCell;
-	nextCell->setVisited();
-	remainingCells--;
-	edgeCount++;
 }
 
 

@@ -1,7 +1,6 @@
 #ifndef MAZE_H
 #define MAZE_H
 
-#include <vector>
 #include "cell.h"
 
 using namespace std;
@@ -17,14 +16,6 @@ the maze grid */
 #define MOVE_SOUTH -1
 #define MOVE_EAST 1
 #define MOVE_WEST -1
-
-/* Definitions for generation and solving methods.  Used to implement a factory pattern */
-#define ALDOUS_BRODER 1
-#define ELLERS 2
-#define DFS 3
-#define BFS 4
-#define DIJKSTRA_MANHATTAN 5
-#define DIJKSTRA_EUCLIDEAN 6
 
 /* edge structure holds the two cells in the edge */
 struct edge

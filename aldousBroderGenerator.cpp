@@ -5,15 +5,14 @@
 using namespace std;
 
 /* Constructor for making the generator object */
-AldousBroderGenerator::AldousBroderGenerator(int w, int h)
+AldousBroderGenerator::AldousBroderGenerator()
 {
-	width = w;
-	height = h;
+
 }
 
 /* Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
-void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
+void AldousBroderGenerator::makeMaze(Maze& maze, vector<edge>& edges)
 {
 
 	int totalCells, remainingCells, edgeCount=0, xPos, yPos;
@@ -63,7 +62,7 @@ void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 
 				}
@@ -82,7 +81,7 @@ void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -100,7 +99,7 @@ void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
@@ -118,7 +117,7 @@ void AldousBroderGenerator::makeMaze(vector<edge>& edges, Maze& maze)
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						maze.addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
 					}
 				}
 			}
