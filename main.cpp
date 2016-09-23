@@ -6,6 +6,7 @@
 #include <random>
 
 #include "mazeGenerator.h"
+#include "mazeSolver.h"
 #include "main.h"
 #include "maze.h"
 #include "fileHandler.h"
@@ -31,6 +32,7 @@ int main(int argc, char **argv)
 	const string programName = argv[0];
 
 	/* Run through arguments entered, ignoring program name */
+	/* 	CHECKING GENERATION ARGUMENTS */
 	for (int i = 1; i < argc; i++)
 	{
 		string currentArgument = argv[i];
@@ -264,6 +266,9 @@ int main(int argc, char **argv)
 
 				
 			}
+
+
+
 			/* Not enough arguments have been entered */
 			else 
 			{
@@ -272,7 +277,28 @@ int main(int argc, char **argv)
 			}
 		}
 
+		/* CHECKING SOLVING ARGUMENTS */
+		else if(currentArgument == SOLVE_DFS)
+		{
 
+		}
+
+		else if(currentArgument == SOLVE_BFS)
+		{
+
+		}
+
+		else if(currentArgument == SOLVE_MANHATTAN)
+		{
+
+		}
+
+		else if(currentArgument == SOLVE_EUCLIDEAN)
+		{
+			
+		}
+
+		/* CHECKING SAVING OPTIONS */
 		else if (currentArgument == SAVE_SVG_FILE)
 		{
 			/* Check more arguments exist */

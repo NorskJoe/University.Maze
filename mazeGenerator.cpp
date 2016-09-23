@@ -1,5 +1,4 @@
 #include <vector>
-#include <iostream>
 
 #include "mazeGenerator.h"
 #include "aldousBroderGenerator.h"
@@ -22,7 +21,6 @@ MazeGenerator* MazeGenerator::getGenerator(int mazeType)
 {
 	if(mazeType == ALDOUS_BRODER)
 	{
-		cout << "creating aldousBroderGenerator" << endl;
 		return new AldousBroderGenerator;
 	}
 	else
