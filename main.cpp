@@ -17,7 +17,9 @@ int main(int argc, char **argv)
 {
 	/* Flags used for command line arguments */
 	bool loadBinary = false;
-	bool loadSeed = false;
+	//bool loadSeed = false;
+	bool loadAldous = false;
+	bool loadEllers = false;
 	bool saveSVG = false;
 	bool saveBinary = false;
 	/* Variables used for initialising and storing information of maze */
@@ -36,7 +38,7 @@ int main(int argc, char **argv)
 		if (currentArgument == LOAD_BINARY_FILE)
 		{
 			/* First check if another generation option has been entered */
-			if (loadSeed == true)
+			if (loadAldous == true || loadEllers == true)
 			{
 				cout << "Only one maze generation option can be entered." << endl;
 				return programUsage(programName);
@@ -58,15 +60,14 @@ int main(int argc, char **argv)
 			}
 		}
 		/* Generate a new maze */
-		else if (currentArgument == GENERATE_WITH_SEED)
+		else if (currentArgument == GENERATE_ALDOUS_BRODER)
 		{
 			/* First check if another generation option has been entered */
-			if (loadBinary == true)
+			if (loadBinary == true || loadEllers == true)
 			{
 				cout << "Only one maze generation option can be entered." << endl;
 				return programUsage(programName);
 			}
-			loadSeed = true;
 
 			/* Check another argument exists */
 			if (i + 1 != argc)
@@ -145,16 +146,125 @@ int main(int argc, char **argv)
 					}
 				}
 				/* All generation options are valid.  Create the maze */
+				/* Set maze generation variables */
+				cout << "Generating a maze using the Aldous Broder algorithm..." << endl;
+				loadAldous = true;
 				mazeType = ALDOUS_BRODER;
 				maze = Maze(width, height, seed);
 				/* Dynamically create a generator object based on maze type using a factory method.  Generator object will then generate the maze */
 				MazeGenerator* generator;
 				generator = MazeGenerator::getGenerator(mazeType);
-				cout << "got generator" << endl;
 				generator->makeMaze(maze, edges);
 
 				
 			}
+			/* Not enough arguments have been entered */
+			else 
+			{
+				cout << "Error in command line arguments. Not enough arguments entered. " << endl;
+				programUsage(programName);
+			}
+		}
+
+		else if(currentArgument == GENERATE_ELLERS)
+		{
+			/* First check if another generation option has been entered */
+			if (loadBinary == true || loadAldous == true)
+			{
+				cout << "Only one maze generation option can be entered." << endl;
+				return programUsage(programName);
+			}
+
+			/* Check another argument exists */
+			if (i + 1 != argc)
+			{
+				/* Get and validate seed argument */
+				istringstream iss(argv[i + 1]);
+				if (iss >> seed)
+				{
+					/* Valid seed, check if width and height entered */
+					istringstream iss(argv[i + 2]);
+					if (iss >> width)
+					{
+						istringstream iss(argv[i + 3]);
+						if (iss >> height)
+						{
+							/* Valid seed, width and height entered */
+							if(height != width)
+							{
+								cout << "The maze must be a square.  i.e. The width and height of the maze must be the same." << endl;
+								return programUsage(programName);
+							}
+							mt19937 mt(seed);
+							seed = mt();
+							cout << "Seed for this generation: " << seed << endl;
+
+						}
+						else
+						{
+							cout << "Width and/or height values invalid" << endl;
+							return programUsage(programName);
+						}
+					}
+
+					/* Width value not entered, checking next argument
+					  validity */
+					else
+					{
+
+						if (argv[i + 2] == SAVE_BINARY_FILE || argv[i + 2] 
+							== SAVE_SVG_FILE)
+						{
+							/* Width and height not entered, default to 10x10 */
+							cout << "Width and height not entered. Defaulting to 10x10... " << endl;
+							width = 10;
+							height = 10;
+						}
+						/* Invalid input after seed and before saving options */
+						else
+						{
+							cout << "Invalid command line arguments." << endl;
+							return programUsage(programName);
+						}
+					}
+				}
+				/* No seed entered */
+				else
+				{
+					/* Checking if next argument is valid */
+					if (argv[i + 1] != SAVE_BINARY_FILE && argv[i + 1] 
+						!= SAVE_SVG_FILE)
+					{
+						cout << "Invalid command line arguments. No seed entered" << endl;
+						return programUsage(programName);
+					}
+					else
+					{
+						/* Seed must be generated */
+						cout << "Generating seed... " << endl;
+						mt19937 mt(time(nullptr));
+						seed = mt();
+						cout << "Seed for this generation: " << seed << endl;
+						cout << "Width & Height defaulting to 10x10..." << endl;
+						width = 10;
+						height = 10;
+
+					}
+				}
+				/* All generation options are valid.  Create the maze */
+				/* Set maze generation variables */
+				cout << "Generating a maze using Ellers algorithm..." << endl;
+				loadEllers = true;
+				mazeType = ELLERS;
+				maze = Maze(width, height, seed);
+				/* Dynamically create a generator object based on maze type using a factory method.  Generator object will then generate the maze */
+				MazeGenerator* generator;
+				generator = MazeGenerator::getGenerator(mazeType);
+				generator->makeMaze(maze, edges);
+
+				
+			}
+			/* Not enough arguments have been entered */
 			else 
 			{
 				cout << "Error in command line arguments. Not enough arguments entered. " << endl;
@@ -224,7 +334,7 @@ int main(int argc, char **argv)
 	}
 
 	/* Final validity check of arguments */
-	if (loadBinary == false && loadSeed == false)
+	if (loadBinary == false && loadAldous == false && loadEllers == false)
 	{
 		cout << "No valid maze generation option found." << endl;
 		return programUsage(programName);
