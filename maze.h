@@ -24,6 +24,7 @@ struct edge
 {
 	Cell * cell1;
 	Cell * cell2;
+	bool isPathway = false;
 };
 
 class Maze
@@ -42,18 +43,15 @@ public:
 	Maze(int, int, int=0);
 
 	/* Functions */
-	void makeMaze(vector<edge>& edges, Maze&, int mazeType);
-	void solveMaze(int solveType);
-	void addNewEdge(vector<edge>&, int&, int&, Cell*, Cell*);
-
 	int getHeight() { return height; }
 	int getWidth() { return width; }
 	int getEdgeCount() { return edgeCount; }
 	int getSeed() { return seed; }
 	vector<edge> getEdges() { return edges; }
-	Cell * getCell(int x, int y);
 	vector< vector<Cell *> > getMaze() { return cells; }
-	
+	Cell * getOtherCell(Cell * cell);
+	Cell * getCell(int x, int y);
+
 	void setEdgeCount(int count);
 	void setWidth(int w);
 	void setHeight(int h);
