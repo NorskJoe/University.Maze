@@ -5,10 +5,10 @@
 #include <vector>
 #include <random>
 
-#include "mazeGenerator.h"
-#include "mazeSolver.h"
 #include "main.h"
 #include "maze.h"
+#include "mazeGenerator.h"
+#include "mazeSolver.h"
 #include "fileHandler.h"
 
 using namespace std;
@@ -18,7 +18,6 @@ int main(int argc, char **argv)
 {
 	/* Flags used for command line arguments */
 	bool loadBinary = false;
-	//bool loadSeed = false;
 	bool loadAldous = false;
 	bool loadEllers = false;
 	bool saveSVG = false;

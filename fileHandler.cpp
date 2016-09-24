@@ -4,7 +4,6 @@
 
 #include "fileHandler.h"
 
-
 using namespace std;
 
 /* Default constructor */

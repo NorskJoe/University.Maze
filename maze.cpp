@@ -1,5 +1,4 @@
 #include <vector>
-#include <iostream>
 
 #include "maze.h"
 
@@ -26,7 +25,6 @@ Maze::Maze(int h, int w, int count)
 		cells.push_back(currentRow);
 	}
 }
-
 
 /* Getters and setters */
 Cell * Maze::getCell(int x, int y)

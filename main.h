@@ -1,3 +1,5 @@
+using namespace std;
+
 const string LOAD_BINARY_FILE = "--lb";
 const string SAVE_SVG_FILE = "--sv";
 const string SAVE_BINARY_FILE = "--sb";
