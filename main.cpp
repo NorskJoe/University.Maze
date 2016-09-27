@@ -284,7 +284,9 @@ int main(int argc, char **argv)
 
 		else if(currentArgument == SOLVE_BFS)
 		{
-
+			MazeSolver* solver;
+			solver = MazeSolver::getSolver(4);
+			solver->solveMaze(maze, edges);
 		}
 
 		else if(currentArgument == SOLVE_MANHATTAN)

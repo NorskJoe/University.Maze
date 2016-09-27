@@ -23,6 +23,7 @@ public:
 	struct coordinates getCoordinates();
 	bool isVisited() { return visited; }
 	void setVisited() { this->visited = true; }
+	void setNotVisited() { this->visited = false; }
 };
 
 #endif // CELL_H
