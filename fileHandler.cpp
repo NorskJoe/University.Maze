@@ -15,9 +15,10 @@ FileHandler::FileHandler()
 /* Function to save an existing maze's attributes to a .maze binary file */
 bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
 {
+    ofstream output;
     output.open(fileName.c_str());
 
-    if(output.is_open() == false)
+    if(!output.is_open())
     {
         return false;
     }
@@ -48,6 +49,11 @@ bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
         output.write((char*)&y2, sizeof(y2));
     }
 
+    if(!output.good())
+    {
+        return false;
+    }
+
     /* Close and return */ 
     output.close();
     return true;
@@ -60,50 +66,60 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 	width = maze.getWidth();
 	height = maze.getHeight();
 
-	output.open(fileName.c_str());
-	if(output.is_open() == false)
-	{
-		return false;
-	}
+    ofstream output;
+    output.open(fileName.c_str());
+    if(output.is_open() == false)
+    {
+        return false;
+    }
 
-	/* Writing header info */
-	output << "<svg viewbox='0 0 1 1' width='" << width*CELL_SIZE << "' ";
-	output << "height='" << height*CELL_SIZE << "' ";
-	output << "xmlns='http://www.w3.org/2000/svg' >" << endl;
-	output << "<rect width='" << width*CELL_SIZE << "' ";
-	output << "height='" << height*CELL_SIZE << "' ";
-	output << "style='fill:black' />" << endl;
+    /* Writing header info */
+    output << "<svg viewbox='0 0 1 1' width='" << width*CELL_SIZE << "' ";
+    output << "height='" << height*CELL_SIZE << "' ";
+    output << "xmlns='http://www.w3.org/2000/svg' >" << endl;
+    output << "<rect width='" << width*CELL_SIZE << "' ";
+    output << "height='" << height*CELL_SIZE << "' ";
+    output << "style='fill:black' />" << endl;
 
-	/* Get edges and write edge info */
-	vector<edge> edges = maze.getEdges();
-	int x1, x2, y1, y2;
-	for(int i = 0; i < maze.getEdgeCount(); i++)
-	{
-		Cell * cellOne = edges[i].cell1;
-		Cell * cellTwo = edges[i].cell2;
-		x1 = cellOne->getCoordinates().xPos;
-		y1 = cellOne->getCoordinates().yPos;
-		x2 = cellTwo->getCoordinates().xPos;
-		y2 = cellTwo->getCoordinates().yPos;
+    /* Get edges and write edge info */
+    vector<edge> edges = maze.getEdges();
+    int x1, x2, y1, y2;
+    for(int i = 0; i < maze.getEdgeCount(); i++)
+    {
+        Cell * cellOne = edges[i].cell1;
+        Cell * cellTwo = edges[i].cell2;
+        x1 = cellOne->getCoordinates().xPos;
+        y1 = cellOne->getCoordinates().yPos;
+        x2 = cellTwo->getCoordinates().xPos;
+        y2 = cellTwo->getCoordinates().yPos;
 
-		output << "<line stroke='white' ";
-		output << "x1='" << x1*CELL_SIZE+OFFSET << "' ";
-		output << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
-		output << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
-		output << "y2='" << y2*CELL_SIZE+OFFSET << "' ";
-		output << "stroke-width='" << STROKE_WIDTH << "' />" << endl;
-	}
+        output << "<line stroke='white' ";
+        output << "x1='" << x1*CELL_SIZE+OFFSET << "' ";
+        output << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
+        output << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
+        output << "y2='" << y2*CELL_SIZE+OFFSET << "' ";
+        output << "stroke-width='" << STROKE_WIDTH << "' />" << endl;
+    }
 
-	/* Footer info */
-	output << "</svg>" << endl;
+    /* Footer info */
+    output << "</svg>" << endl;
+
+    if(!output.good())
+    {
+        //error
+        return false;
+    }
+
     output.close();
-	
+
+
 	return true;
 }
 
 /* Function to load a binary file with a .maze extension, and generate a maze 	with the information */
 bool FileHandler::loadBinaryFile (string fileName, vector<edge>& edges, Maze& maze) 
 {
+    ifstream input;
 	input.open(fileName.c_str(), ios::binary | ios::in);
 
     /* Check validity of file, return empty maze if fails */
@@ -155,6 +171,10 @@ bool FileHandler::loadBinaryFile (string fileName, vector<edge>& edges, Maze& ma
    	{
    		return false;
    	}
+    if(!input.good())
+    {
+        return false;
+    }
 
     maze.setEdges(edges);
     input.close();

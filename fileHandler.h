@@ -1,8 +1,6 @@
 #ifndef FILE_HANDLER_H
 #define FILE_HANDLER_H
 
-//#include <fstream>
-
 #include "maze.h"
 
 /* Definitions used when writing an svg file */
@@ -12,10 +10,6 @@
 
 class FileHandler
 {
-private:
-	/* input and output files */
-	ifstream input;
-	ofstream output;
 public:
 	/* Constructor */
 	FileHandler();

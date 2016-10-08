@@ -311,7 +311,11 @@ int main(int argc, char **argv)
 				{
 					/* Valid filename */
 					saveSVG = true;
-					file.saveSVGFile(argv[i+1], maze);
+					if(file.saveSVGFile(fileName, maze) == false)
+					{
+						cout << "Error saving " << fileName << ". Check the file name is valid." << endl;
+						return programUsage(programName);
+					}
 
 				}
 				else
