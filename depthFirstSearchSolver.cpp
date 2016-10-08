@@ -1,4 +1,5 @@
-
+//remove later
+#include <iostream>
 
 #include "depthFirstSearchSolver.h"
 
@@ -12,5 +13,5 @@ DepthFirstSearchSolver::DepthFirstSearchSolver()
 
 void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<edge>& edges)
 {
-	
+	cout << "in dfs solver" << endl;
 }
