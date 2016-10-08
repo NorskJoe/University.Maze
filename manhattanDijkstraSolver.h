@@ -10,7 +10,7 @@ public:
 	DijkstraManhattanSolver();
 
 	/* Functions */
-	void solveMaze(Maze&, vector<edge>&);
+	void solveMaze(Maze&, vector<Edge>&);
 };
 
 #endif

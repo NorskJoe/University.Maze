@@ -21,7 +21,7 @@ public:
 
 	/* Functions */
 	static MazeSolver* getSolver(int solverType);
-	virtual void solveMaze(Maze& maze, vector<edge>& edges) = 0;
+	virtual void solveMaze(Maze& maze, vector<Edge>& edges) = 0;
 };
 
 #endif

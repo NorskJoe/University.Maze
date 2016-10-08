@@ -11,7 +11,7 @@ DepthFirstSearchSolver::DepthFirstSearchSolver()
 
 }
 
-void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<edge>& edges)
+void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 {
 	cout << "in dfs solver" << endl;
 }

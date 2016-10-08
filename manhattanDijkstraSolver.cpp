@@ -10,7 +10,7 @@ DijkstraManhattanSolver::DijkstraManhattanSolver()
 
 }
 
-void DijkstraManhattanSolver::solveMaze(Maze& maze, vector<edge>& edges)
+void DijkstraManhattanSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 {
 	
 }

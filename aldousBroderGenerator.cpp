@@ -13,7 +13,7 @@ AldousBroderGenerator::AldousBroderGenerator()
 
 /* Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
-void AldousBroderGenerator::makeMaze(Maze& maze, vector<edge>& edges)
+void AldousBroderGenerator::makeMaze(Maze& maze, vector<Edge>& edges)
 {
 	int totalCells, remainingCells, edgeCount=0, xPos, yPos;
 	int width = maze.getWidth();

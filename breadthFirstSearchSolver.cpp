@@ -14,7 +14,7 @@ BreadthFirstSearchSolver::BreadthFirstSearchSolver()
 
 }
 
-void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<edge>& edges)
+void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 {
 	/* Setting up local variables */
 	Cell * startCell = maze.getCell(0,0);

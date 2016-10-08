@@ -25,7 +25,7 @@ int main(int argc, char **argv)
 	/* Variables used for initialising and storing information of maze */
 	unsigned long seed;
 	int width, height, mazeType;
-	vector<edge> edges;
+	vector<Edge> edges;
 	Maze maze;
 	FileHandler file;
 	const string programName = argv[0];

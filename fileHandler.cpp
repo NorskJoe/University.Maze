@@ -33,15 +33,18 @@ bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
     output.write((char*)&edgeCount, sizeof(edgeCount));
 
     /* Writing edge data to file */
-    vector<edge> edges = maze.getEdges();
-    for(vector<edge>::iterator it = edges.begin(); it != edges.end(); ++it)
+    vector<Edge> edges = maze.getEdges();
+    for(vector<Edge>::iterator it = edges.begin(); it != edges.end(); ++it)
     {
         int x1, y1, x2, y2;
 
-        x1 = it->cell1->getCoordinates().xPos;
-        y1 = it->cell1->getCoordinates().yPos;
-        x2 = it->cell2->getCoordinates().xPos;
-        y2 = it->cell2->getCoordinates().yPos;
+        Cell * cell1 = it->getCellOne();
+        Cell * cell2 = it->getCellTwo();
+
+        x1 = cell1->getCoordinates().xPos;
+        y1 = cell1->getCoordinates().yPos;
+        x2 = cell2->getCoordinates().xPos;
+        y2 = cell2->getCoordinates().yPos;
 
         output.write((char*)&x1, sizeof(x1));
         output.write((char*)&y1, sizeof(y1));
@@ -81,22 +84,24 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
     output << "style='fill:black' />" << endl;
 
     /* Get edges and write edge info */
-    vector<edge> edges = maze.getEdges();
+    vector<Edge> edges = maze.getEdges();
     int x1, x2, y1, y2;
     for(int i = 0; i < maze.getEdgeCount(); i++)
     {
         //cout << "true? (1==true): " << edges[i].isPathway << endl;
-        string strokeColour;
-        if(edges[i].isPathway)
-        {
-            strokeColour = "rgb(255,0,0)";
-        }
-        else
-        {
-            strokeColour = "rgb(255,255,255";
-        }
-        Cell * cellOne = edges[i].cell1;
-        Cell * cellTwo = edges[i].cell2;
+        string strokeColour = "white";
+        // if(edges[i].isPathway)
+        // {
+        //     strokeColour = "rgb(255,0,0)";
+        // }
+        // else
+        // {
+        //     strokeColour = "rgb(255,255,255";
+        // }
+
+
+        Cell * cellOne = edges[i].getCellOne();
+        Cell * cellTwo = edges[i].getCellTwo();
         x1 = cellOne->getCoordinates().xPos;
         y1 = cellOne->getCoordinates().yPos;
         x2 = cellTwo->getCoordinates().xPos;
@@ -126,7 +131,7 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 }
 
 /* Function to load a binary file with a .maze extension, and generate a maze 	with the information */
-bool FileHandler::loadBinaryFile (string fileName, vector<edge>& edges, Maze& maze) 
+bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, Maze& maze) 
 {
     ifstream input;
 	input.open(fileName.c_str(), ios::binary | ios::in);
@@ -168,10 +173,13 @@ bool FileHandler::loadBinaryFile (string fileName, vector<edge>& edges, Maze& ma
             cout << "Error reading in " << fileName << ". Some edges are outside the bounds of the maze." << endl;
             return false;
         }
+
         /* Create an edge  */
-        edges.push_back(edge());
-        edges[edgeCounter].cell1 = maze.getCell(x1, y1);
-        edges[edgeCounter].cell2 = maze.getCell(x2, y2);
+        Cell * cell1 = maze.getCell(x1, y1);
+        Cell * cell2 = maze.getCell(x2, y2);
+        edges.push_back(Edge(cell1, cell2));
+        //edges[edgeCounter].cell1 = maze.getCell(x1, y1);
+        //edges[edgeCounter].cell2 = maze.getCell(x2, y2);
         edgeCounter++;
     }
 

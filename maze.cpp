@@ -47,18 +47,14 @@ void Maze::setHeight(int h)
 	height = h;
 }
 
-void Maze::setEdges(vector<edge>& newEdges)
+void Maze::setEdges(vector<Edge>& newEdges)
 {
 	edges = newEdges;
 }
 
-void Maze::setPathways(vector<edge>& newPathway)
-{
-	pathway = newPathway;
-}
 
 /* When given a cell, see if it has an adjacent cell as part of an edge/pathway */
-Cell * Maze::getOtherCell(Cell * cell)
+/*Cell * Maze::getOtherCell(Cell * cell)
 {
 	unsigned i;
 	for(i = 0; i < edges.size(); i++)
@@ -75,4 +71,4 @@ Cell * Maze::getOtherCell(Cell * cell)
 	
 	return nullptr;
 
-}
+}*/
