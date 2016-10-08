@@ -279,13 +279,15 @@ int main(int argc, char **argv)
 		/* CHECKING SOLVING ARGUMENTS */
 		else if(currentArgument == SOLVE_DFS)
 		{
-
+			MazeSolver* solver;
+			solver = MazeSolver::getSolver(DFS);
+			solver->solveMaze(maze, edges);
 		}
 
 		else if(currentArgument == SOLVE_BFS)
 		{
 			MazeSolver* solver;
-			solver = MazeSolver::getSolver(4);
+			solver = MazeSolver::getSolver(BFS);
 			solver->solveMaze(maze, edges);
 		}
 

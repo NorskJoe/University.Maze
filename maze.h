@@ -27,11 +27,13 @@ struct edge
 	bool isPathway = false;
 };
 
+
 class Maze
 {
 protected:
 	int height, width, edgeCount, seed;
 	vector<edge> edges;
+	vector<edge> pathway;
 	vector< vector<Cell *> > cells;
 public:
 	/* Constructors */
@@ -56,6 +58,7 @@ public:
 	void setWidth(int w);
 	void setHeight(int h);
 	void setEdges(vector<edge>&);
+	void setPathways(vector<edge>&);
 
 };
 

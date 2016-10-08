@@ -1,5 +1,6 @@
 #include <queue>
 #include <unordered_set>
+#include <unordered_map>
 #include <iostream>
 #include <algorithm>
 
@@ -22,7 +23,7 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<edge>& edges)
 	/* Setting up local data structures */
 	queue<Cell *> cellQueue;
 	unordered_set<Cell *> visistedCells;
-	vector< vector<Cell *> > cells = maze.getMaze();
+	
 
 	/* MAIN BODY OF ALGORITHM */
 	/* Start by pushing first cell to queue */
@@ -37,21 +38,36 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<edge>& edges)
 		if(currentCell == endCell)
 		{
 			/* Found a complete path to the end */
-			cout << "compelted pathway" << endl;
-			cout << "size of pathway: " << visistedCells.size() << endl;
+			cout << "The maze has been solved!" << endl;
 			break;
 		}
 
 		else
-		{
+		{ 
 			/* For each of the current cells neighbours, add it to the queue, and mark it visited */
 			for(Cell* neighbour : currentCell->getNeighbours())
 			{
-				cout << "neighbour is: " <<  neighbour->getCoordinates().xPos << "," << neighbour->getCoordinates().yPos << endl;
-				cellQueue.push(neighbour);
-				visistedCells.insert(neighbour);
-			}
+				/* Checks to see if neighbour has already been visited */
+				if(visistedCells.find(neighbour) == visistedCells.end())
+				{
+					cellQueue.push(neighbour);
+					visistedCells.insert(neighbour);
 
+					/* Find the associated edge in the maze, mark it as part of a pathway */
+					/*for(unsigned i = 0; i < edges.size(); i++)
+					{
+						if(edges[i].cell1 == currentCell && edges[i].cell2 == neighbour)
+						{
+							edges[i].isPathway = true;
+						}
+						else if(edges[i].cell1 == neighbour && edges[i].cell2 == currentCell)
+						{
+							edges[i].isPathway = true;
+						}
+					}*/
+				}
+			}
 		}
 	}
+			maze.setEdges(edges);
 }

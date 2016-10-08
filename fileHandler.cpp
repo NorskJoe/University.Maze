@@ -65,7 +65,6 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 	int height, width;
 	width = maze.getWidth();
 	height = maze.getHeight();
-
     ofstream output;
     output.open(fileName.c_str());
     if(output.is_open() == false)
@@ -86,6 +85,16 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
     int x1, x2, y1, y2;
     for(int i = 0; i < maze.getEdgeCount(); i++)
     {
+        //cout << "true? (1==true): " << edges[i].isPathway << endl;
+        string strokeColour;
+        if(edges[i].isPathway)
+        {
+            strokeColour = "rgb(255,0,0)";
+        }
+        else
+        {
+            strokeColour = "rgb(255,255,255";
+        }
         Cell * cellOne = edges[i].cell1;
         Cell * cellTwo = edges[i].cell2;
         x1 = cellOne->getCoordinates().xPos;
@@ -93,7 +102,7 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
         x2 = cellTwo->getCoordinates().xPos;
         y2 = cellTwo->getCoordinates().yPos;
 
-        output << "<line stroke='white' ";
+        output << "<line stroke='" << strokeColour << "' ";
         output << "x1='" << x1*CELL_SIZE+OFFSET << "' ";
         output << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
         output << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
