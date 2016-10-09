@@ -45,13 +45,13 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 		else
 		{ 
 			/* For each of the current cells neighbours, add it to the queue, and mark it visited */
-			for(Cell* neighbour : currentCell->getNeighbours())
+			for(Edge * neighbours : currentCell->getNeighbours())
 			{
 				/* Checks to see if neighbour has already been visited */
-				if(visistedCells.find(neighbour) == visistedCells.end())
-				{
-					cellQueue.push(neighbour);
-					visistedCells.insert(neighbour);
+				//if(visistedCells.find(neighbour) == visistedCells.end())
+				//{
+				//	cellQueue.push(neighbour);
+				//	visistedCells.insert(neighbour);
 
 					/* Find the associated edge in the maze, mark it as part of a pathway */
 					/*for(unsigned i = 0; i < edges.size(); i++)
@@ -65,7 +65,7 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 							edges[i].isPathway = true;
 						}
 					}*/
-				}
+				//}
 			}
 		}
 	}

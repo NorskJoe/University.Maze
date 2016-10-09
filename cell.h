@@ -2,6 +2,7 @@
 #define CELL_H
 
 #include <vector>
+#include "edge.h"
 
 /* Used to hold the position of a cell */
 struct coordinates
@@ -9,12 +10,13 @@ struct coordinates
 	int xPos, yPos;
 };
 
+
 class Cell
 {
 private:
 	struct coordinates xy;
 	bool visited;
-	std::vector<Cell*> neighbours;
+	std::vector<Edge*> neighbours;
 public:
 	/* Constructors */
 	Cell() :
@@ -26,11 +28,11 @@ public:
 	struct coordinates getCoordinates();
 	bool isVisited() { return visited; }
 
-	void setNeighbour(Cell * neighbour) { neighbours.push_back(neighbour); }
+	void setNeighbour(Edge* neighbour) { neighbours.push_back(neighbour); }
 	void setVisited() { this->visited = true; }
 	void setNotVisited() { this->visited = false; }
 
-	std::vector<Cell*> getNeighbours() { return neighbours; }
+	std::vector<Edge*> getNeighbours() { return neighbours; }
 };
 
 #endif // CELL_H

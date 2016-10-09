@@ -34,7 +34,7 @@ class Maze
 protected:
 	int height, width, edgeCount, seed;
 	vector<Edge> edges;
-	vector<Edge> pathway;
+	vector<Edge> pathways;
 	vector< vector<Cell *> > cells;
 public:
 	/* Constructors */
@@ -51,6 +51,7 @@ public:
 	int getEdgeCount() { return edgeCount; }
 	int getSeed() { return seed; }
 	vector<Edge> getEdges() { return edges; }
+	vector<Edge> getPathways() { return pathways; }
 	vector< vector<Cell *> > getMaze() { return cells; }
 	Cell * getCell(int x, int y);
 
@@ -59,6 +60,8 @@ public:
 	void setHeight(int h);
 	void setEdges(vector<Edge>&);
 	void setPathways(vector<Edge>&);
+
+	//void addEdge(Edge);
 
 };
 

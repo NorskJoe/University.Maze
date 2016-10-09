@@ -66,6 +66,7 @@ bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
 bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 {
 	int height, width;
+    string strokeColour;
 	width = maze.getWidth();
 	height = maze.getHeight();
     ofstream output;
@@ -83,21 +84,16 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
     output << "height='" << height*CELL_SIZE << "' ";
     output << "style='fill:black' />" << endl;
 
+    /* Get edges and solved edges */
+    vector<Edge> solvedEdges = maze.getEdges();
+    vector<Edge> unsolvedEdges = maze.getPathways();
+
     /* Get edges and write edge info */
     vector<Edge> edges = maze.getEdges();
     int x1, x2, y1, y2;
-    for(int i = 0; i < maze.getEdgeCount(); i++)
+    for(unsigned i = 0; i < edges.size(); i++)
     {
-        //cout << "true? (1==true): " << edges[i].isPathway << endl;
-        string strokeColour = "white";
-        // if(edges[i].isPathway)
-        // {
-        //     strokeColour = "rgb(255,0,0)";
-        // }
-        // else
-        // {
-        //     strokeColour = "rgb(255,255,255";
-        // }
+        strokeColour = "white";
 
 
         Cell * cellOne = edges[i].getCellOne();
@@ -178,8 +174,8 @@ bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, Maze& ma
         Cell * cell1 = maze.getCell(x1, y1);
         Cell * cell2 = maze.getCell(x2, y2);
         edges.push_back(Edge(cell1, cell2));
-        //edges[edgeCounter].cell1 = maze.getCell(x1, y1);
-        //edges[edgeCounter].cell2 = maze.getCell(x2, y2);
+        cell1->setNeighbour(&edges[edges.size()-1]);
+        cell2->setNeighbour(&edges[edges.size()-1]);
         edgeCounter++;
     }
 

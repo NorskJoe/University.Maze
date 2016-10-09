@@ -52,23 +52,7 @@ void Maze::setEdges(vector<Edge>& newEdges)
 	edges = newEdges;
 }
 
-
-/* When given a cell, see if it has an adjacent cell as part of an edge/pathway */
-/*Cell * Maze::getOtherCell(Cell * cell)
+void Maze::setPathways(vector<Edge>& newPathways)
 {
-	unsigned i;
-	for(i = 0; i < edges.size(); i++)
-	{
-		if(cell == edges[i].cell1)
-		{
-			return edges[i].cell2;
-		}
-		else if (cell == edges[i].cell2)
-		{
-			return edges[i].cell1;
-		}
-	}
-	
-	return nullptr;
-
-}*/
+	pathways = newPathways;
+}

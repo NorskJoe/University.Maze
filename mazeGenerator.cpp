@@ -51,8 +51,8 @@ void MazeGenerator::addNewEdge(vector<Edge>& edges, int& edgeCount, int& remaini
 	edges.push_back(Edge(currentCell, nextCell));
 	//edges[edgeCount].cell1 = currentCell;
 	//edges[edgeCount].cell2 = nextCell;
-	currentCell->setNeighbour(nextCell);
-	nextCell->setNeighbour(currentCell);
+	//currentCell->setNeighbour(&edges[edges.size()-1]);
+	//nextCell->setNeighbour(&edges[edges.size()-1]);
 	nextCell->setVisited();
 	remainingCells--;
 	edgeCount++;
