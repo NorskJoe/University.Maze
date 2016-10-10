@@ -17,3 +17,8 @@ void Cell::setNeighbour(Edge neighbour)
 {
 	this->neighbours.push_back(neighbour);
 }
+
+void Cell::setNeighbourCell(Cell * cell)
+{
+	this->neighbourCells.push_back(cell);
+}

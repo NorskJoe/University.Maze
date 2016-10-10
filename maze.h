@@ -60,6 +60,7 @@ public:
 	void setHeight(int h);
 	void setEdges(vector<Edge>&);
 	void setPathways(vector<Edge>&);
+	void addPathway(Edge pathway) { this->pathways.push_back(pathway); }
 
 	//void addEdge(Edge);
 

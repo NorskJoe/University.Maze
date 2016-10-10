@@ -45,8 +45,8 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 		else
 		{ 
 			/* For each of the current cells neighbours, add it to the queue, and mark it visited */
-			for(Edge neighbours : currentCell->getNeighbours())
-			{
+			//for(Edge neighbours : currentCell->getNeighbours())
+			//{
 				/* Checks to see if neighbour has already been visited */
 				//if(visistedCells.find(neighbour) == visistedCells.end())
 				//{
@@ -66,7 +66,7 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 						}
 					}*/
 				//}
-			}
+			//}
 		}
 	}
 			maze.setEdges(edges);
