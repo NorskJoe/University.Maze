@@ -16,11 +16,11 @@ class Cell
 private:
 	struct coordinates xy;
 	bool visited;
-	std::vector<Edge*> neighbours;
+	std::vector<Edge> neighbours;
 public:
 	/* Constructors */
 	Cell() :
-		xy()
+		xy()	
 	{};
 	Cell(int x, int y);
 	
@@ -28,11 +28,12 @@ public:
 	struct coordinates getCoordinates();
 	bool isVisited() { return visited; }
 
-	void setNeighbour(Edge* neighbour) { neighbours.push_back(neighbour); }
+	void setNeighbour(Edge neighbour);
 	void setVisited() { this->visited = true; }
 	void setNotVisited() { this->visited = false; }
 
-	std::vector<Edge*> getNeighbours() { return neighbours; }
+	std::vector<Edge> getNeighbours() { return neighbours; }
+	int getNeighbourCount() { return this->neighbours.size(); }
 };
 
 #endif // CELL_H

@@ -30,20 +30,25 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 	*/
 	stack<Cell*> cellStack;
 	stack<Edge*> pathwayStack;
-	unordered_set<Edge*> pathwaySet;
+	//unordered_set<Edge*> pathwaySet;
 
-	cout << "startCell: " << startCell->getCoordinates().xPos << "," << startCell->getCoordinates().yPos << endl;
+	//cout << "startCell: " << startCell->getCoordinates().xPos << "," << startCell->getCoordinates().yPos << endl;
 
 	cellStack.push(startCell);
 
 	/* Main body of algorithm */
 	bool foundPathway;
-	while(true)
+	int count = 0;
+	while(count < 5)
 	{
 		currentCell = cellStack.top();
+		
+		//cout <<  "stack size: " << cellStack.size() << endl;
+
 
 		//DEBUGGING
 		cout << "currentCell: " << currentCell->getCoordinates().xPos << "," << currentCell->getCoordinates().yPos << endl;
+		cout << "endCell: " << endCell->getCoordinates().xPos << "," << endCell->getCoordinates().yPos << endl;
 		//
 
 		if(currentCell == nullptr)
@@ -52,27 +57,45 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 			cout << "error" << endl;
 		}
 
-		for(Edge * pathway : currentCell->getNeighbours())
+		//cout << "currentCells neighbour count: " << currentCell->getNeighbourCount() << endl;
+
+		for( Edge pathway : currentCell->getNeighbours() )
 		{
 			foundPathway = false;
-			/* If pathway has not been visisted */
-			if(pathwaySet.find(pathway) == pathwaySet.end())
+
+			cout << "currentCell nghbr count: " << currentCell->getNeighbourCount() << endl;
+
+			cout << "currentCell neighours: " << endl;
+			for( Edge path : currentCell->getNeighbours() )
 			{
-				cout << "check" << endl;
-				pathwaySet.insert(pathway);
-				pathwayStack.push(pathway);
+
+				cout << path.getCellOne()->getCoordinates().xPos << "," << path.getCellOne()->getCoordinates().yPos << " - " << path.getCellTwo()->getCoordinates().xPos << "," << path.getCellTwo()->getCoordinates().yPos << endl;
+			}
+
+			/* If pathway has not been visisted */
+			//if(pathwaySet.find(&pathway) == pathwaySet.end())
+			//{
+			if(pathway.checkVisited() == false)
+			{
+
+				//pathwaySet.insert(&pathway);
+				pathwayStack.push(&pathway);
+				pathway.setVisited();
 
 				/* Add neighouring cells to stack */
-				cellStack.push(pathway->getNeighbouringCell(currentCell));
+				cellStack.push(pathway.getNeighbouringCell(currentCell));
 
 				//DEBUGGING
-				Cell * pushed = pathway->getNeighbouringCell(currentCell);
+				Cell * pushed = pathway.getNeighbouringCell(currentCell);
 				cout << "pushed: " << pushed->getCoordinates().xPos << "," << pushed->getCoordinates().yPos << endl;
 				//
 
-				foundPathway = true;
 
+				cout << "found a pathway" << endl << endl;
+				foundPathway = true;
+				count++;
 				break;
+			//}
 			}
 		}
 
@@ -87,6 +110,7 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 			{
 				pathwayStack.pop();
 				cellStack.pop();
+				cout << "popped" << endl;
 			}
 		}
 

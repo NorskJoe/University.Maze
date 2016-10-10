@@ -174,8 +174,8 @@ bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, Maze& ma
         Cell * cell1 = maze.getCell(x1, y1);
         Cell * cell2 = maze.getCell(x2, y2);
         edges.push_back(Edge(cell1, cell2));
-        cell1->setNeighbour(&edges[edges.size()-1]);
-        cell2->setNeighbour(&edges[edges.size()-1]);
+        cell1->setNeighbour(edges[edges.size()-1]);
+        cell2->setNeighbour(edges[edges.size()-1]);
         edgeCounter++;
     }
 

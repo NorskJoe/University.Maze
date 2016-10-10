@@ -56,3 +56,11 @@ void Maze::setPathways(vector<Edge>& newPathways)
 {
 	pathways = newPathways;
 }
+
+/*void Maze::addEdge(Edge edge)
+{
+	edges.push_back(edge);
+	Cell * cell1 = edges[edges.size()-1].getCellOne();
+	Cell * cell2 = edges[edges.size()-1].getCellTwo();
+	cell1
+}*/

@@ -12,3 +12,8 @@ struct coordinates Cell::getCoordinates()
 {
 	return this->xy;
 }
+
+void Cell::setNeighbour(Edge neighbour)
+{
+	this->neighbours.push_back(neighbour);
+}

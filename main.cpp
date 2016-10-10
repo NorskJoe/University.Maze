@@ -26,6 +26,7 @@ int main(int argc, char **argv)
 	unsigned long seed;
 	int width, height, mazeType;
 	vector<Edge> edges;
+	vector<Edge> pathways;
 	Maze maze;
 	FileHandler file;
 	const string programName = argv[0];
@@ -378,6 +379,16 @@ int main(int argc, char **argv)
 		cout << "No valid file saving option found." << endl;
 		return programUsage(programName);
 	}
+
+	/*  DEBUGGING  */
+	// for(int i = 0; i < maze.getWidth(); i++)
+	// {
+	// 	for(int j = 0; j < maze.getHeight(); j++)
+	// 	{
+	// 		Cell * cell = maze.getCell(i,j);
+	// 		cout << "cell " << cell->getCoordinates().xPos << "," << cell->getCoordinates().yPos << " has " << cell->getNeighbourCount() << " neighbours." << endl;
+	// 	}
+	// }
 
 	return 0;
 }
