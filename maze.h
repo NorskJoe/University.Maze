@@ -64,8 +64,6 @@ public:
 
 	Edge * findEdge(Cell * cell1, Cell * cell2);
 
-	//void addEdge(Edge);
-
 };
 
 #endif

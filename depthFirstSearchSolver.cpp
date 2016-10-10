@@ -16,8 +16,6 @@ DepthFirstSearchSolver::DepthFirstSearchSolver()
 
 void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 {
-	cout << "Solving with DFS" << endl;
-
 	/* Setting up local variables/objects */
 	Cell * startCell = maze.getCell(0,0);
 	Cell * endCell = maze.getCell(maze.getWidth()-1, maze.getHeight()-1);
@@ -31,7 +29,6 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 	*/
 	stack<Cell*> cellStack;
 	stack<Edge*> pathwayStack;
-	//unordered_set<Edge*> pathwaySet;
 
 	/* Set all cells as unvisited */
 	for(int i = 0; i < maze.getWidth(); i++)
@@ -46,76 +43,44 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 	cellStack.push(startCell);
 
 	/* Main body of algorithm */
-	bool foundPathway;
 	bool foundValidNeighbour;
-	int count = 0;
 	while(currentCell != endCell)
 	{
 		currentCell = cellStack.top();
 		currentCell->setVisited();
-		
 
 		if(currentCell == nullptr)
 		{
-			//error
+			/* Maze cannot be solved */
 			cout << "error" << endl;
 		}
 
-
-			int count = 0;
-
+		/* Get all neighbouring cells */
 		for( Cell * neighbour : currentCell->getNeighbourCells() )
 		{
 			foundValidNeighbour = false;
-			int x, y;
 
+			/* If neighbour has not been visited, 'move' to it */
 			if(!neighbour->isVisited())
 			{
-				x = neighbour->getCoordinates().xPos;
-				y = neighbour->getCoordinates().yPos;
 				cellStack.push(neighbour);
-
 				foundValidNeighbour = true;
-				count++;
 				break;
 			}
 
 		}
 		
+		/* If no unvisited neighbour found, backtrace by one cell */
 		if(!foundValidNeighbour)
 		{
-			int x, y;
-			Cell * cell = cellStack.top();
-			x = cell->getCoordinates().xPos;
-			y = cell->getCoordinates().yPos;
 			cellStack.pop();
 		}
 
 	}
 
-
-
 	/* Now add cell pathway to maze object as vector of edges */
 	/* First push last cell onto stack */
 	cellStack.push(endCell);
-
-
-	/* DEBUGGING */
-	// cout << "stack contains: " << endl;
-	// for(int i = cellStack.size(); cellStack.size()!=0; i--)
-	// {
-	// 	Cell * cell = cellStack.top();
-	// 	cellStack.pop();
-	// 	int x, y;
-
-	// 	x = cell->getCoordinates().xPos;
-	// 	y = cell->getCoordinates().yPos;
-
-	// 	cout << y << "," << x << endl;
-
-	// }
-
-
 	/* Go through stack, adding two cells to Edge at a time */
 	for (int i = cellStack.size(); cellStack.size() != 1; i--)
 	{
