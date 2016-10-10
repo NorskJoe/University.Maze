@@ -1,5 +1,8 @@
 #include <vector>
 
+//remove later
+#include <iostream>
+
 #include "maze.h"
 
 
@@ -57,3 +60,20 @@ void Maze::setPathways(vector<Edge>& newPathways)
 	pathways = newPathways;
 }
 
+Edge * Maze::findEdge(Cell * cell1, Cell * cell2)
+{
+	for(unsigned i = 0; i < this->edges.size(); i++)
+	{
+		if(cell1 == this->edges[i].getCellOne() && cell2 == this->edges[i].getCellTwo())
+		{
+			cout << "found the edge" << endl;
+			return &this->edges[i];
+		}
+		else if(cell1 == this->edges[i].getCellTwo() && cell2 == this->edges[i].getCellTwo())
+		{
+			cout << "found the edge" << endl;
+			return &this->edges[i];
+		}
+	}
+	return nullptr;
+}

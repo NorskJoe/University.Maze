@@ -62,6 +62,8 @@ public:
 	void setPathways(vector<Edge>&);
 	void addPathway(Edge pathway) { this->pathways.push_back(pathway); }
 
+	Edge * findEdge(Cell * cell1, Cell * cell2);
+
 	//void addEdge(Edge);
 
 };

@@ -85,12 +85,36 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
     output << "style='fill:black' />" << endl;
 
     /* Get edges and solved edges */
-    vector<Edge> solvedEdges = maze.getEdges();
-    vector<Edge> unsolvedEdges = maze.getPathways();
+    vector<Edge> solvedEdges = maze.getPathways();
+
+    /* Get edges and write edge info */
+    vector<Edge> edges = maze.getEdges();
     int x1, x2, y1, y2;
     for(unsigned i = 0; i < edges.size(); i++)
     {
         strokeColour = "white";
+
+
+        Cell * cellOne = edges[i].getCellOne();
+        Cell * cellTwo = edges[i].getCellTwo();
+        x1 = cellOne->getCoordinates().xPos;
+        y1 = cellOne->getCoordinates().yPos;
+        x2 = cellTwo->getCoordinates().xPos;
+        y2 = cellTwo->getCoordinates().yPos;
+
+        output << "<line stroke='" << strokeColour << "' ";
+        output << "x1='" << x1*CELL_SIZE+OFFSET << "' ";
+        output << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
+        output << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
+        output << "y2='" << y2*CELL_SIZE+OFFSET << "' ";
+        output << "stroke-width='" << STROKE_WIDTH << "' />" << endl;
+    }
+
+    cout << "solved edges size: " << solvedEdges.size() << endl;
+
+    for(unsigned i = 0; i < solvedEdges.size(); i++)
+    {
+        strokeColour = "red";
 
 
         Cell * cellOne = solvedEdges[i].getCellOne();
@@ -99,11 +123,6 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
         y1 = cellOne->getCoordinates().yPos;
         x2 = cellTwo->getCoordinates().xPos;
         y2 = cellTwo->getCoordinates().yPos;
-      
-        // if( (x1 == 2 && y1 == 0) || (x2 == 2 && y2 == 1) )
-        // {
-        //     strokeColour = "blue";
-        // }
 
         output << "<line stroke='" << strokeColour << "' ";
         output << "x1='" << x1*CELL_SIZE+OFFSET << "' ";

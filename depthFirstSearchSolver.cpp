@@ -22,6 +22,7 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 	Cell * startCell = maze.getCell(0,0);
 	Cell * endCell = maze.getCell(maze.getWidth()-1, maze.getHeight()-1);
 	Cell * currentCell = nullptr;
+	vector<Edge> pathways;
 
 	/* Setting up local data structures
 		cellStack: used to keep track of visited cells
@@ -53,13 +54,6 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 		currentCell = cellStack.top();
 		currentCell->setVisited();
 		
-		cout <<  "stack size: " << cellStack.size() << endl;
-
-
-		//DEBUGGING
-		cout << "currentCell: " << currentCell->getCoordinates().yPos << "," << currentCell->getCoordinates().xPos << endl;
-		//cout << "endCell: " << endCell->getCoordinates().xPos << "," << endCell->getCoordinates().yPos << endl;
-		//
 
 		if(currentCell == nullptr)
 		{
@@ -75,25 +69,11 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 			foundValidNeighbour = false;
 			int x, y;
 
-
-			if(count == 0)
-			{
-				cout << "neighbours are: " << endl;
-				for( Cell * ngh : currentCell->getNeighbourCells() )
-				{
-					x = ngh->getCoordinates().xPos;
-					y = ngh->getCoordinates().yPos;
-					cout << y << "," << x << endl;
-				}
-				count++;
-			}
-
 			if(!neighbour->isVisited())
 			{
 				x = neighbour->getCoordinates().xPos;
 				y = neighbour->getCoordinates().yPos;
 				cellStack.push(neighbour);
-				cout << "pushed: " << y << "," << x << endl << endl;;
 
 				foundValidNeighbour = true;
 				count++;
@@ -109,68 +89,7 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 			x = cell->getCoordinates().xPos;
 			y = cell->getCoordinates().yPos;
 			cellStack.pop();
-			cout << "popped: " << y << "," << x << endl << endl;
 		}
-
-
-
-
-		//cout << "currentCells neighbour count: " << currentCell->getNeighbourCount() << endl;
-
-		// for( Edge pathway : currentCell->getNeighbours() )
-		// {
-		// 	foundPathway = false;
-
-		// 	cout << "currentCell nghbr count: " << currentCell->getNeighbourCount() << endl;
-
-		// 	cout << "currentCell neighours: " << endl;
-		// 	for( Edge path : currentCell->getNeighbours() )
-		// 	{
-
-		// 		cout << path.getCellOne()->getCoordinates().xPos << "," << path.getCellOne()->getCoordinates().yPos << " - " << path.getCellTwo()->getCoordinates().xPos << "," << path.getCellTwo()->getCoordinates().yPos << endl;
-		// 	}
-
-		// 	/* If pathway has not been visisted */
-		// 	//if(pathwaySet.find(&pathway) == pathwaySet.end())
-		// 	//{
-		// 	if(pathway.checkVisited() == false)
-		// 	{
-
-		// 		//pathwaySet.insert(&pathway);
-		// 		pathwayStack.push(&pathway);
-		// 		pathway.setVisited();
-
-		// 		/* Add neighouring cells to stack */
-		// 		cellStack.push(pathway.getNeighbouringCell(currentCell));
-
-		// 		//DEBUGGING
-		// 		Cell * pushed = pathway.getNeighbouringCell(currentCell);
-		// 		cout << "pushed: " << pushed->getCoordinates().xPos << "," << pushed->getCoordinates().yPos << endl;
-		// 		//
-
-
-		// 		cout << "found a pathway" << endl << endl;
-		// 		foundPathway = true;
-		// 		count++;
-		// 		break;
-		// 	//}
-		// 	}
-		// }
-
-		// if(!foundPathway)
-		// {
-		// 	/* Reached dead end, no unvisited neighbours */
-		// 	if(currentCell == endCell)
-		// 	{
-		// 		break;
-		// 	}
-		// 	else
-		// 	{
-		// 		pathwayStack.pop();
-		// 		cellStack.pop();
-		// 		cout << "popped" << endl;
-		// 	}
-		// }
 
 	}
 
@@ -180,40 +99,48 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 	/* First push last cell onto stack */
 	cellStack.push(endCell);
 
-	
+
 	/* DEBUGGING */
-	cout << "stack contains: " << endl;
-	for(int i = cellStack.size(); cellStack.size()!=0; i--)
-	{
-		Cell * cell = cellStack.top();
-		cellStack.pop();
-		int x, y;
+	// cout << "stack contains: " << endl;
+	// for(int i = cellStack.size(); cellStack.size()!=0; i--)
+	// {
+	// 	Cell * cell = cellStack.top();
+	// 	cellStack.pop();
+	// 	int x, y;
 
-		x = cell->getCoordinates().xPos;
-		y = cell->getCoordinates().yPos;
+	// 	x = cell->getCoordinates().xPos;
+	// 	y = cell->getCoordinates().yPos;
 
-		cout << y << "," << x << endl;
+	// 	cout << y << "," << x << endl;
 
-	}
+	// }
 
 
 	/* Go through stack, adding two cells to Edge at a time */
-	for (int i = cellStack.size(); cellStack.size() != 0; i--)
+	for (int i = cellStack.size(); cellStack.size() != 1; i--)
 	{
-		int x, y;
 		Cell * cell1 = cellStack.top();
 		cellStack.pop();
 		Cell * cell2 = cellStack.top();
-		cellStack.pop();
+
 
 		maze.addPathway(Edge(cell1,cell2));
+
 	}
 
+	// pathways = maze.getPathways();
 
-	/* Go through pathwayStack and mark as solved */
-	// while(pathwayStack.size() > 0)
+	// cout << "contents of maze pathways: " << endl;
+	// for(int i = 0; i < pathways.size(); i++)
 	// {
-	// 	pathwayStack.top()->setSolvedPathway();
-	// 	pathwayStack.pop();
+	// 	int x, y;
+	// 	x = pathways[i].getCellOne()->getCoordinates().xPos;
+	// 	y = pathways[i].getCellOne()->getCoordinates().yPos;
+	// 	cout << y << "," << x <<  " - ";
+
+	// 	x = pathways[i].getCellTwo()->getCoordinates().xPos;
+	// 	y = pathways[i].getCellTwo()->getCoordinates().yPos;
+
+	// 	cout << y << "," << x << endl;
 	// }
 }
