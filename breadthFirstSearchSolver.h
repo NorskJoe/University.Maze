@@ -10,7 +10,7 @@ public:
 	BreadthFirstSearchSolver();
 
 	/* Functions */
-	void solveMaze(Maze&, vector<Edge>&);
+	void solveMaze(Maze&);
 };
 
 #endif

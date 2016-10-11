@@ -30,6 +30,8 @@ int main(int argc, char **argv)
 	Maze maze;
 	FileHandler file;
 	const string programName = argv[0];
+	string svgFileName;
+	string binaryFileName;
 
 	/* Run through arguments entered, ignoring program name */
 	/* 	CHECKING GENERATION ARGUMENTS */
@@ -282,14 +284,14 @@ int main(int argc, char **argv)
 		{
 			MazeSolver* solver;
 			solver = MazeSolver::getSolver(DFS);
-			solver->solveMaze(maze, edges);
+			solver->solveMaze(maze);
 		}
 
 		else if(currentArgument == SOLVE_BFS)
 		{
 			MazeSolver* solver;
 			solver = MazeSolver::getSolver(BFS);
-			solver->solveMaze(maze, edges);
+			solver->solveMaze(maze);
 		}
 
 		else if(currentArgument == SOLVE_MANHATTAN)
@@ -308,18 +310,12 @@ int main(int argc, char **argv)
 			/* Check more arguments exist */
 			if(i + 1 != argc)
 			{
-				string fileName = argv[i + 1];
+				svgFileName = argv[i + 1];
 				/* Check file extension */
-				if (fileName.substr(fileName.find_last_of(".") + 1) == "svg")
+				if (svgFileName.substr(svgFileName.find_last_of(".") + 1) == "svg")
 				{
 					/* Valid filename */
 					saveSVG = true;
-					if(file.saveSVGFile(fileName, maze) == false)
-					{
-						cout << "Error saving " << fileName << ". Check the file name is valid." << endl;
-						return programUsage(programName);
-					}
-
 				}
 				else
 				{
@@ -340,17 +336,12 @@ int main(int argc, char **argv)
 			/* Check more arguments exist */
 			if(i + 1 != argc)
 			{
-				string fileName = argv[i + 1];
+				binaryFileName = argv[i + 1];
 				/* Check filename extension */
-				if (fileName.substr(fileName.find_last_of(".") + 1) == "maze")
+				if (binaryFileName.substr(binaryFileName.find_last_of(".") + 1) == "maze")
 				{
 					/* Valid filename */
 					saveBinary = true;
-					if(file.saveBinaryFile(fileName, maze) == false)
-					{
-						cout << "Error saving " << fileName << ". Check the file name is valid." << endl;
-						return programUsage(programName);
-					}
 				}
 				else
 				{
@@ -380,15 +371,27 @@ int main(int argc, char **argv)
 		return programUsage(programName);
 	}
 
-	/*  DEBUGGING  */
-	// for(int i = 0; i < maze.getWidth(); i++)
-	// {
-	// 	for(int j = 0; j < maze.getHeight(); j++)
-	// 	{
-	// 		Cell * cell = maze.getCell(i,j);
-	// 		cout << "cell " << cell->getCoordinates().xPos << "," << cell->getCoordinates().yPos << " has " << cell->getNeighbourCount() << " neighbours." << endl;
-	// 	}
-	// }
+	/* Saving files are performed last two ensure all edges and 
+	pathways are correct */
+	/* Saving SVG File */
+	if(saveSVG == true)
+	{
+		cout << "saving svg" << endl;
+		if(file.saveSVGFile(svgFileName, maze) == false)
+		{
+			cout << "Error saving " << svgFileName << ". Check the file name is valid." << endl;
+			return programUsage(programName);
+		}
+	}
+	/* Saving Binary File */
+	if(saveBinary == true)
+	{
+		if(file.saveBinaryFile(binaryFileName, maze) == false)
+		{
+			cout << "Error saving " << binaryFileName << ". Check the file name is valid." << endl;
+			return programUsage(programName);
+		}
+	}
 
 	return 0;
 }

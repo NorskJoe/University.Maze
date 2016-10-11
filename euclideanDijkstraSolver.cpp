@@ -10,7 +10,7 @@ DijkstraEuclideanSolver::DijkstraEuclideanSolver()
 
 }
 
-void DijkstraEuclideanSolver::solveMaze(Maze& maze, vector<Edge>& edges)
+void DijkstraEuclideanSolver::solveMaze(Maze& maze)
 {
 	
 }

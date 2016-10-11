@@ -14,7 +14,7 @@ BreadthFirstSearchSolver::BreadthFirstSearchSolver()
 
 }
 
-void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
+void BreadthFirstSearchSolver::solveMaze(Maze& maze)
 {
 	/* Setting up local variables */
 	Cell * startCell = maze.getCell(0,0);
@@ -22,18 +22,36 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 	Cell * currentCell = nullptr;
 	/* Setting up local data structures */
 	queue<Cell *> cellQueue;
-	unordered_set<Cell *> visistedCells;
+	//unordered_set<Cell *> visistedCells;
+
+	/* Set all cells in the maze as invisited */
+	for(int i = 0; i < maze.getWidth(); i ++)
+	{
+		for(int j = 0; j < maze.getHeight(); j++)
+		{
+			Cell * cell = maze.getCell(i,j);
+			cell->setNotVisited();
+		}
+	}
 	
+
+	int x, y;
 
 	/* MAIN BODY OF ALGORITHM */
 	/* Start by pushing first cell to queue */
 	cellQueue.push(startCell);
+	startCell->setVisited();
 
-	while(cellQueue.empty() == false)
+	int count = 0;
+
+	while(count < 10)
 	{
 		/* Get the next cell in the queue */
 		currentCell = cellQueue.front();
 		cellQueue.pop();
+		x = currentCell->getCoordinates().xPos;
+		y = currentCell->getCoordinates().yPos;
+		cout << "current cell is: " << y << "," << x << endl;
 
 		if(currentCell == endCell)
 		{
@@ -44,30 +62,33 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
 
 		else
 		{ 
-			/* For each of the current cells neighbours, add it to the queue, and mark it visited */
-			//for(Edge neighbours : currentCell->getNeighbours())
-			//{
-				/* Checks to see if neighbour has already been visited */
-				//if(visistedCells.find(neighbour) == visistedCells.end())
-				//{
-				//	cellQueue.push(neighbour);
-				//	visistedCells.insert(neighbour);
+			/* For each of the current cells neighbours, add it to the queue, 
+			and mark it visited */
+			for(Cell * neighbour : currentCell->getNeighbourCells())
+			{
+				if(!neighbour->isVisited())
+				{
+					cellQueue.push(neighbour);
+					neighbour->setVisited();
+					x = neighbour->getCoordinates().xPos;
+					y = neighbour->getCoordinates().yPos;
+					cout << "pushed: " << y << "," << x << endl;
+				}
+			}
 
-					/* Find the associated edge in the maze, mark it as part of a pathway */
-					/*for(unsigned i = 0; i < edges.size(); i++)
-					{
-						if(edges[i].cell1 == currentCell && edges[i].cell2 == neighbour)
-						{
-							edges[i].isPathway = true;
-						}
-						else if(edges[i].cell1 == neighbour && edges[i].cell2 == currentCell)
-						{
-							edges[i].isPathway = true;
-						}
-					}*/
-				//}
-			//}
+			count++;
+
 		}
 	}
-			maze.setEdges(edges);
+
+	cout << "cellQueue contains: " << endl;
+	for(unsigned i = 0; i < cellQueue.size(); i++)
+	{
+		Cell * cell = cellQueue.front();
+		cellQueue.pop();
+		x = cell->getCoordinates().xPos;
+		y = cell->getCoordinates().yPos;
+		cout << y << "," << x << endl;
+	}
+		
 }

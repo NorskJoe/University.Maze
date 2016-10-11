@@ -14,7 +14,7 @@ DepthFirstSearchSolver::DepthFirstSearchSolver()
 
 }
 
-void DepthFirstSearchSolver::solveMaze(Maze& maze, vector<Edge>& edges)
+void DepthFirstSearchSolver::solveMaze(Maze& maze)
 {
 	/* Setting up local variables/objects */
 	Cell * startCell = maze.getCell(0,0);
