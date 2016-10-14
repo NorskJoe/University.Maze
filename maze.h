@@ -20,19 +20,12 @@ the maze grid */
 #define MOVE_EAST 1
 #define MOVE_WEST -1
 
-/* edge structure holds the two cells in the edge */
-/*struct edge
-{
-	Cell * cell1;
-	Cell * cell2;
-	bool isPathway = false;
-};*/
-
 
 class Maze
 {
 protected:
-	int height, width, edgeCount, seed;
+	int height, width, edgeCount;
+	unsigned long seed;
 	vector<Edge> edges;
 	vector<Edge> pathways;
 	vector< vector<Cell *> > cells;
@@ -56,6 +49,7 @@ public:
 	Cell * getCell(int x, int y);
 
 	void setEdgeCount(int count);
+	void setSeed(unsigned long s) {this->seed = s; }
 	void setWidth(int w);
 	void setHeight(int h);
 	void setEdges(vector<Edge>&);

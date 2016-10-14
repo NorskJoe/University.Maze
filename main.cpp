@@ -25,10 +25,14 @@ int main(int argc, char **argv)
 	/* Variables used for initialising and storing information of maze */
 	unsigned long seed;
 	int width, height, mazeType;
+	mt19937 generator;
+
+	Maze maze;
 	vector<Edge> edges;
 	vector<Edge> pathways;
-	Maze maze;
+
 	FileHandler file;
+
 	const string programName = argv[0];
 	string svgFileName;
 	string binaryFileName;
@@ -77,54 +81,19 @@ int main(int argc, char **argv)
 			if (i + 1 != argc)
 			{
 				/* Get and validate seed argument */
-				istringstream iss(argv[i + 1]);
-				if (iss >> seed)
+				//istringstream iss(argv[i + 1]);
+				if (argv[i+1] != SAVE_BINARY_FILE 
+					&& argv[i+1] != SAVE_SVG_FILE
+					&& argv[i+1] != SOLVE_EUCLIDEAN
+					&& argv[i+1] != SOLVE_DFS
+					&& argv[i+1] != SOLVE_BFS
+					&& argv[i+1] != SOLVE_MANHATTAN)
 				{
-					/* Valid seed, check if width and height entered */
-					istringstream iss(argv[i + 2]);
-					if (iss >> width)
+					if(!getSeedArguments(maze, generator, argv[i+1], argv[i+2], argv[i+3]))
 					{
-						istringstream iss(argv[i + 3]);
-						if (iss >> height)
-						{
-							/* Valid seed, width and height entered */
-							if(height != width)
-							{
-								cout << "The maze must be a square.  i.e. The width and height of the maze must be the same." << endl;
-								return programUsage(programName);
-							}
-							mt19937 mt(seed);
-							seed = mt();
-							cout << "Seed for this generation: " << seed << endl;
-
-						}
-						else
-						{
-							cout << "Width and/or height values invalid" << endl;
-							return programUsage(programName);
-						}
+						return programUsage(programName);
 					}
-
-					/* Width value not entered, checking next argument
-					  validity */
-					else
-					{
-
-						if (argv[i + 2] == SAVE_BINARY_FILE || argv[i + 2] 
-							== SAVE_SVG_FILE)
-						{
-							/* Width and height not entered, default to 10x10 */
-							cout << "Width and height not entered. Defaulting to 10x10... " << endl;
-							width = 10;
-							height = 10;
-						}
-						/* Invalid input after seed and before saving options */
-						else
-						{
-							cout << "Invalid command line arguments." << endl;
-							return programUsage(programName);
-						}
-					}
+		
 				}
 				/* No seed entered */
 				else
@@ -427,4 +396,75 @@ int programUsage(string programName)
 	cout << "in binary form." << endl << endl;
 	
 	return -1;
+}
+
+/* Function to parse seed, width and height arguments from cmd */
+bool getSeedArguments(Maze& maze, mt19937& gen, string seed, 
+	string widthArg, string heightArg)
+{
+	int w, h;
+	unsigned long s;
+
+	cout << "getting seed arguments" << endl;
+	cout << "args are: " << seed << ", " << widthArg << ", " << heightArg << endl;
+
+	istringstream iss(seed);
+	if(iss >> s)
+	{
+		maze.setSeed(s);
+
+		istringstream iss(widthArg);
+		if(iss >> w)
+		{
+			maze.setWidth(w);
+
+			istringstream iss(heightArg);
+			if(iss >> h)
+			{
+				if(h != w)
+				{
+					cout << "The maze must be a square." << endl;
+					return false;
+				}
+				gen.seed(s);
+				s = gen();
+				cout << "The seed for this generation is: " << s << endl;
+				maze.setHeight(h);
+				maze.setSeed(s);
+			}
+			else
+			{
+				/* height invalid */
+				cout << "Width and/or height values invalid" << endl;
+				return false;
+			}
+		}
+
+		else
+		{
+			/* width invalid */
+			if (widthArg == SAVE_BINARY_FILE 
+				|| widthArg == SAVE_SVG_FILE)
+			{
+				/* Width and height not entered, default to 10x10 */
+				cout << "Width and height not entered. Defaulting to 10x10... " << endl;
+				w = 10;
+				h = 10;
+			}
+			/* Invalid input after seed and before saving options */
+			else
+			{
+				cout << "Invalid command line arguments." << endl;
+				return false;
+			}
+		}
+	}
+
+	else
+	{
+		/* seed invalid */
+		return false;
+	}
+
+	return true;
 }

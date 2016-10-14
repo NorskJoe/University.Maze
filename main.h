@@ -1,3 +1,5 @@
+#include "maze.h"
+
 using namespace std;
 
 const string LOAD_BINARY_FILE = "--lb";
@@ -12,4 +14,4 @@ const string SOLVE_EUCLIDEAN = "--pe";
 
 int programUsage(string programName);
 
-int getSeedArguments()
+bool getSeedArguments(Maze&, mt19937&, string, string, string);
