@@ -130,8 +130,12 @@ int main(int argc, char **argv)
 				else
 				{
 					/* Checking if next argument is valid */
-					if (argv[i + 1] != SAVE_BINARY_FILE && argv[i + 1] 
-						!= SAVE_SVG_FILE)
+					if (argv[i+1] != SAVE_BINARY_FILE 
+						&& argv[i+1] != SAVE_SVG_FILE 
+						&& argv[i+1] != SOLVE_DFS
+						&& argv[i+1] != SOLVE_BFS
+						&& argv[i+1] != SOLVE_MANHATTAN
+						&& argv[i+1] != SOLVE_EUCLIDEAN)
 					{
 						cout << "Invalid command line arguments. No seed entered" << endl;
 						return programUsage(programName);
@@ -236,8 +240,12 @@ int main(int argc, char **argv)
 				else
 				{
 					/* Checking if next argument is valid */
-					if (argv[i + 1] != SAVE_BINARY_FILE && argv[i + 1] 
-						!= SAVE_SVG_FILE)
+					if (argv[i+1] != SAVE_BINARY_FILE 
+						&& argv[i+1] != SAVE_SVG_FILE 
+						&& argv[i+1] != SOLVE_DFS
+						&& argv[i+1] != SOLVE_BFS
+						&& argv[i+1] != SOLVE_MANHATTAN
+						&& argv[i+1] != SOLVE_EUCLIDEAN)
 					{
 						cout << "Invalid command line arguments. No seed entered" << endl;
 						return programUsage(programName);
@@ -266,7 +274,6 @@ int main(int argc, char **argv)
 				generator = MazeGenerator::getGenerator(mazeType);
 				generator->makeMaze(maze, edges);
 
-				
 			}
 
 
@@ -376,21 +383,24 @@ int main(int argc, char **argv)
 	/* Saving SVG File */
 	if(saveSVG == true)
 	{
-		cout << "saving svg" << endl;
+		cout << "Saving svg file...";
 		if(file.saveSVGFile(svgFileName, maze) == false)
 		{
 			cout << "Error saving " << svgFileName << ". Check the file name is valid." << endl;
 			return programUsage(programName);
 		}
+		cout << "... saved!" << endl;
 	}
 	/* Saving Binary File */
 	if(saveBinary == true)
 	{
+		cout << "Saving binary .maze file...";
 		if(file.saveBinaryFile(binaryFileName, maze) == false)
 		{
 			cout << "Error saving " << binaryFileName << ". Check the file name is valid." << endl;
 			return programUsage(programName);
 		}
+		cout << "... saved!" << endl;
 	}
 
 	return 0;

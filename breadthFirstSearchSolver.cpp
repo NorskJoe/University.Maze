@@ -1,5 +1,4 @@
 #include <queue>
-#include <unordered_set>
 #include <unordered_map>
 #include <iostream>
 #include <algorithm>
@@ -22,7 +21,8 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze)
 	Cell * currentCell = nullptr;
 	/* Setting up local data structures */
 	queue<Cell *> cellQueue;
-	//unordered_set<Cell *> visistedCells;
+	unordered_map<Cell *, Cell *> cellMap;
+	cellMap.reserve(maze.getHeight() * maze.getWidth());
 
 	/* Set all cells in the maze as invisited */
 	for(int i = 0; i < maze.getWidth(); i ++)
@@ -33,25 +33,17 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze)
 			cell->setNotVisited();
 		}
 	}
-	
-
-	int x, y;
 
 	/* MAIN BODY OF ALGORITHM */
-	/* Start by pushing first cell to queue */
+	/* Start by pushing first cell to queue and pathway stack */
 	cellQueue.push(startCell);
 	startCell->setVisited();
 
-	int count = 0;
-
-	while(count < 10)
+	while(currentCell != endCell)
 	{
 		/* Get the next cell in the queue */
 		currentCell = cellQueue.front();
 		cellQueue.pop();
-		x = currentCell->getCoordinates().xPos;
-		y = currentCell->getCoordinates().yPos;
-		cout << "current cell is: " << y << "," << x << endl;
 
 		if(currentCell == endCell)
 		{
@@ -63,32 +55,32 @@ void BreadthFirstSearchSolver::solveMaze(Maze& maze)
 		else
 		{ 
 			/* For each of the current cells neighbours, add it to the queue, 
-			and mark it visited */
+			 mark it visited, and add to cell map for solving */
 			for(Cell * neighbour : currentCell->getNeighbourCells())
 			{
+				
+
 				if(!neighbour->isVisited())
 				{
 					cellQueue.push(neighbour);
+					cellMap[neighbour] = currentCell;
 					neighbour->setVisited();
-					x = neighbour->getCoordinates().xPos;
-					y = neighbour->getCoordinates().yPos;
-					cout << "pushed: " << y << "," << x << endl;
 				}
 			}
-
-			count++;
 
 		}
 	}
 
-	cout << "cellQueue contains: " << endl;
-	for(unsigned i = 0; i < cellQueue.size(); i++)
+	/* Start at end of map, work backwards through key-values to 
+	build solved pathway */
+	currentCell = endCell;	
+	unordered_map<Cell *, Cell *>::const_iterator nextCell;
+	while(currentCell != startCell)
 	{
-		Cell * cell = cellQueue.front();
-		cellQueue.pop();
-		x = cell->getCoordinates().xPos;
-		y = cell->getCoordinates().yPos;
-		cout << y << "," << x << endl;
+		nextCell = cellMap.find(currentCell);
+		maze.addPathway((Edge(currentCell, nextCell->second)));
+		currentCell = nextCell->second;
+		
 	}
 		
 }

@@ -127,9 +127,4 @@ void AldousBroderGenerator::makeMaze(Maze& maze, vector<Edge>& edges)
 	}
 	maze.setEdgeCount(edgeCount);
 	maze.setEdges(edges);
-
-	/* DEBUGGING */
-	
-
-
 }

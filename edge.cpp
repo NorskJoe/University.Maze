@@ -25,7 +25,6 @@ Cell * Edge::getNeighbouringCell(Cell * cell)
 	else
 	{
 		/* Error */
-		std::cout << "return null" << std::endl;
 		return nullptr;
 	}
 }

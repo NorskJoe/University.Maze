@@ -92,20 +92,4 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze)
 		maze.addPathway(Edge(cell1,cell2));
 
 	}
-
-	// pathways = maze.getPathways();
-
-	// cout << "contents of maze pathways: " << endl;
-	// for(int i = 0; i < pathways.size(); i++)
-	// {
-	// 	int x, y;
-	// 	x = pathways[i].getCellOne()->getCoordinates().xPos;
-	// 	y = pathways[i].getCellOne()->getCoordinates().yPos;
-	// 	cout << y << "," << x <<  " - ";
-
-	// 	x = pathways[i].getCellTwo()->getCoordinates().xPos;
-	// 	y = pathways[i].getCellTwo()->getCoordinates().yPos;
-
-	// 	cout << y << "," << x << endl;
-	// }
 }

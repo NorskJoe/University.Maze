@@ -11,3 +11,5 @@ const string SOLVE_MANHATTAN = "--pm";
 const string SOLVE_EUCLIDEAN = "--pe";
 
 int programUsage(string programName);
+
+int getSeedArguments()

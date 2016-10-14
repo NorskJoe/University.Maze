@@ -84,16 +84,13 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
     output << "height='" << height*CELL_SIZE << "' ";
     output << "style='fill:black' />" << endl;
 
-    /* Get edges and solved edges */
-    vector<Edge> solvedEdges = maze.getPathways();
-
     /* Get edges and write edge info */
+    vector<Edge> solvedEdges = maze.getPathways();
     vector<Edge> edges = maze.getEdges();
     int x1, x2, y1, y2;
     for(unsigned i = 0; i < edges.size(); i++)
     {
         strokeColour = "white";
-
 
         Cell * cellOne = edges[i].getCellOne();
         Cell * cellTwo = edges[i].getCellTwo();
@@ -110,12 +107,9 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
         output << "stroke-width='" << STROKE_WIDTH << "' />" << endl;
     }
 
-    cout << "solved edges size: " << solvedEdges.size() << endl;
-
     for(unsigned i = 0; i < solvedEdges.size(); i++)
     {
         strokeColour = "red";
-
 
         Cell * cellOne = solvedEdges[i].getCellOne();
         Cell * cellTwo = solvedEdges[i].getCellTwo();
