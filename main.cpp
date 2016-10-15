@@ -145,7 +145,7 @@ int main(int argc, char **argv)
 			else 
 			{
 				cout << "Error in command line arguments. Not enough arguments entered. " << endl;
-				programUsage(programName);
+				return programUsage(programName);
 			}
 		}
 
@@ -198,6 +198,9 @@ int main(int argc, char **argv)
 						cout << "Width & Height defaulting to 10x10..." << endl;
 						width = 10;
 						height = 10;
+						maze.setWidth(width);
+						maze.setHeight(height);
+						maze.setSeed(seed);
 
 					}
 				}
@@ -206,8 +209,11 @@ int main(int argc, char **argv)
 				cout << "Generating a maze using Ellers algorithm..." << endl;
 				loadEllers = true;
 				mazeType = ELLERS;
+				width = maze.getWidth();
+				height = maze.getHeight();
+				seed = maze.getSeed();
 				maze = Maze(width, height, seed);
-				/* Dynamically create a generator object based on maze type using a factory method.  Generator object will then generate the maze */
+				/* Dynamically create a generator object based on maze type */
 				MazeGenerator* mazeGenerator;
 				mazeGenerator = MazeGenerator::getGenerator(mazeType);
 				mazeGenerator->makeMaze(maze, generator, edges);
@@ -377,11 +383,9 @@ bool getSeedArguments(Maze& maze, mt19937& gen, string seed,
 	istringstream iss(seed);
 	if(iss >> s)
 	{
-
 		istringstream iss(widthArg);
 		if(iss >> w)
 		{
-
 			istringstream iss(heightArg);
 			if(iss >> h)
 			{
@@ -421,7 +425,6 @@ bool getSeedArguments(Maze& maze, mt19937& gen, string seed,
 			}
 		}
 	}
-
 	else
 	{
 		/* seed invalid */

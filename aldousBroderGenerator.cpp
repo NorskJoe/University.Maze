@@ -59,7 +59,8 @@ void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edg
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, currentCell, nextCell);
+						remainingCells--;
 					}
 
 				}
@@ -78,7 +79,8 @@ void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edg
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, currentCell, nextCell);
+						remainingCells--;
 					}
 				}
 			}
@@ -96,7 +98,8 @@ void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edg
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, currentCell, nextCell);
+						remainingCells--;
 					}
 				}
 			}
@@ -114,7 +117,8 @@ void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edg
 					if(nextCell->isVisited() == false)
 					{
 						/* Add currentCell and nextCell to edge structure */
-						addNewEdge(edges, edgeCount, remainingCells, currentCell, nextCell);
+						addNewEdge(edges, edgeCount, currentCell, nextCell);
+						remainingCells--;
 					}
 				}
 			}

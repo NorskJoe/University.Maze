@@ -28,7 +28,7 @@ MazeGenerator* MazeGenerator::getGenerator(int mazeType)
 	}
 }
 
-void MazeGenerator::addNewEdge(vector<Edge>& edges, int& edgeCount, int& remainingCells, Cell * currentCell, Cell * nextCell)
+void MazeGenerator::addNewEdge(vector<Edge>& edges, int& edgeCount, Cell * currentCell, Cell * nextCell)
 {
 	edges.push_back(Edge(currentCell, nextCell));
 
@@ -39,6 +39,6 @@ void MazeGenerator::addNewEdge(vector<Edge>& edges, int& edgeCount, int& remaini
 	nextCell->setNeighbourCell(currentCell);
 
 	nextCell->setVisited();
-	remainingCells--;
+
 	edgeCount++;
 }
