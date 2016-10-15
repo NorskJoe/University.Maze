@@ -13,22 +13,19 @@ AldousBroderGenerator::AldousBroderGenerator()
 
 /* Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-generation-aldous-broder-algorithm */
-void AldousBroderGenerator::makeMaze(Maze& maze, vector<Edge>& edges)
+void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 {
 	int totalCells, remainingCells, edgeCount=0, xPos, yPos;
 	int width = maze.getWidth();
 	int height = maze.getHeight();
-	int seed = maze.getSeed();
 
 	totalCells = width * height;
 	Cell * currentCell, * nextCell;
 	vector< vector<Cell *> > cells = maze.getMaze();
 
-	/* Get number generator */
-	mt19937 mt(seed);
 	/* Choose a random vertex to start generation */
-	xPos = mt() % width;
-	yPos = mt() % height;
+	xPos = gen() % width;
+	yPos = gen() % height;
 	currentCell = maze.getCell(xPos,yPos);
 	currentCell->setVisited();
 	remainingCells = totalCells - 1;
@@ -47,7 +44,7 @@ void AldousBroderGenerator::makeMaze(Maze& maze, vector<Edge>& edges)
 			yPos = currentCell->getCoordinates().yPos;
 
 			/* Get the next random direction. 0-3 */
-			random = mt() % NUMBER_OF_DIRECTIONS;
+			random = gen() % NUMBER_OF_DIRECTIONS;
 
 			if(random == NORTH)
 			{

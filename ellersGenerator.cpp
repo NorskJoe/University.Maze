@@ -13,7 +13,7 @@ EllersGenerator::EllersGenerator()
 
 /* Implemented using Ellers's algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2010/12/29/maze-generation-eller-s-algorithm */
-void EllersGenerator::makeMaze(Maze& maze, vector<Edge>& edges)
+void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 {
 		cout << "in ellers generator" << endl;
 

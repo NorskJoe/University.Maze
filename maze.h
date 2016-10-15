@@ -42,7 +42,7 @@ public:
 	int getHeight() { return height; }
 	int getWidth() { return width; }
 	int getEdgeCount() { return edgeCount; }
-	int getSeed() { return seed; }
+	unsigned long getSeed() { return seed; }
 	vector<Edge> getEdges() { return edges; }
 	vector<Edge> getPathways() { return pathways; }
 	vector< vector<Cell *> > getMaze() { return cells; }

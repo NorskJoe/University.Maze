@@ -9,7 +9,7 @@ public:
 	/* Constructor */
 	EllersGenerator();
 
-	void makeMaze(Maze&, vector<Edge>&);
+	void makeMaze(Maze&, mt19937&, vector<Edge>&);
 };
 
 #endif

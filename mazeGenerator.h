@@ -18,7 +18,7 @@ public:
 
 	/* Functions*/
 	static MazeGenerator* getGenerator(int);
-	virtual void makeMaze(Maze& maze, vector<Edge>& edges) = 0; 
+	virtual void makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges) = 0; 
 	void addNewEdge(vector<Edge>& edges, int& edgeCount, int& remainingCells, Cell* currentCell, Cell* nextCell);
 };
 
