@@ -8,7 +8,6 @@
 #include "manhattanDijkstraSolver.h"
 #include "euclideanDijkstraSolver.h"
 
-
 /* Constructor */
 MazeGenerator::MazeGenerator()
 {
