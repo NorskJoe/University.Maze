@@ -28,11 +28,8 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	setNumber = 1;
 	edgeCount = 0;
 
-	multimap<int, Cell *> set_to_cellMap;
+	// multimap<int, Cell *> set_to_cellMap;
 	multimap<Cell *, int> cell_to_setMap;
-
-	int x, y;
-
 
 	bool finalRow = false;
 	for(int i = 0; i < height; i++)
@@ -44,7 +41,7 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 			//{
 			Cell * cell = maze.getCell(j, i);
 
-			set_to_cellMap.insert(pair<int, Cell *>(setNumber, cell));
+			// set_to_cellMap.insert(pair<int, Cell *>(setNumber, cell));
 			cell_to_setMap.insert(pair<Cell *, int>(cell, setNumber));
 
 			setNumber++;
@@ -70,7 +67,7 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 
 				/* If the two cells are not already in the same set, 
 				merge them into a single set */				
-				mergeCells(cell1, cell2, set_to_cellMap, cell_to_setMap,
+				mergeCells(cell1, cell2, cell_to_setMap,
 					edges, edgeCount);
 
 			}
@@ -81,14 +78,14 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 		if(!finalRow)
 		{
 			/* Get the total number of sets in this row */
-			setCount = getRowSetCount(set_to_cellMap, cell_to_setMap, i, maze);
+			setCount = getRowSetCount(cell_to_setMap, i, maze);
 			cout << "number of sets in row: " << i << " is " << setCount << endl;
 
 			/* For each set, choose a neighbour from below to join set.
 			Each set should be joined at least once */
 			//while(setCount != 0)
 			{
-				addNextRow(maze, i, setCount, cell_to_setMap);
+			addNextRow(gen, maze, i, cell_to_setMap, edges, edgeCount);
 				
 			}
 		}
@@ -97,7 +94,7 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 		/* Discard all mappings from row, won't be needed in next iteration */
 		for(int j = 0; j < width; j++)
 		{
-			set_to_cellMap.clear();
+			// set_to_cellMap.clear();
 			cell_to_setMap.clear();
 		}
 
@@ -125,12 +122,11 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 }
 
 /* Function that will take two cells and merge them into one set, and add
-them into an edge structure */
-void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<int,
-	Cell*> & s_to_cMap, multimap<Cell*, int> & c_to_sMap,
+them into an edge structure  */
+void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<Cell*, int> & c_to_sMap,
 	vector<Edge>& edges, int& edgeCount)
 {
-	multimap<int, Cell *>::iterator s_to_cIt;
+	// multimap<int, Cell *>::iterator s_to_cIt;
 	multimap<Cell *, int>::iterator c_to_sIt;
 
 	int setOne, setTwo;
@@ -145,15 +141,15 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<int,
 		/* Clear the unused elements in the map for efficiency */
 		c_to_sMap.erase(cell1);
 		c_to_sMap.erase(cell2);
-		s_to_cMap.erase(setOne);
-		s_to_cMap.erase(setTwo);
+		// s_to_cMap.erase(setOne);
+		// s_to_cMap.erase(setTwo);
 		int setNumber = setOne;
 		
 		addNewEdge(edges, edgeCount, cell1, cell2);
 
 		/* Add the new elements to map, merge into cell1's set */
-		s_to_cMap.insert(pair<int, Cell *>(setNumber, cell1));
-		s_to_cMap.insert(pair<int, Cell *>(setNumber, cell2));
+		// s_to_cMap.insert(pair<int, Cell *>(setNumber, cell1));
+		// s_to_cMap.insert(pair<int, Cell *>(setNumber, cell2));
 
 		c_to_sMap.insert(pair<Cell *, int>(cell1, setNumber));
 		c_to_sMap.insert(pair<Cell *, int>(cell2, setNumber));
@@ -163,27 +159,12 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<int,
 		// cout << "elements with key " << cell1 << ": " << c_to_sMap.count(cell1) << endl << endl;
 
 	}
-	// cout << "edges contains: " << endl;
-	// for(unsigned i = 0; i < edges.size(); i++)
-	// {
-	// 	int x, y;
-	// 	Cell * cellOne = edges[i].getCellOne();
-	// 	Cell * cellTwo = edges[i].getCellTwo();
-	// 	x = cellOne->getCoordinates().xPos;
-	// 	y = cellOne->getCoordinates().yPos;
-	// 	cout << y << "," << x << " - ";
-
-	// 	x = cellTwo->getCoordinates().xPos;
-	// 	y = cellTwo->getCoordinates().yPos;
-	// 	cout << y << "," << x << endl;
-	// }
-	// cout << endl;
 }
 
 /* Function that will get the total number of sets in a given row,
 used to join with neighbours below this row */
-int EllersGenerator::getRowSetCount(multimap<int, Cell *> & s_to_cMap, 
-	multimap<Cell *, int> & c_to_sMap, int rowNumber, Maze& maze)
+int EllersGenerator::getRowSetCount(multimap<Cell *, int> & c_to_sMap, 
+	int rowNumber, Maze& maze)
 {
 	const int width = maze.getWidth();
 	/* Maintain a list of already counted sets */
@@ -206,9 +187,18 @@ int EllersGenerator::getRowSetCount(multimap<int, Cell *> & s_to_cMap,
 	return countedSets.size();
 }
 
-int getNumberOfCellsInSet()
+void EllersGenerator::getInstancesOfSet(int setNumber, int&setCount, 
+	multimap<Cell *,int>& c_to_sMap)
 {
-	return 0;
+
+	for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
+	{
+		if(it->second == setNumber)
+		{
+			setCount++;
+		}
+	}
+	
 }
 
 /* Function that will randomly choose neighbours to add to set 
@@ -216,8 +206,8 @@ from row below.
 	-if a set only has one cell, it must add an edge
 	-if a cell is the last member of a set without an edge, an edge must
 	 not be added */
-void EllersGenerator::addNextRow(Maze& maze, int row, int& setCount,
-	multimap<Cell *, int> & c_to_sMap)
+void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row, 
+	multimap<Cell *, int> & c_to_sMap, vector<Edge>& edges, int& edgeCount)
 {
 	int width = maze.getWidth();
 	int x, y;
@@ -228,20 +218,78 @@ void EllersGenerator::addNextRow(Maze& maze, int row, int& setCount,
 		//cout << "i: " << i << endl;
 		Cell * topCell = maze.getCell(i, row);
 
-		cout << "have cell: ";
-		x = topCell->getCoordinates().xPos;
-		y = topCell->getCoordinates().yPos;
-		cout << y << "," << x << endl;
+		// cout << "have cell: ";
+		// x = topCell->getCoordinates().xPos;
+		// y = topCell->getCoordinates().yPos;
+		// cout << y << "," << x << endl;
 
-		cout << "cell_to_setMap cointains: " << endl;
-		for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
+		/* Find the set number of this cell, then find how many cells 
+		share the same set number */
+		multimap<Cell *, int>::iterator it;
+		it = c_to_sMap.find(topCell);
+		int setNumber = it->second;
+		int cellCount = 0;
+		getInstancesOfSet(setNumber, cellCount, c_to_sMap);
+		// cout << "cellCount is: " << cellCount << endl;
+
+		/* If only cell in set, join to below neighbour */
+		if(cellCount == 1)
 		{
-			x = it->first->getCoordinates().xPos;
-			y = it->first->getCoordinates().yPos;
-			cout << y << "," << x << " : " << it->second << endl;
+			Cell * bottomCell = maze.getCell(i, row+1);
+			mergeCells(topCell, bottomCell, c_to_sMap, edges, edgeCount);
+
+		}
+		else
+		{
+			/* Randomly decide to add cells, make sure that at least one 
+			cell is left NOT joined, and that at least one cell is joined */
+			int cellsToJoin = gen() % cellCount;
+			/* Ensure at least one cell in set is joined */
+			if(cellsToJoin <= 0)
+			{
+				cellsToJoin = 1;
+			}
+
+			cout << "cells to join: " << cellsToJoin << endl;
+			
+			while(cellsToJoin > 0 && i < width)
+			{
+				int chosen = gen() % JOIN_CHOICE;
+
+				Cell * topCell = maze.getCell(i, row);
+				/* Choose a random cell */
+				if(chosen == JOIN)
+				{
+					Cell * bottomCell = maze.getCell(i, row+1);
+					mergeCells(topCell, bottomCell, c_to_sMap, edges, edgeCount);
+					cellsToJoin--;
+				}
+				else
+				{
+					if(cellsToJoin == 1)
+					{
+						Cell * bottomCell = maze.getCell(i, row+1);
+						mergeCells(topCell, bottomCell, c_to_sMap, edges, edgeCount);
+					}
+					else
+					{
+						i++;
+					}
+				}
+
+			}
 		}
 
 
+		// cout << "cell_to_setMap cointains: " << endl;
+		// for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
+		// {
+		// 	x = it->first->getCoordinates().xPos;
+		// 	y = it->first->getCoordinates().yPos;
+		// 	cout << y << "," << x << " : " << it->second << endl;
+		// }
+		// cout << endl;
+
+
 	}
-	setCount--;
 }

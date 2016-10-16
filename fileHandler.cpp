@@ -18,8 +18,6 @@ bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
     ofstream output;
     output.open(fileName.c_str());
 
-    cout << "saving binary file" << endl;
-
     if(!output.is_open())
     {
         return false;
