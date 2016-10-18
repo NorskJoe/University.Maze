@@ -395,7 +395,6 @@ bool getSeedArguments(Maze& maze, mt19937& gen, string seed,
 					return false;
 				}
 				gen.seed(s);
-				s = gen();
 				cout << "The seed for this generation is: " << s << endl;
 			}
 			else
