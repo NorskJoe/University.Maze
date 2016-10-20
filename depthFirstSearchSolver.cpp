@@ -24,11 +24,8 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze)
 
 	/* Setting up local data structures
 		cellStack: used to keep track of visited cells
-		pathwayStack: used to keep track of pathway
-		pathwaySet: used to keep track of visisted pathways
 	*/
 	stack<Cell*> cellStack;
-	stack<Edge*> pathwayStack;
 
 	/* Set all cells as unvisited */
 	for(int i = 0; i < maze.getWidth(); i++)

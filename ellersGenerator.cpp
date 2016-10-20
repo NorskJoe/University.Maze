@@ -26,7 +26,6 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	width = maze.getWidth();
 	height = maze.getHeight();
 	edgeCount = 0;
-	int x, y;
 
 	// multimap<int, Cell *> set_to_cellMap;
 	multimap<Cell *, int> cell_to_setMap;
@@ -191,20 +190,6 @@ int EllersGenerator::getRowSetCount(multimap<Cell *, int> & c_to_sMap,
 	return countedSets.size();
 }
 
-// void EllersGenerator::getInstancesOfSet(int setNumber, int&setCount, 
-// 	multimap<Cell *,int>& c_to_sMap)
-// {
-
-// 	for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
-// 	{
-// 		if(it->second == setNumber)
-// 		{
-// 			setCount++;
-// 		}
-// 	}
-	
-// }
-
 /* Function that will randomly choose neighbours to add to set 
 from row below.
 	-if a set only has one cell, it must add an edge
@@ -215,7 +200,7 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 	int& setNumber)
 {
 	int width = maze.getWidth();
-	int x, y;
+	
 	//cout << "adding vertically" << endl;
 
 	int setCount = getRowSetCount(c_to_sMap, row, maze);
@@ -252,10 +237,6 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 
 		else
 		{
-			bool cellAdded = false;
-
-			int addedCells = 0;
-
 			int cellsToJoin = gen() % cellCount;
 
 			if(cellsToJoin == 0)
@@ -285,8 +266,8 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 	for(int i = 0; i < width; i++)
 	{
 		Cell * cell = maze.getCell(i, row+1);
-		x = cell->getCoordinates().xPos;
-		y = cell->getCoordinates().yPos;
+		// x = cell->getCoordinates().xPos;
+		// y = cell->getCoordinates().yPos;
 		//cout << "editing cell: " << y << "," << x << endl;
 
 		unsigned set = c_to_sMap.find(cell)->second;
@@ -308,23 +289,6 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 	// cout << endl;
 
 }
-
-// vector<Cell *> EllersGenerator::getCellsInSet(int currentSet, 
-// 	multimap<Cell *, int> c_to_sMap)
-// {
-// 	vector <Cell *> cells;
-
-// 	for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
-// 	{
-// 		if(it->second == currentSet)
-// 		{
-// 			cells.push_back(it->first);
-
-// 		}
-// 	}
-
-// 	return cells;
-// }
 
 int EllersGenerator::getCellCount(int currentSet,
 	multimap<Cell *, int> c_to_sMap, int row)

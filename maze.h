@@ -4,8 +4,6 @@
 #include "cell.h"
 #include "edge.h"
 
-//#include <vector>
-
 using namespace std;
 
 /* Definitions used for random direction choosing, and for traversing 
@@ -55,8 +53,6 @@ public:
 	void setEdges(vector<Edge>&);
 	void setPathways(vector<Edge>&);
 	void addPathway(Edge pathway) { this->pathways.push_back(pathway); }
-
-	Edge * findEdge(Cell * cell1, Cell * cell2);
 
 };
 

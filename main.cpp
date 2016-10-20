@@ -247,7 +247,9 @@ int main(int argc, char **argv)
 
 		else if(currentArgument == SOLVE_MANHATTAN)
 		{
-
+			MazeSolver* solver;
+			solver = MazeSolver::getSolver(DIJKSTRA_MANHATTAN);
+			solver->solveMaze(maze);
 		}
 
 		else if(currentArgument == SOLVE_EUCLIDEAN)
