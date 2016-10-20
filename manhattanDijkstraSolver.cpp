@@ -24,7 +24,6 @@ void DijkstraManhattanSolver::solveMaze(Maze& maze)
 	int width = maze.getWidth();
 	int height = maze.getHeight();
 	const int INFINITY = numeric_limits<int>::max();
-	int size = width * height;
 
 	unordered_map<Cell *, int> minDistance;
 	unordered_map<Cell *, Cell *> previous;

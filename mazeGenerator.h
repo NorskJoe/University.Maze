@@ -4,8 +4,6 @@
 #include <random>
 #include "maze.h"
 
-//using namespace std;
-
 /* Definitions for generation methods.  Used to implement a factory pattern */
 #define ALDOUS_BRODER 1
 #define ELLERS 2

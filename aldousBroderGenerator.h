@@ -3,6 +3,15 @@
 
 #include "mazeGenerator.h"
 
+enum direction
+{
+	NORTH,
+	EAST,
+	SOUTH,
+	WEST,
+	DIRECTION_COUNT
+};
+
 class AldousBroderGenerator: public MazeGenerator
 {
 public:
