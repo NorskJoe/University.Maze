@@ -3,10 +3,10 @@
 #include "mazeGenerator.h"
 #include "aldousBroderGenerator.h"
 #include "ellersGenerator.h"
-#include "depthFirstSearchSolver.h"
-#include "breadthFirstSearchSolver.h"
-#include "manhattanDijkstraSolver.h"
-#include "euclideanDijkstraSolver.h"
+// #include "depthFirstSearchSolver.h"
+// #include "breadthFirstSearchSolver.h"
+// #include "manhattanDijkstraSolver.h"
+// #include "euclideanDijkstraSolver.h"
 
 /* Constructor */
 MazeGenerator::MazeGenerator()

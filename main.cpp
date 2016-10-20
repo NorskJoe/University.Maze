@@ -254,7 +254,9 @@ int main(int argc, char **argv)
 
 		else if(currentArgument == SOLVE_EUCLIDEAN)
 		{
-			
+			MazeSolver* solver;
+			solver = MazeSolver::getSolver(DIJKSTRA_EUCLIDEAN);
+			solver->solveMaze(maze);
 		}
 
 		/* CHECKING SAVING OPTIONS */

@@ -1,18 +1,15 @@
 #ifndef MANHATTAN_DIJKSTRA_H
 #define MANHATTAN_DIJKSTRA_H
 
-#include "mazeSolver.h"
+#include "dijkstraSolver.h"
 
-#define COST_OF_MOVING_CELL 1
-
-class DijkstraManhattanSolver: public MazeSolver
+class DijkstraManhattan: public DijkstraSolver
 {
 public:
 	/* Constructor */
-	DijkstraManhattanSolver();
+	DijkstraManhattan();
 
 	/* Functions */
-	void solveMaze(Maze&);
 	int heuristicEstimate(Maze& maze, Cell * cell);
 };
 

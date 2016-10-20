@@ -1,12 +1,8 @@
-#include <vector>
-
 #include "mazeSolver.h"
 #include "breadthFirstSearchSolver.h"
 #include "depthFirstSearchSolver.h"
-#include "euclideanDijkstraSolver.h"
-#include "manhattanDijkstraSolver.h"
-
-using namespace std;
+#include "euclideanDijkstra.h"
+#include "manhattanDijkstra.h"
 
 /* Constructor */
 MazeSolver::MazeSolver()
@@ -27,10 +23,10 @@ MazeSolver* MazeSolver::getSolver(int solverType)
 	}
 	else if(solverType == DIJKSTRA_MANHATTAN)
 	{
-		return new DijkstraManhattanSolver;
+		return new DijkstraManhattan;
 	}
 	else /* DIJKSTRA_EUCLIDEAN */
 	{
-		return new DijkstraEuclideanSolver;
+		return new DijkstraEuclidean;
 	}
 }

@@ -2,13 +2,13 @@
 #include <unordered_set>
 #include <limits>
 
-#include "manhattanDijkstraSolver.h"
+#include "dijkstraSolver.h"
 #include "minHeap.h"
 
 using namespace std;
 
 /* Constructor */
-DijkstraManhattanSolver::DijkstraManhattanSolver()
+DijkstraSolver::DijkstraSolver()
 {
 
 }
@@ -18,7 +18,7 @@ https://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
 
 Heuristic estimates based on explanation at:
 http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#S7 */
-void DijkstraManhattanSolver::solveMaze(Maze& maze)
+void DijkstraSolver::solveMaze(Maze& maze)
 {
 	/* Set up variables and local data structures */
 	int width = maze.getWidth();
@@ -56,6 +56,7 @@ void DijkstraManhattanSolver::solveMaze(Maze& maze)
 
 		for(Cell * neighbour : currentCell->getNeighbourCells())
 		{
+			/* The appropriate heuristic function will be called */
 			int heuristic = heuristicEstimate(maze, neighbour);
 
 			int cost = COST_OF_MOVING_CELL + heuristic;
@@ -81,8 +82,8 @@ void DijkstraManhattanSolver::solveMaze(Maze& maze)
 
 }
 
-int DijkstraManhattanSolver::heuristicEstimate(Maze& maze, Cell * cell)
-{
-	return (maze.getWidth() - cell->getCoordinates().yPos-1)  + 
-		(maze.getHeight() - cell->getCoordinates().xPos-1);
-}
+// int DijkstraManhattanSolver::heuristicEstimate(Maze& maze, Cell * cell)
+// {
+// 	return (maze.getWidth() - cell->getCoordinates().yPos-1)  + 
+// 		(maze.getHeight() - cell->getCoordinates().xPos-1);
+// }

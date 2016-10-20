@@ -14,7 +14,6 @@ public:
 
 	Cell * getCellOne() { return cell1; }
 	Cell * getCellTwo() { return cell2; }
-	// Cell * getNeighbouringCell(Cell * cell);
 };
 
 #endif
