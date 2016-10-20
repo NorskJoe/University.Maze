@@ -12,8 +12,7 @@
 class EllersGenerator: public MazeGenerator
 {
 private:
-
-	/* Other functions */
+	/* Functions */
 	void mergeCells(Cell *, Cell *, multimap<Cell *,int> &, 
 		vector<Edge>&, int&);
 	int getRowSetCount(multimap<Cell *, int>&, int, Maze&);

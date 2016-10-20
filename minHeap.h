@@ -19,17 +19,14 @@ private:
 	/* Functions */
 	void bubbleDown(int index);
 	void bubbleUp(int index);
-	void heapify();
 
 public:
 	/* Constructors */
-	MinHeap(const vector<int>& heap);
 	MinHeap();
 
 	/* Functions */
 	void insert(Cell * cell, int priority);
 	Cell * getMinCell();
-	int getMinPriority();
 	void deleteMin();
 	int getSize();
 };

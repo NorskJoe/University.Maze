@@ -12,10 +12,9 @@ public:
 	/* Constructors */
 	Edge(Cell * cell1, Cell * cell2): cell1(cell1), cell2(cell2) {};
 
-	/* Might not be needed */
 	Cell * getCellOne() { return cell1; }
 	Cell * getCellTwo() { return cell2; }
-	Cell * getNeighbouringCell(Cell * cell);
+	// Cell * getNeighbouringCell(Cell * cell);
 };
 
 #endif

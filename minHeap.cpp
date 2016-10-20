@@ -1,29 +1,8 @@
-//remove later
-#include <iostream>
-
 #include "minHeap.h"
-
-//remove later
-#include "cell.h"
-
-
-// MinHeap::MinHeap(const vector<int>& heap) : heapVector(heap)
-// {
-// 	heapify();
-// }
 
 MinHeap::MinHeap()
 {
 
-}
-
-void MinHeap::heapify()
-{
-	int length = heapVector.size();
-	for(int i = length-1; i >= 0; i--)
-	{
-		bubbleDown(i);
-	}
 }
 
 void MinHeap::bubbleDown(int index)
@@ -118,11 +97,6 @@ Cell * MinHeap::getMinCell()
 	return data.cell;
 }
 
-int MinHeap::getMinPriority()
-{
-	Data data = heapVector[0];
-	return data.priority;
-}
 
 void MinHeap::deleteMin()
 {
