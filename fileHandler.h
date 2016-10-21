@@ -18,7 +18,8 @@ public:
 	bool saveBinaryFile(std::string, Maze&);
 	bool saveSVGFile(std::string, Maze&);
 	bool loadBinaryFile(std::string, vector<Edge>&, Maze&);
-	bool checkFileValidity(unsigned w, unsigned h, unsigned edgeCount, unsigned edgesRead);
+	bool checkFileValidity(unsigned w, unsigned h, unsigned edgeCount, 
+		unsigned edgesRead);
 
 };
 

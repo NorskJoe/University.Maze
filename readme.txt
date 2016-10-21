@@ -1,5 +1,19 @@
 s3542413 - Joseph Johnson
 
+Differences from Assignment One:
+- Some parts of the code from assignment one have been changed
+
+- Aldous Broder algorithm has been refactored
+
+- An Edge class was added, and the edge struct removed.  This seemed easier to work with
+
+- Although seeding was not broken, it has been changed to make it more efficient.  The mt19337 object is now passed to functions where it is needed.
+
+- After saving files, I validate the file using good()
+
+- Fixed an error where the program would not work if a seed argument was not entered
+
+
 Compiling:
  - source /opt/rh/devtoolset-4/enable must be entered into the command line before compiling
 
@@ -13,13 +27,15 @@ Compiling:
 
 
 Flags:
- - --g: tells the program to generate a maze using the aldous-broder algorithm
+ - --ga: tells the program to generate a maze using the aldous-broder algorithm
 
- - --g can be followed by the optinal commands of <seed> <width> <height>
+ - --ge: tells the program to generate a maze using the ellers algorithm
 
- - if seed is entered, width and height are optional
+ - --ge or --ga can be followed by the optinal commands of <seed> <width> <height>
 
- - if seed is not entered, you cannot specify width and height.  The maze size will default to 10x10, this also happens if a seed is entered but width and height are not
+ - if seed is entered, width and height must also be entered
+
+ - if seed is not entered, you cannot specify width and height.  The maze size will default to 10x10.
 
  - --lb: tells the program to generate a maze from a binary file.  The binary file must have a .maze file extension.  The filename must follow the --lb flag
 
@@ -27,13 +43,15 @@ Flags:
 
  - --sv: tells the program to save the maze to a svg file with a .svg file extension.  THe filename must be specified after the --sv flag.
 
+ - --pm: tells the program to solve a maze using Dijkstra's algorithm using Manhattan cost heuristics
+
+ - --pe: tells the program to solve a maze using Dijkstra's algorithm using Euclidean cost heuristics
+
 
 Program Usage:
- - --g OR --lb generation options must be used, they cannot be used in conjunction.
+ - --ge OR --ga OR --lb generation options must be used, they cannot be used in conjunction.
 
  - --sb AND/OR --sv saving options must be used.  At least one or both needs to be chosen.
-
- - the order of flags should be <generation option> followed by <saving option>
 
  - binary files must have the file extension .maze.  svg files must have the file extension .svg.  These must be explicity entered by the user.
 
@@ -49,27 +67,15 @@ Seeding:
 
 
 Unresolved errors:
-- a segmentation fault (core dump) occurs when the program is run with the 'badWidthHeight2.maze' example binary file provided on google drive.  I am unsure as to why this error occurs.
+- None that I know of
 
 
-Program Development:
-(1): I first created a class diagram based on the functionality required
+Design Patterns:
+- The factory pattern is used both for maze solving and maze generating.  See mazeSolver.cpp and mazeGenerator.cpp
 
-(2): I then created the 'skeleton code' based on this class diagram, adding classes and empty functions that I thought would be required
 
-(3): I started implementing the loading and saving of binary files first.  Only reading and saving data, but not doing anything with it.
-
-(4): I then filled out the Maze class so that I could create a maze based on the binary information read in.
-
-(5): Once the binary files and Maze class was fully functioning, I implemented saving the maze to an svg file
-
-(6): I then implemented the seeding and maze generation functions.  I had to make some changes to the Maze class in order for maze generation to work properly
-
-(7): Once all of the main functionality was complete, I made another class diagram based on what I thought could be improved and refactored.
-
-(8): I then refactored the code, moving seperate file saving files into one class called FileHandler
-
-(9): I then did a final refactoring of the code
+Inheritance and Polymorphism:
+- Inheritance and polymorphism have been used to reduce code re-usage, in particular for Dijkstra'a algorithm. See dijkstraSolver.cpp, manhattanDijkstra.cpp and euclideanDijkstra.cpp.  As well as mazeSolver.cpp and mazeGenerator.cpp
 
 
 Other Notes:
@@ -77,4 +83,4 @@ Other Notes:
 
  - My first and my final version of my class diagram are included in my submission
 
- - I tested my maze generation algorithm on mazes up to 1000x1000
+ - I tested my maze generation and solving algorithms on mazes up to 1000x1000

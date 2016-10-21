@@ -141,8 +141,10 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 	return true;
 }
 
-/* Function to load a binary file with a .maze extension, and generate a maze 	with the information */
-bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, Maze& maze) 
+/* Function to load a binary file with a .maze extension, 
+and generate a maze 	with the information */
+bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, 
+    Maze& maze) 
 {
     ifstream input;
 	input.open(fileName.c_str(), ios::binary | ios::in);
@@ -179,18 +181,21 @@ bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, Maze& ma
         input.read((char*)&y2, sizeof(y2));
 
         /* Check if edges read in are within bounds of the maze */
-        if(x1 < 0 || x1 > width || x2 < 0 || x2 > width || y1 < 0 || y1 > height || y2 < 0 || y2 > height)
+        if(x1 < 0 || x1 > width || x2 < 0 || x2 > width 
+            || y1 < 0 || y1 > height || y2 < 0 || y2 > height)
         {
-            cout << "Error reading in " << fileName << ". Some edges are outside the bounds of the maze." << endl;
+            cout << "Error reading in " << fileName 
+                << ". Some edges are outside the bounds of the maze." << endl;
             return false;
         }
 
         /* Create an edge  */
         Cell * cell1 = maze.getCell(x1, y1);
         Cell * cell2 = maze.getCell(x2, y2);
+        cell1->setNeighbourCell(cell2);
+        cell2->setNeighbourCell(cell1);
         edges.push_back(Edge(cell1, cell2));
-        cell1->setNeighbour(edges[edges.size()-1]);
-        cell2->setNeighbour(edges[edges.size()-1]);
+
         edgeCounter++;
     }
 
@@ -210,7 +215,8 @@ bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, Maze& ma
 }
 
 /* This function checks the validity of the maze and the .maze file */
-bool FileHandler::checkFileValidity(unsigned width, unsigned height, unsigned edgeCount, unsigned edgesRead)
+bool FileHandler::checkFileValidity(unsigned width, unsigned height, 
+    unsigned edgeCount, unsigned edgesRead)
 {
 	unsigned totalCells = width*height;
 	/* Check enough edges exist */
@@ -228,7 +234,8 @@ bool FileHandler::checkFileValidity(unsigned width, unsigned height, unsigned ed
 	/* Check the maze is a square */
 	else if(width != height)
 	{
-		cout << "The maze must be a square. i.e. the width and height should be the same." << endl;
+		cout << "The maze must be a square. i.e. the width and height";
+        cout << " should be the same." << endl;
 		return false;
 	}
 	/* Check the header info matches the number of edges read */

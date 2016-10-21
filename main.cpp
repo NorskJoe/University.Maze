@@ -4,6 +4,7 @@
 #include <sstream>
 #include <vector>
 #include <random>
+#include <chrono>
 
 #include "main.h"
 #include "maze.h"
@@ -37,6 +38,10 @@ int main(int argc, char **argv)
 	string svgFileName;
 	string binaryFileName;
 
+	/* Time objects for timing algorithms */
+	chrono::time_point<chrono::system_clock> start, end;
+	chrono::duration<double> elapsedTime;
+
 	/* Run through arguments entered, ignoring program name */
 	/* 	CHECKING GENERATION ARGUMENTS */
 	for (int i = 1; i < argc; i++)
@@ -48,7 +53,8 @@ int main(int argc, char **argv)
 			/* First check if another generation option has been entered */
 			if (loadAldous == true || loadEllers == true)
 			{
-				cout << "Only one maze generation option can be entered." << endl;
+				cout << "Only one maze generation option can be entered." 
+					<< endl;
 				return programUsage(programName);
 			}
 			loadBinary = true;
@@ -56,10 +62,12 @@ int main(int argc, char **argv)
 			if (i + 1 != argc)
 			{
 				/* Get and validate file to load */
+				cout << "Loading maze from file...";
 				if(!file.loadBinaryFile(argv[i+1], edges, maze))
 				{
 					return programUsage(programName);
 				}
+				cout << "... Complete!" << endl;
 			}
 			else
 			{
@@ -73,7 +81,8 @@ int main(int argc, char **argv)
 			/* First check if another generation option has been entered */
 			if (loadBinary == true || loadEllers == true)
 			{
-				cout << "Only one maze generation option can be entered." << endl;
+				cout << "Only one maze generation option can be entered." 
+					<< endl;
 				return programUsage(programName);
 			}
 
@@ -89,7 +98,8 @@ int main(int argc, char **argv)
 					&& argv[i+1] != SOLVE_BFS
 					&& argv[i+1] != SOLVE_MANHATTAN)
 				{
-					if(!getSeedArguments(maze, generator, argv[i+1], argv[i+2], argv[i+3]))
+					if(!getSeedArguments(maze, generator, argv[i+1], 
+						argv[i+2], argv[i+3]))
 					{
 						return programUsage(programName);
 					}
@@ -106,7 +116,8 @@ int main(int argc, char **argv)
 						&& argv[i+1] != SOLVE_MANHATTAN
 						&& argv[i+1] != SOLVE_EUCLIDEAN)
 					{
-						cout << "Invalid command line arguments. No seed entered" << endl;
+						cout << "Invalid command line arguments.";
+						cout << " No seed entered" << endl;
 						return programUsage(programName);
 					}
 					else
@@ -116,7 +127,8 @@ int main(int argc, char **argv)
 						mt19937 mt(time(nullptr));
 						seed = mt();
 						cout << "Seed for this generation: " << seed << endl;
-						cout << "Width & Height defaulting to 10x10..." << endl;
+						cout << "Width & Height defaulting to 10x10..." 
+							<< endl;
 						width = 10;
 						height = 10;
 						maze.setSeed(seed);
@@ -127,24 +139,33 @@ int main(int argc, char **argv)
 				}
 				/* All generation options are valid.  Create the maze */
 				/* Set maze generation variables */
-				cout << "Generating a maze using the Aldous Broder algorithm..." << endl;
+				cout << "Generating a maze using the";
+				cout << " Aldous Broder algorithm...";
 				loadAldous = true;
 				mazeType = ALDOUS_BRODER;
 				width = maze.getWidth();
 				height = maze.getHeight();
 				seed = maze.getSeed();
 				maze = Maze(width, height, seed);
-				/* Dynamically create a generator object based on maze type using a factory method.  Generator object will then generate the maze */
+				/* Dynamically create a generator object based on maze type
+				using a factory method. */
 				MazeGenerator* mazeGenerator;
 				mazeGenerator = MazeGenerator::getGenerator(mazeType);
+				start = chrono::system_clock::now();
 				mazeGenerator->makeMaze(maze, generator, edges);
+				end = chrono::system_clock::now();
+				elapsedTime = end - start;
+				cout << "... Generated!" << endl;
+				cout << "Elapsed time for generating the algorithm was " 
+					<< elapsedTime.count() << " seconds." << endl;
 
 				
 			}
 			/* Not enough arguments have been entered */
 			else 
 			{
-				cout << "Error in command line arguments. Not enough arguments entered. " << endl;
+				cout << "Error in command line arguments.";
+				cout << "Not enough arguments entered. " << endl;
 				return programUsage(programName);
 			}
 		}
@@ -154,7 +175,8 @@ int main(int argc, char **argv)
 			/* First check if another generation option has been entered */
 			if (loadBinary == true || loadAldous == true)
 			{
-				cout << "Only one maze generation option can be entered." << endl;
+				cout << "Only one maze generation option can be entered." 
+					<< endl;
 				return programUsage(programName);
 			}
 
@@ -168,7 +190,8 @@ int main(int argc, char **argv)
 					&& argv[i+1] != SOLVE_BFS
 					&& argv[i+1] != SOLVE_MANHATTAN)
 				{
-					if(!getSeedArguments(maze, generator, argv[i+1], argv[i+2], argv[i+3]))
+					if(!getSeedArguments(maze, generator, argv[i+1], 
+						argv[i+2], argv[i+3]))
 					{
 						return programUsage(programName);
 					}
@@ -185,7 +208,8 @@ int main(int argc, char **argv)
 						&& argv[i+1] != SOLVE_MANHATTAN
 						&& argv[i+1] != SOLVE_EUCLIDEAN)
 					{
-						cout << "Invalid command line arguments. No seed entered" << endl;
+						cout << "Invalid command line arguments.";
+						cout << " No seed entered" << endl;
 						return programUsage(programName);
 					}
 					else
@@ -195,7 +219,8 @@ int main(int argc, char **argv)
 						mt19937 mt(time(nullptr));
 						seed = mt();
 						cout << "Seed for this generation: " << seed << endl;
-						cout << "Width & Height defaulting to 10x10..." << endl;
+						cout << "Width & Height defaulting to 10x10..." 
+							<< endl;
 						width = 10;
 						height = 10;
 						maze.setWidth(width);
@@ -206,7 +231,7 @@ int main(int argc, char **argv)
 				}
 				/* All generation options are valid.  Create the maze */
 				/* Set maze generation variables */
-				cout << "Generating a maze using Ellers algorithm..." << endl;
+				cout << "Generating a maze using Ellers algorithm...";
 				loadEllers = true;
 				mazeType = ELLERS;
 				width = maze.getWidth();
@@ -216,7 +241,13 @@ int main(int argc, char **argv)
 				/* Dynamically create a generator object based on maze type */
 				MazeGenerator* mazeGenerator;
 				mazeGenerator = MazeGenerator::getGenerator(mazeType);
+				start = chrono::system_clock::now();
 				mazeGenerator->makeMaze(maze, generator, edges);
+				end = chrono::system_clock::now();
+				elapsedTime = end - start;
+				cout << "... Generated!" << endl;
+				cout << "Elapsed time for generating the maze was " 
+					<< elapsedTime.count() << " seconds." << endl;
 
 			}
 
@@ -225,7 +256,8 @@ int main(int argc, char **argv)
 			/* Not enough arguments have been entered */
 			else 
 			{
-				cout << "Error in command line arguments. Not enough arguments entered. " << endl;
+				cout << "Error in command line arguments.";
+				cout << "Not enough arguments entered. " << endl;
 				programUsage(programName);
 			}
 		}
@@ -233,30 +265,56 @@ int main(int argc, char **argv)
 		/* CHECKING SOLVING ARGUMENTS */
 		else if(currentArgument == SOLVE_DFS)
 		{
+			cout << "Solving maze using depth first search..." << endl;
 			MazeSolver* solver;
 			solver = MazeSolver::getSolver(DFS);
+			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
+			end = chrono::system_clock::now();
+			elapsedTime = end - start;
+			cout << "Elapsed time for solving the maze was "
+				<< elapsedTime.count() << " seconds." << endl;
 		}
 
 		else if(currentArgument == SOLVE_BFS)
 		{
+			cout << "Solving maze using breadth first search..." << endl;
 			MazeSolver* solver;
 			solver = MazeSolver::getSolver(BFS);
+			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
+			end = chrono::system_clock::now();
+			elapsedTime = end - start;
+			cout << "Elapsed time for solving the maze was "
+				<< elapsedTime.count() << " seconds." << endl;
 		}
 
 		else if(currentArgument == SOLVE_MANHATTAN)
 		{
+			cout << "Solving maze using Dijkstra's algorithm "
+				<< "and Manhattan distance cost..." << endl;
 			MazeSolver* solver;
 			solver = MazeSolver::getSolver(DIJKSTRA_MANHATTAN);
+			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
+			end = chrono::system_clock::now();
+			elapsedTime = end - start;
+			cout << "Elapsed time for solving the maze was "
+				<< elapsedTime.count() << " seconds." << endl;
 		}
 
 		else if(currentArgument == SOLVE_EUCLIDEAN)
 		{
+			cout << "Solving maze using Dijkstra's algorithm "
+				<< "and Euclidean distance cost..." << endl;
 			MazeSolver* solver;
 			solver = MazeSolver::getSolver(DIJKSTRA_EUCLIDEAN);
+			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
+			end = chrono::system_clock::now();
+			elapsedTime = end - start;
+			cout << "Elapsed time for solving the maze was "
+				<< elapsedTime.count() << " seconds." << endl;
 		}
 
 		/* CHECKING SAVING OPTIONS */
@@ -267,7 +325,8 @@ int main(int argc, char **argv)
 			{
 				svgFileName = argv[i + 1];
 				/* Check file extension */
-				if (svgFileName.substr(svgFileName.find_last_of(".") + 1) == "svg")
+				if (svgFileName.substr(svgFileName.find_last_of(".")+1) 
+					== "svg")
 				{
 					/* Valid filename */
 					saveSVG = true;
@@ -281,7 +340,8 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				cout << "Error in command line arguments. No filename found for saving svg." << endl;
+				cout << "Error in command line arguments.";
+				cout << "No filename found for saving svg." << endl;
 				return programUsage(programName);
 			}
 		}
@@ -293,7 +353,8 @@ int main(int argc, char **argv)
 			{
 				binaryFileName = argv[i + 1];
 				/* Check filename extension */
-				if (binaryFileName.substr(binaryFileName.find_last_of(".") + 1) == "maze")
+				if (binaryFileName.substr(binaryFileName.find_last_of(".")+1)
+					== "maze")
 				{
 					/* Valid filename */
 					saveBinary = true;
@@ -307,7 +368,8 @@ int main(int argc, char **argv)
 			}
 			else
 			{
-				cout << "Error in command line arguments. No filename found for saving binary file." << endl;
+				cout << "Error in command line arguments.";
+				cout << "No filename found for saving binary file." << endl;
 				return programUsage(programName);
 			}
 		}
@@ -334,7 +396,8 @@ int main(int argc, char **argv)
 		cout << "Saving svg file...";
 		if(file.saveSVGFile(svgFileName, maze) == false)
 		{
-			cout << "Error saving " << svgFileName << ". Check the file name is valid." << endl;
+			cout << "Error saving " << svgFileName 
+				<< ". Check the file name is valid." << endl;
 			return programUsage(programName);
 		}
 		cout << "... saved!" << endl;
@@ -345,7 +408,8 @@ int main(int argc, char **argv)
 		cout << "Saving binary .maze file...";
 		if(file.saveBinaryFile(binaryFileName, maze) == false)
 		{
-			cout << "Error saving " << binaryFileName << ". Check the file name is valid." << endl;
+			cout << "Error saving " << binaryFileName 
+				<< ". Check the file name is valid." << endl;
 			return programUsage(programName);
 		}
 		cout << "... saved!" << endl;
@@ -359,19 +423,47 @@ int programUsage(string programName)
 {
 	/* Correct usage of arguments */
 	cout << endl;
-	cout << "The correct use of arguments are: " << endl;
-	cout << "\t" << programName << "<[--g seed width height] OR ";
-	cout << "[--g seed] OR [--g] OR [--lb infile]> " << endl;
-	cout << "\t<[--sv filename.svg] AND\\OR [--sb filename.maze]>" << endl << endl;
+	cout << "The correct use of arguments are: " << endl << endl;
+	cout << "\t" << programName << endl;
+
+	cout << "\t<[g seed width height] OR [g] OR [--lb infile]>   ";
+	cout <<  "(Where g is --ga OR --ge)" << endl;
+
+	cout << "\t<[p]>   (Where p is --pd OR --pb OR --pm OR --pe)   (OPTIONAL)"
+		<< endl;
+
+	cout << "\t<[--sv filename.svg] AND\\OR [--sb filename.maze]>" 
+		<< endl << endl;
 	/* Explanation of arguments */
-	cout << "<--g> flag generates a new maze from seed. <seed> is the optional seed ";
-	cout << "to be used for generation. <width> and <height> are the optional ";
-	cout << "desrired width and height of the maze.  Note that if these are entered, you must also enter a seed." << endl << endl;
+	cout << "<--ga> flag generates a new maze from seed, using the Aldous";
+	cout << " Broder Algorithm." << endl;
+	cout << "<--ge> flag generates a new maze from seed, using Eller's";
+	cout << " Algorithm" << endl;
+	cout << "(Note that <seed width height> is optional.  However if seed is";
+	cout << " entered, then width and height must also be entered, and vice";
+	cout << " versa)" << endl << endl;
+	
+
 	cout << "<--lb> flag will load an existing maze from a .maze file. ";
-	cout << "<infile> is the specified .maze file to load a maze from." << endl << endl;
-	cout << "<--sv> flag will tell the program to save the maze in an .svg file. ";
+	cout << "<infile> is the specified .maze file to load a maze from." 
+		<< endl << endl;
+
+	cout << "<--pd> flag will solve the maze using a depth first search";
+	cout << " algorithm." << endl;
+	cout << "<--pb> flag will solve the maze using a breadth first search";
+	cout << " algorithm." << endl;
+	cout << "<--pm> flag will solve the maze using Dijkstra's algorithm,";
+	cout << " with Manhattan cost heuristics." << endl;
+	cout << "<--pe> flag will solve the maze using Dijkstra's algorithm,";
+	cout << " with Euclidean cost heuristics." << endl;
+	cout << "(Note that all of these flags are optional.  Also, only";
+	cout << " one solving algorithm should be chosen" << endl << endl;
+
+	cout << "<--sv> flag will tell the program to save the maze in an";
+	cout << " .svg file. ";
 	cout << "This file must have the .svg file extension. " << endl << endl;
-	cout << "<--sb> flag will tell the program to save the maze in a .maze file ";
+	cout << "<--sb> flag will tell the program to save the maze in a";
+	cout << " .maze file ";
 	cout << "in binary form." << endl << endl;
 	
 	return -1;
@@ -416,7 +508,8 @@ bool getSeedArguments(Maze& maze, mt19937& gen, string seed,
 				|| widthArg == SAVE_SVG_FILE)
 			{
 				/* Width and height not entered, default to 10x10 */
-				cout << "Width and height not entered. Defaulting to 10x10... " << endl;
+				cout << "Width and height not entered. Defaulting to 10x10..."
+					<< endl;
 				w = 10;
 				h = 10;
 			}

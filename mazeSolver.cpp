@@ -10,7 +10,8 @@ MazeSolver::MazeSolver()
 	
 }
 
-/* Factory method will return the appropriate generator object for making a maze */
+/* Factory method will return the appropriate generator object for 
+solving a maze */
 MazeSolver* MazeSolver::getSolver(int solverType)
 {
 	if(solverType == DFS)

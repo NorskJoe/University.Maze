@@ -1,6 +1,3 @@
-//remove later
-#include <iostream>
-
 #include "euclideanDijkstra.h"
 
 using namespace std;

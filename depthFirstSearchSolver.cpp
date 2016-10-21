@@ -1,4 +1,3 @@
-//remove later
 #include <iostream>
 #include <unordered_set>
 #include <stack>
@@ -23,7 +22,7 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze)
 	vector<Edge> pathways;
 
 	/* Setting up local data structures
-		cellStack: used to keep track of visited cells
+		cellStack: used to keep track of solution
 	*/
 	stack<Cell*> cellStack;
 
@@ -49,7 +48,8 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze)
 		if(currentCell == nullptr)
 		{
 			/* Maze cannot be solved */
-			cout << "error" << endl;
+			cout << "This maze cannot be solved." << endl;
+			return;
 		}
 
 		/* Get all neighbouring cells */
@@ -64,7 +64,6 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze)
 				foundValidNeighbour = true;
 				break;
 			}
-
 		}
 		
 		/* If no unvisited neighbour found, backtrace by one cell */
@@ -72,21 +71,18 @@ void DepthFirstSearchSolver::solveMaze(Maze& maze)
 		{
 			cellStack.pop();
 		}
-
 	}
 
-	/* Now add cell pathway to maze object as vector of edges */
+	/* Now add cell pathway to maze object. Trace through maze solution
+	backwards */
 	/* First push last cell onto stack */
 	cellStack.push(endCell);
-	/* Go through stack, adding two cells to Edge at a time */
 	for (int i = cellStack.size(); cellStack.size() != 1; i--)
 	{
 		Cell * cell1 = cellStack.top();
 		cellStack.pop();
 		Cell * cell2 = cellStack.top();
 
-
 		maze.addPathway(Edge(cell1,cell2));
-
 	}
 }

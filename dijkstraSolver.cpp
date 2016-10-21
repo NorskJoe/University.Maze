@@ -81,9 +81,3 @@ void DijkstraSolver::solveMaze(Maze& maze)
 	}
 
 }
-
-// int DijkstraManhattanSolver::heuristicEstimate(Maze& maze, Cell * cell)
-// {
-// 	return (maze.getWidth() - cell->getCoordinates().yPos-1)  + 
-// 		(maze.getHeight() - cell->getCoordinates().xPos-1);
-// }

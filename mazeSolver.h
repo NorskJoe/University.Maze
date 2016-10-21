@@ -1,11 +1,6 @@
 #ifndef MAZE_SOLVER_H
 #define MAZE_SOLVER_H
 
-//using namespace std;
-
-#include <vector>
-
-
 #include "maze.h"
 
 /* Definitions for solving options.  Used to implement a factory pattern */

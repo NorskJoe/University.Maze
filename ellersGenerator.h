@@ -5,9 +5,14 @@
 
 #include "mazeGenerator.h"
 
-#define JOIN 0
-#define NOT_JOIN 1
-#define JOIN_CHOICE 2
+enum join
+{
+	JOIN,
+	NOT_JOIN,
+
+	JOIN_CHOICE
+
+};
 
 class EllersGenerator: public MazeGenerator
 {

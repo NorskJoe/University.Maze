@@ -27,7 +27,6 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	height = maze.getHeight();
 	edgeCount = 0;
 
-	// multimap<int, Cell *> set_to_cellMap;
 	multimap<Cell *, int> cell_to_setMap;
 
 	setNumber = 1;
@@ -45,13 +44,11 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	bool finalRow = false;
 	for(int i = 0; i < height; i++)
 	{
-		cout << "doing row: " << i << endl;
 		if(i == height-1)
 		{
 			finalRow = true;
 		}
 
-		cout << "adding horizontally" << endl;
 		/* Go through cells in row, deciding whether to join or not */
 		for(int j = 0; j < width-1; j++)
 		{
@@ -66,15 +63,9 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 			else
 			{
 				int choice = gen() % JOIN_CHOICE;
-				// cout << "choice is: " << choice << endl;
-				// cout << "cell1: ";
-				// Cell * cellll = maze.getCell(j, i);
-				// x = cellll->getCoordinates().xPos;
-				// y = cellll->getCoordinates().yPos;
-				// cout << y << "," << x << endl;
+
 				if(choice == JOIN)
 				{
-					//cout << "joined" << endl;
 					Cell * cell1 = maze.getCell(j, i);
 					Cell * cell2 = maze.getCell(j+1, i);
 
@@ -83,9 +74,7 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 					mergeCells(cell1, cell2, cell_to_setMap,
 						edges, edgeCount);
 				}
-
 			}
-			
 		}
 		
 		/* If reach final row, do not add neighbours from row below */
@@ -96,14 +85,6 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 		}
 
 	}
-	// int x, y;
-	// cout << endl << "cell_to_setMap cointains: " << endl;
-	// for(auto it = cell_to_setMap.begin(); it != cell_to_setMap.end(); it++)
-	// {
-	// 	x = it->first->getCoordinates().xPos;
-	// 	y = it->first->getCoordinates().yPos;
-	// 	cout << y << "," << x << " : " << it->second << endl;
-	// }
 
 	maze.setEdges(edges);
 	maze.setEdgeCount(edgeCount);
@@ -116,6 +97,7 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<Cell*,
 {
 	multimap<Cell *, int>::iterator c_to_sIt;
 
+	/* First check that the two cells are not already in the same set */
 	int setOne = -1, setTwo = -1;
 	c_to_sIt = c_to_sMap.find(cell1);
 	if(c_to_sIt != c_to_sMap.end())
@@ -150,14 +132,6 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<Cell*,
 		addNewEdge(edges, edgeCount, cell1, cell2);
 
 		/* Add the new elements to map, merge into cell1's set */
-
-		x = cell1->getCoordinates().xPos;
-		y = cell1->getCoordinates().yPos;
-		cout << "joined cells: " << y << "," << x << " - ";
-		x = cell2->getCoordinates().xPos;
-		y = cell2->getCoordinates().yPos;
-		cout << y << "," << x << endl;
-
 		c_to_sMap.insert(pair<Cell *, int>(cell1, setNumber));
 		c_to_sMap.insert(pair<Cell *, int>(cell2, setNumber));
 
@@ -200,32 +174,16 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 	int& setNumber)
 {
 	int width = maze.getWidth();
-	
-	//cout << "adding vertically" << endl;
+	int col = 0;
 
 	int setCount = getRowSetCount(c_to_sMap, row, maze);
-	//cout << "set count in row: " << row << " is: " << setCount << endl;
 
-	// cout << "c_to_sMap contains: " << endl;
-	// for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
-	// {
-	// 	x = it->first->getCoordinates().xPos;
-	// 	y = it->first->getCoordinates().yPos;
-	// 	cout << y << "," << x << " : " << it->second << endl;
-	// }
-	// cout << endl;
-
-	int col = 0;
 	while(setCount > 0)
 	{
 		Cell * topCell = maze.getCell(col, row);
-		// x = topCell->getCoordinates().xPos;
-		// y = topCell->getCoordinates().yPos;
-		// cout << "have new cell: " << y << "," << x << endl;
+		
 		int setNumber = c_to_sMap.find(topCell)->second;
-		// cout << "set number is: " << setNumber << endl;
 		int cellCount = getCellCount(setNumber, c_to_sMap, row);
-		// cout << "cell count is: " << cellCount << endl << endl;
 
 		if(cellCount == 1)
 		{
@@ -243,33 +201,44 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 			{
 				cellsToJoin = 1;
 			}
-			cout << "cellsToJoin: " << cellsToJoin << endl;
+
 			int difference = cellCount - cellsToJoin;
 
 			while(cellsToJoin > 0)
 			{
-				Cell * topCell  = maze.getCell(col, row);
-
-				Cell * bottomCell = maze.getCell(col, row+1);
-				mergeCells(topCell, bottomCell, c_to_sMap, edges, edgeCount);
-				cellsToJoin--;
-				col++;
+				/* Randomly decide to skip cell or not */
+				int random = gen() % JOIN_CHOICE;
+				if(cellsToJoin > 1)
+				{
+					if(random == NOT_JOIN)
+					{	
+						col++;
+						Cell * topCell  = maze.getCell(col, row);
+						Cell * bottomCell = maze.getCell(col, row+1);
+						mergeCells(topCell, bottomCell, c_to_sMap, edges, 
+							edgeCount);
+						cellsToJoin--;
+					}
+				}
+				else
+				{
+					Cell * topCell  = maze.getCell(col, row);
+					Cell * bottomCell = maze.getCell(col, row+1);
+					mergeCells(topCell, bottomCell, c_to_sMap, edges, 
+						edgeCount);
+					cellsToJoin--;
+					col++;
+				}
 			}
 			setCount--;
 			col += difference;
-
-		
 		}
 	}
 
-	/* Add any cells not already in a set, add to a new set */
+	/* For any cells not already in a set, add to a new unique set */
 	for(int i = 0; i < width; i++)
 	{
 		Cell * cell = maze.getCell(i, row+1);
-		// x = cell->getCoordinates().xPos;
-		// y = cell->getCoordinates().yPos;
-		//cout << "editing cell: " << y << "," << x << endl;
-
 		unsigned set = c_to_sMap.find(cell)->second;
 
 		if(set > c_to_sMap.size() || set <= 0)
@@ -278,15 +247,6 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 			setNumber++;
 		}
 	}
-
-	// cout << "c_to_sMap contains: " << endl;
-	// for(auto it = c_to_sMap.begin(); it != c_to_sMap.end(); it++)
-	// {
-	// 	x = it->first->getCoordinates().xPos;
-	// 	y = it->first->getCoordinates().yPos;
-	// 	cout << y << "," << x << " : " << it->second << endl;
-	// }
-	// cout << endl;
 
 }
 
