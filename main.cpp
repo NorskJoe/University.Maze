@@ -40,7 +40,6 @@ int main(int argc, char **argv)
 
 	/* Time objects for timing algorithms */
 	chrono::time_point<chrono::system_clock> start, end;
-	chrono::duration<double> elapsedTime;
 
 	/* Run through arguments entered, ignoring program name */
 	/* 	CHECKING GENERATION ARGUMENTS */
@@ -154,10 +153,10 @@ int main(int argc, char **argv)
 				start = chrono::system_clock::now();
 				mazeGenerator->makeMaze(maze, generator, edges);
 				end = chrono::system_clock::now();
-				elapsedTime = end - start;
 				cout << "... Generated!" << endl;
 				cout << "Elapsed time for generating the algorithm was " 
-					<< elapsedTime.count() << " seconds." << endl;
+					<< chrono::duration_cast<chrono::microseconds>
+					(end - start).count() << " microseconds." << endl;
 
 				
 			}
@@ -244,10 +243,10 @@ int main(int argc, char **argv)
 				start = chrono::system_clock::now();
 				mazeGenerator->makeMaze(maze, generator, edges);
 				end = chrono::system_clock::now();
-				elapsedTime = end - start;
 				cout << "... Generated!" << endl;
-				cout << "Elapsed time for generating the maze was " 
-					<< elapsedTime.count() << " seconds." << endl;
+				cout << "Elapsed time for generating the algorithm was " 
+					<< chrono::duration_cast<chrono::microseconds>
+					(end - start).count() << " microseconds." << endl;
 
 			}
 
@@ -271,9 +270,9 @@ int main(int argc, char **argv)
 			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
 			end = chrono::system_clock::now();
-			elapsedTime = end - start;
-			cout << "Elapsed time for solving the maze was "
-				<< elapsedTime.count() << " seconds." << endl;
+			cout << "Elapsed time for solving the algorithm was " 
+				<< chrono::duration_cast<chrono::microseconds>
+				(end - start).count() << " microseconds." << endl;
 		}
 
 		else if(currentArgument == SOLVE_BFS)
@@ -284,9 +283,9 @@ int main(int argc, char **argv)
 			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
 			end = chrono::system_clock::now();
-			elapsedTime = end - start;
-			cout << "Elapsed time for solving the maze was "
-				<< elapsedTime.count() << " seconds." << endl;
+			cout << "Elapsed time for solving the algorithm was " 
+				<< chrono::duration_cast<chrono::microseconds>
+				(end - start).count() << " microseconds." << endl;
 		}
 
 		else if(currentArgument == SOLVE_MANHATTAN)
@@ -298,9 +297,9 @@ int main(int argc, char **argv)
 			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
 			end = chrono::system_clock::now();
-			elapsedTime = end - start;
-			cout << "Elapsed time for solving the maze was "
-				<< elapsedTime.count() << " seconds." << endl;
+			cout << "Elapsed time for solving the algorithm was " 
+				<< chrono::duration_cast<chrono::microseconds>
+				(end - start).count() << " microseconds." << endl;
 		}
 
 		else if(currentArgument == SOLVE_EUCLIDEAN)
@@ -312,9 +311,9 @@ int main(int argc, char **argv)
 			start = chrono::system_clock::now();
 			solver->solveMaze(maze);
 			end = chrono::system_clock::now();
-			elapsedTime = end - start;
-			cout << "Elapsed time for solving the maze was "
-				<< elapsedTime.count() << " seconds." << endl;
+			cout << "Elapsed time for solving the algorithm was " 
+				<< chrono::duration_cast<chrono::microseconds>
+				(end - start).count() << " microseconds." << endl;
 		}
 
 		/* CHECKING SAVING OPTIONS */

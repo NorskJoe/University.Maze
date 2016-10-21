@@ -117,7 +117,6 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<Cell*,
 		c_to_sMap.erase(cell1);
 		c_to_sMap.erase(cell2);
 		int setNumber = setOne;
-		int x, y;
 
 		/* Find all other cells in set two, and change their set to set one
 		for continuity */
