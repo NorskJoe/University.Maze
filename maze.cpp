@@ -30,7 +30,7 @@ Maze::Maze(int h, int w, int count)
 }
 
 /* Getters and setters */
-Cell * Maze::getCell(int x, int y)
+Cell * Maze::getCell(int x, int y) const
 {
 	return cells[x][y];
 }

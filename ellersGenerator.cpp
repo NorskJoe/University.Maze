@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <list>
 
+#include <iostream>
+
 #include "ellersGenerator.h"
 
 using namespace std;
@@ -29,6 +31,7 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 
 	multimap<Cell *, int> cell_to_setMap;
 
+	/* The number that will be used to add cells to a new set */
 	setNumber = 1;
 	/* Add all cells to a distinct set */
 	for(int j = 0; j < width; j++)
@@ -37,27 +40,32 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 		cell_to_setMap.insert(pair<Cell *, int>(cell, setNumber));
 
 		setNumber++;
-
 	}
 
 
 	bool finalRow = false;
+	bool firstRow = true;
 	for(int i = 0; i < height; i++)
 	{
 		if(i == height-1)
 		{
 			finalRow = true;
 		}
+		if(i > 0 && firstRow)
+		{
+			firstRow = false;
+		}
 
 		/* Go through cells in row, deciding whether to join or not */
 		for(int j = 0; j < width-1; j++)
 		{
-			/* For final row, join all adjacent cells in distinct */
+			/* For final row, join all adjacent cells in distinct sets */
 			if(finalRow)
 			{
 				Cell * cell1 = maze.getCell(j, i);
 				Cell * cell2 = maze.getCell(j+1, i);
-				mergeCells(cell1, cell2, cell_to_setMap, edges, edgeCount);
+				mergeCells(cell1, cell2, cell_to_setMap, 
+					edges, edgeCount);
 			}
 
 			else
@@ -80,8 +88,23 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 		/* If reach final row, do not add neighbours from row below */
 		if(!finalRow)
 		{
-			addNextRow(gen, maze, i, cell_to_setMap, edges, edgeCount,
-				setNumber);
+			addNextRow(gen, maze, i, cell_to_setMap, 
+				edges, edgeCount, setNumber);
+		}
+
+		/* Clear map data for previous row */
+		if(!firstRow)
+		{
+			for(int j = 0; j < width; j++)
+			{
+				Cell * cell = maze.getCell(j, i-1);
+
+				if(cell_to_setMap.find(cell) != cell_to_setMap.end())
+				{
+					cell_to_setMap.erase(cell);
+				}
+
+			}
 		}
 
 	}
@@ -92,8 +115,8 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 
 /* Function that will take two cells and merge them into one set, and add
 them into an edge structure  */
-void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<Cell*, 
-	int> & c_to_sMap, vector<Edge>& edges, int& edgeCount)
+void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, 
+	multimap<Cell*,int> & c_to_sMap, vector<Edge>& edges, int& edgeCount)
 {
 	multimap<Cell *, int>::iterator c_to_sIt;
 
@@ -139,8 +162,8 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, multimap<Cell*,
 
 /* Function that will get the total number of sets in a given row,
 used to join with neighbours below this row */
-int EllersGenerator::getRowSetCount(multimap<Cell *, int> & c_to_sMap, 
-	int rowNumber, Maze& maze)
+int EllersGenerator::getRowSetCount(const multimap<Cell *,int> & c_to_sMap, 
+	const int rowNumber, const Maze& maze)
 {
 	const int width = maze.getWidth();
 	/* Maintain a list of already counted sets */
@@ -168,7 +191,7 @@ from row below.
 	-if a set only has one cell, it must add an edge
 	-if a cell is the last member of a set without an edge, an edge must
 	 not be added */
-void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row, 
+void EllersGenerator::addNextRow(mt19937& gen, const Maze& maze, int row, 
 	multimap<Cell *, int> & c_to_sMap, vector<Edge>& edges, int& edgeCount, 
 	int& setNumber)
 {
@@ -211,6 +234,7 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 				{
 					if(random == NOT_JOIN)
 					{	
+						/* Skip the current cell, join the next instead */
 						col++;
 						Cell * topCell  = maze.getCell(col, row);
 						Cell * bottomCell = maze.getCell(col, row+1);
@@ -249,8 +273,8 @@ void EllersGenerator::addNextRow(mt19937& gen, Maze& maze, int row,
 
 }
 
-int EllersGenerator::getCellCount(int currentSet,
-	multimap<Cell *, int> c_to_sMap, int row)
+int EllersGenerator::getCellCount(const int currentSet,
+	const multimap<Cell *, int> c_to_sMap, const int row)
 {
 	int count = 0;
 

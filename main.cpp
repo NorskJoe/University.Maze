@@ -393,25 +393,36 @@ int main(int argc, char **argv)
 	if(saveSVG == true)
 	{
 		cout << "Saving svg file...";
+		start = chrono::system_clock::now();
 		if(file.saveSVGFile(svgFileName, maze) == false)
 		{
 			cout << "Error saving " << svgFileName 
 				<< ". Check the file name is valid." << endl;
 			return programUsage(programName);
 		}
+		end =chrono::system_clock::now();
 		cout << "... saved!" << endl;
+		cout << "Elapsed time for saving the .svg was " 
+				<< chrono::duration_cast<chrono::microseconds>
+				(end - start).count() << " microseconds." << endl;
+
 	}
 	/* Saving Binary File */
 	if(saveBinary == true)
 	{
 		cout << "Saving binary .maze file...";
+		start = chrono::system_clock::now();
 		if(file.saveBinaryFile(binaryFileName, maze) == false)
 		{
 			cout << "Error saving " << binaryFileName 
 				<< ". Check the file name is valid." << endl;
 			return programUsage(programName);
 		}
+		end =chrono::system_clock::now();
 		cout << "... saved!" << endl;
+		cout << "Elapsed time for saving the .maze was " 
+				<< chrono::duration_cast<chrono::microseconds>
+				(end - start).count() << " microseconds." << endl;
 	}
 
 	return 0;

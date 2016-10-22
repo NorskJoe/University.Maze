@@ -24,14 +24,14 @@ public:
 	Maze(int, int, int=0);
 
 	/* Functions */
-	int getHeight() { return height; }
-	int getWidth() { return width; }
-	int getEdgeCount() { return edgeCount; }
-	unsigned long getSeed() { return seed; }
+	int getHeight() const { return height; }
+	int getWidth() const { return width; }
+	int getEdgeCount() const { return edgeCount; }
+	unsigned long getSeed() const { return seed; }
 	vector<Edge> getEdges() { return edges; }
 	vector<Edge> getPathways() { return pathways; }
 	vector< vector<Cell *> > getMaze() { return cells; }
-	Cell * getCell(int x, int y);
+	Cell * getCell(int x, int y) const;
 	bool existsInMaze(int x, int y);
 
 	void setEdgeCount(int count);

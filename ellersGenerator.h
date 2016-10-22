@@ -20,10 +20,10 @@ private:
 	/* Functions */
 	void mergeCells(Cell *, Cell *, multimap<Cell *,int> &, 
 		vector<Edge>&, int&);
-	int getRowSetCount(multimap<Cell *, int>&, int, Maze&);
-	void addNextRow(mt19937&, Maze&, int, multimap<Cell *, int>&, 
+	int getRowSetCount(const multimap<Cell *,int>&, const int, const Maze&);
+	void addNextRow(mt19937&, const Maze&, int, multimap<Cell *, int>&, 
 		vector<Edge>&, int&, int&);
-	int getCellCount(int, multimap<Cell *, int>, int);
+	int getCellCount(const int, const multimap<Cell *, int>, const int);
 public:
 	/* Constructor */
 	EllersGenerator();
