@@ -28,6 +28,7 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	width = maze.getWidth();
 	height = maze.getHeight();
 	edgeCount = 0;
+	cellMap.resize(width);
 
 	multimap<Cell *, int> cell_to_setMap;
 

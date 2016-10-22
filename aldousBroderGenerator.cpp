@@ -27,8 +27,8 @@ void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen,
 	vector< vector<Cell *> > cells = maze.getMaze();
 
 	/* Choose a random vertex to start generation */
-	xPos = gen() % width;
-	yPos = gen() % height;
+	xPos = gen() % width-1;
+	yPos = gen() % height-1;
 	currentCell = maze.getCell(xPos,yPos);
 	currentCell->setVisited();
 	remainingCells = totalCells - 1;

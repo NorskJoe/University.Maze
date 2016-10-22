@@ -32,7 +32,7 @@ public:
 	void setVisited() { this->visited = true; }
 	void setNotVisited() { this->visited = false; }
 
-	std::vector<Cell *> getNeighbourCells() { return neighbourCells; }
+	const std::vector<Cell *>& getNeighbourCells();
 };
 
 #endif // CELL_H

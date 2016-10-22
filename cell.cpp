@@ -17,3 +17,8 @@ void Cell::setNeighbourCell(Cell * cell)
 {
 	this->neighbourCells.push_back(cell);
 }
+
+const std::vector<Cell *>& Cell::getNeighbourCells()
+{
+	return neighbourCells;
+}

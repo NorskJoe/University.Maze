@@ -32,14 +32,12 @@ void DijkstraSolver::solveMaze(Maze& maze)
 	Cell * startCell = maze.getCell(0,0);
 	Cell * endCell = maze.getCell(width-1, height-1);
 
-	/* First mark all cells as unvisited and 
-	give a distance cost of infinity */
+	/* First give a distance cost of infinity */
 	for(int i = 0; i < width; i++)
 	{
 		for(int j = 0; j < height; j++)
 		{
 			Cell * cell = maze.getCell(i,j);
-			cell->setNotVisited();
 			minDistance[cell] = INFINITY;
 		}
 	}

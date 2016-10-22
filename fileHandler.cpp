@@ -123,7 +123,7 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
         output << "x2='" << x2*CELL_SIZE+OFFSET << "' ";
         output << "y1='" << y1*CELL_SIZE+OFFSET << "' ";
         output << "y2='" << y2*CELL_SIZE+OFFSET << "' ";
-        output << "stroke-width='" << STROKE_WIDTH << "' />" << endl;
+        output << "stroke-width='" << STROKE_WIDTH/2 << "' />" << endl;
     }
 
     /* Footer info */

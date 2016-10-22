@@ -17,6 +17,12 @@ enum join
 class EllersGenerator: public MazeGenerator
 {
 private:
+	struct EllersCell
+	{
+		Cell * cell;
+		int setNumber;
+	};
+	std::vector<vector<EllersCell>> cellMap;
 	/* Functions */
 	void mergeCells(Cell *, Cell *, multimap<Cell *,int> &, 
 		vector<Edge>&, int&);
