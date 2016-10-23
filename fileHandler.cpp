@@ -1,3 +1,9 @@
+/*******************************************************************************
+    Author: Joseph Johnson
+    Student Number: s3542413
+
+    Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include <fstream>
 #include <iostream>
 #include <vector>
@@ -12,7 +18,13 @@ FileHandler::FileHandler()
 
 }
 
-/* Function to save an existing maze's attributes to a .maze binary file */
+/***************************************************************************** 
+    Function that saves maze's attributes in a binary file
+
+    fileName - a valid file name passed into cmd line
+    maze - the maze object
+    
+******************************************************************************/
 bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
 {
     ofstream output;
@@ -62,7 +74,13 @@ bool FileHandler::saveBinaryFile(string fileName, Maze& maze)
     return true;
 }
 
-/* Function to save an existing maze to an svg file */
+/***************************************************************************** 
+    Function that saves a visual representation of a maze to an svg file
+
+    fileName - a valid file name passed into cmd line
+    maze - the maze object
+    
+******************************************************************************/
 bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 {
 	int height, width;
@@ -141,8 +159,14 @@ bool FileHandler::saveSVGFile(string fileName, Maze& maze)
 	return true;
 }
 
-/* Function to load a binary file with a .maze extension, 
-and generate a maze 	with the information */
+/***************************************************************************** 
+    Function that loads a maze from a binary file
+
+    fileName - the name of the file to read, passed into cmd line
+    edges - a vector of edges representing pathways in the maze
+    maze - a maze object to initialise
+    
+******************************************************************************/
 bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges, 
     Maze& maze) 
 {
@@ -214,7 +238,16 @@ bool FileHandler::loadBinaryFile (string fileName, vector<Edge>& edges,
   	return true;
 }
 
-/* This function checks the validity of the maze and the .maze file */
+/***************************************************************************** 
+    Function that checks the validity of the data being read in from a 
+    binary file
+
+    width - the width of the edge read in from file
+    height - the height of the maze read in from file
+    edgeCount - the number of edges that should exist in a maze of this size
+    edgesRead - the edge count read in from file
+    
+******************************************************************************/
 bool FileHandler::checkFileValidity(unsigned width, unsigned height, 
     unsigned edgeCount, unsigned edgesRead)
 {

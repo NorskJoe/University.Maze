@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include <random>
 #include <iostream>
 
@@ -5,8 +11,6 @@
 #include <map>
 #include <algorithm>
 #include <list>
-
-#include <iostream>
 
 #include "ellersGenerator.h"
 
@@ -18,9 +22,17 @@ EllersGenerator::EllersGenerator()
 
 }
 
-/* Implemented using Ellers's algorithm 
+/***************************************************************************** 
+	Overidden function to generate a new maze.
+
+	maze - main maze object
+	gen - random number generator, already seeded
+	edges - a vector of edges that represent pathways in maze
+
+	Implemented using Ellers's algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2010/12/29/maze-
-	generation-eller-s-algorithm */
+	generation-eller-s-algorithm 
+******************************************************************************/
 void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 {
 	int width, height, setNumber, edgeCount;
@@ -28,16 +40,15 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	width = maze.getWidth();
 	height = maze.getHeight();
 	edgeCount = 0;
-	cellMap.resize(width);
 
 	multimap<Cell *, int> cell_to_setMap;
 
 	/* The number that will be used to add cells to a new set */
 	setNumber = 1;
 	/* Add all cells to a distinct set */
-	for(int j = 0; j < width; j++)
+	for(int i = 0; i < width; i++)
 	{
-		Cell * cell = maze.getCell(j, 0);
+		Cell * cell = maze.getCell(i, 0);
 		cell_to_setMap.insert(pair<Cell *, int>(cell, setNumber));
 
 		setNumber++;
@@ -114,8 +125,16 @@ void EllersGenerator::makeMaze(Maze& maze, mt19937& gen, vector<Edge>& edges)
 	maze.setEdgeCount(edgeCount);
 }
 
-/* Function that will take two cells and merge them into one set, and add
-them into an edge structure  */
+/***************************************************************************** 
+	Function to merge two adjacent cells together
+
+	cell1 - first cell in edge
+	cell2 - second cell in edge
+	c_to_sMap - the map representing what set each cell is in
+	edges - the list of edges in the maze
+	edgeCount - the number of edges in the list
+
+******************************************************************************/
 void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2, 
 	multimap<Cell*,int> & c_to_sMap, vector<Edge>& edges, int& edgeCount)
 {
@@ -161,12 +180,18 @@ void EllersGenerator::mergeCells(Cell * cell1, Cell * cell2,
 	}
 }
 
-/* Function that will get the total number of sets in a given row,
-used to join with neighbours below this row */
+/***************************************************************************** 
+	Function that will return the number of distinct sets in a given row
+
+	c_to_sMap - the map representing what set each cell is in
+	rowNumber - the row that is being counted
+	width - the width of the maze
+ 
+******************************************************************************/
 int EllersGenerator::getRowSetCount(const multimap<Cell *,int> & c_to_sMap, 
 	const int rowNumber, const Maze& maze)
 {
-	const int width = maze.getWidth();
+	int width = maze.getWidth();
 	/* Maintain a list of already counted sets */
 	list<int> countedSets;
 
@@ -187,11 +212,18 @@ int EllersGenerator::getRowSetCount(const multimap<Cell *,int> & c_to_sMap,
 	return countedSets.size();
 }
 
-/* Function that will randomly choose neighbours to add to set 
-from row below.
-	-if a set only has one cell, it must add an edge
-	-if a cell is the last member of a set without an edge, an edge must
-	 not be added */
+/***************************************************************************** 
+	Function that will randomly add adjacent cells below the current row
+
+	gen - the random number generator
+	maze - the maze object
+	row - the current row number
+	c_to_sMap - the map representing what set each cell is in
+	edges - the vector of edges in the maze
+	edgeCount - the number of edges in the edge vector
+	setNumber - the current setNumber being used to assign to new cells
+
+******************************************************************************/
 void EllersGenerator::addNextRow(mt19937& gen, const Maze& maze, int row, 
 	multimap<Cell *, int> & c_to_sMap, vector<Edge>& edges, int& edgeCount, 
 	int& setNumber)
@@ -274,6 +306,14 @@ void EllersGenerator::addNextRow(mt19937& gen, const Maze& maze, int row,
 
 }
 
+/***************************************************************************** 
+	Function that returns the number of cells in a given set and row
+
+	currentSet - the current set number
+	c_to_sMap - the map representing what set each cell is in
+	row - the current row number
+
+******************************************************************************/
 int EllersGenerator::getCellCount(const int currentSet,
 	const multimap<Cell *, int> c_to_sMap, const int row)
 {

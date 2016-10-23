@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include <vector>
 
 #include "mazeGenerator.h"
@@ -10,8 +16,13 @@ MazeGenerator::MazeGenerator()
 	
 }
 
-/* Factory method will return the appropriate generator object for 
-making a maze */
+/***************************************************************************** 
+	Function that implements the factory method.  Returns a maze generator
+	object of the correct type
+
+	mazeType - the type of maze generator requested by user via cmd line
+	
+******************************************************************************/
 MazeGenerator* MazeGenerator::getGenerator(int mazeType)
 {
 	if(mazeType == ALDOUS_BRODER)

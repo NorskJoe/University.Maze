@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include <unordered_map>
 #include <unordered_set>
 #include <limits>
@@ -13,11 +19,18 @@ DijkstraSolver::DijkstraSolver()
 
 }
 
-/* Main component of algorithm based on explanation at: 
-https://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+/***************************************************************************** 
+	Function that solves a maze
 
-Heuristic estimates based on explanation at:
-http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#S7 */
+	maze - the maze object
+
+	Main component of algorithm based on explanation at: 
+	https://rosettacode.org/wiki/Dijkstra%27s_algorithm#C.2B.2B
+
+	Heuristic estimates based on explanation at:
+	http://theory.stanford.edu/~amitp/GameProgramming/Heuristics.html#S7
+	
+******************************************************************************/
 void DijkstraSolver::solveMaze(Maze& maze)
 {
 	/* Set up variables and local data structures */

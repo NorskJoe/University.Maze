@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #ifndef EUCLIDEAN_DIJKSTRA_H
 #define EUCLIDEAN_DIJKSTRA_H
 

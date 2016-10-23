@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include <iostream>
 #include <unordered_set>
 #include <stack>
@@ -13,6 +19,12 @@ DepthFirstSearchSolver::DepthFirstSearchSolver()
 
 }
 
+/***************************************************************************** 
+	Function that solves a maze
+
+	maze - the maze object
+	
+******************************************************************************/
 void DepthFirstSearchSolver::solveMaze(Maze& maze)
 {
 	/* Setting up local variables/objects */

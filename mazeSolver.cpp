@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include "mazeSolver.h"
 #include "breadthFirstSearchSolver.h"
 #include "depthFirstSearchSolver.h"
@@ -10,8 +16,13 @@ MazeSolver::MazeSolver()
 	
 }
 
-/* Factory method will return the appropriate generator object for 
-solving a maze */
+/***************************************************************************** 
+	Function that implements the factory method.  Returns a maze solver
+	object of the correct type
+
+	mazeType - the type of maze solver requested by user via cmd line
+	
+******************************************************************************/
 MazeSolver* MazeSolver::getSolver(int solverType)
 {
 	if(solverType == DFS)

@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -428,7 +434,12 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-/* Function to display the proper program usage to the user */
+/***************************************************************************** 
+	Function that displays correct usage of arguments to the user
+
+	programName - the name of the executable file
+
+******************************************************************************/
 int programUsage(string programName)
 {
 	/* Correct usage of arguments */
@@ -442,7 +453,7 @@ int programUsage(string programName)
 	cout << "\t<[p]>   (Where p is --pd OR --pb OR --pm OR --pe)   (OPTIONAL)"
 		<< endl;
 
-	cout << "\t<[--sv filename.svg] AND\\OR [--sb filename.maze]>" 
+	cout << "\t<[--sv filename.svg] OR [--sb filename.maze]>" 
 		<< endl << endl;
 	/* Explanation of arguments */
 	cout << "<--ga> flag generates a new maze from seed, using the Aldous";
@@ -479,14 +490,23 @@ int programUsage(string programName)
 	return -1;
 }
 
-/* Function to parse seed, width and height arguments from cmd */
-bool getSeedArguments(Maze& maze, mt19937& gen, string seed, 
+/***************************************************************************** 
+	Function that parses the seed width and height arguments
+
+	maze - the maze object
+	gen - the random number generator that needs to be seeded
+	seedArg - the seed argument entered in cmd line
+	widthArg - the width argument entered in cmd line
+	heightArg - the height argument entered in cmd line
+
+******************************************************************************/
+bool getSeedArguments(Maze& maze, mt19937& gen, string seedArg, 
 	string widthArg, string heightArg)
 {
 	int w, h;
 	unsigned long s;
 
-	istringstream iss(seed);
+	istringstream iss(seedArg);
 	if(iss >> s)
 	{
 		istringstream iss(widthArg);

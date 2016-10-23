@@ -1,3 +1,10 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
+
 #include <queue>
 #include <unordered_map>
 #include <iostream>
@@ -13,6 +20,12 @@ BreadthFirstSearchSolver::BreadthFirstSearchSolver()
 
 }
 
+/***************************************************************************** 
+	Function that solves a maze
+
+	maze - the maze object
+	
+******************************************************************************/
 void BreadthFirstSearchSolver::solveMaze(Maze& maze)
 {
 	/* Setting up local variables */

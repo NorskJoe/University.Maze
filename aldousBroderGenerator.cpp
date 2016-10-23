@@ -1,3 +1,10 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
+
 #include <random>
 #include <iostream>
 
@@ -11,9 +18,18 @@ AldousBroderGenerator::AldousBroderGenerator()
 	
 }
 
-/* Implemented using the Aldous-Broder algorithm 
+/***************************************************************************** 
+	Function that generates a new maze
+
+	maze - the maze object
+	gen - a seeded random number generator
+	edges - a vector of edges that represents pathways in the maze
+	
+	Implemented using the Aldous-Broder algorithm 
 	based on explanation at: http://weblog.jamisbuck.org/2011/1/17/maze-
-	generation-aldous-broder-algorithm */
+	generation-aldous-broder-algorithm
+
+******************************************************************************/
 void AldousBroderGenerator::makeMaze(Maze& maze, mt19937& gen, 
 	vector<Edge>& edges)
 {

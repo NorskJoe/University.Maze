@@ -1,14 +1,24 @@
-#include <vector>
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
 
-//remove later
-#include <iostream>
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
+#include <vector>
 
 #include "maze.h"
 
 
 using namespace std;
 
-/* Initialise an empty maze of cells */
+/***************************************************************************** 
+	Function that initialises a maze of cells
+
+	h - the new height of the maze
+	w - the new width of the maze
+	count - the number of edges that will exist in the maze
+	
+******************************************************************************/
 Maze::Maze(int h, int w, int count)
 {
 	height = h;
@@ -29,15 +39,22 @@ Maze::Maze(int h, int w, int count)
 	}
 }
 
+/***************************************************************************** 
+	Function that checks if a given cell is in the bounds of the maze
+
+	x - the x position of the cell
+	y - the y position of the cell
+	
+******************************************************************************/
+bool Maze::existsInMaze(int x, int y)
+{
+	return (x >= 0 && x < width && y >= 0 && y < height);
+}
+
 /* Getters and setters */
 Cell * Maze::getCell(int x, int y) const
 {
 	return cells[x][y];
-}
-
-bool Maze::existsInMaze(int x, int y)
-{
-	return (x >= 0 && x < width && y >= 0 && y < height);
 }
 
 void Maze::setEdgeCount(int count)

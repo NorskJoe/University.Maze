@@ -1,3 +1,9 @@
+/*******************************************************************************
+	Author: Joseph Johnson
+	Student Number: s3542413
+
+	Programming Using C++ - Semester 2. 2016
+*******************************************************************************/
 #include "minHeap.h"
 
 MinHeap::MinHeap()
@@ -5,6 +11,12 @@ MinHeap::MinHeap()
 
 }
 
+/***************************************************************************** 
+	Function that moves a node down the tree until it finds its correct place
+
+	index - the index of the node to be moved
+	
+******************************************************************************/
 void MinHeap::bubbleDown(int index)
 {
 	int length = heapVector.size();
@@ -49,6 +61,12 @@ void MinHeap::bubbleDown(int index)
 	}
 }
 
+/***************************************************************************** 
+	Function that moves a node up the tree until it finds its correct place
+
+	index - the index of the node to be moved
+	
+******************************************************************************/
 void MinHeap::bubbleUp(int index)
 {
 	/* Check if already at top */
@@ -75,6 +93,13 @@ void MinHeap::bubbleUp(int index)
 	}
 }
 
+/***************************************************************************** 
+	Function that inserts a new node as a leaf
+
+	cell - the new cell that is being added
+	priority - the priority/cost of this cell.  Used for heuristics
+	
+******************************************************************************/
 void MinHeap::insert(Cell * cell, int priority)
 {
 	/* Create new data struct */
@@ -91,13 +116,20 @@ void MinHeap::insert(Cell * cell, int priority)
 	bubbleUp(length);
 }
 
+/***************************************************************************** 
+	Function that returns the cell at the top of the heap
+	
+******************************************************************************/
 Cell * MinHeap::getMinCell()
 {
 	Data data = heapVector[0];
 	return data.cell;
 }
 
-
+/***************************************************************************** 
+	Function that removes the node from the top of the heap
+	
+******************************************************************************/
 void MinHeap::deleteMin()
 {
 	int length = heapVector.size();
